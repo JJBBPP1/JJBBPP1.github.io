@@ -95,7 +95,7 @@
             background-color: rgb(255, 255, 253);
             width: 75vw;
             float: left;
-            padding: 10px;
+            padding: 15px;
             border-radius: 7%;
             text-align: justify;
         }
@@ -173,8 +173,7 @@
             </aside>
         </div>
         <div class="main">
-            <main>
-                <br>
+            <main class="acordeon">
                 <details> 
                     <summary><b>IES DONOSO CORTES</b></summary>
                     
@@ -249,6 +248,22 @@
             </main>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const detailsElements = document.querySelectorAll('main.acordeon details');
+            detailsElements.forEach((detail) => {
+                detail.addEventListener('toggle', () => {
+                    if (detail.open) {
+                        detailsElements.forEach((otherDetail) => {
+                            if (otherDetail !== detail && otherDetail.open) {
+                                otherDetail.open = false;
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
     <!--cuadro del footer-->
     <div class="footer">
         <footer>
