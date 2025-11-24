@@ -711,152 +711,156 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    function detectType(text){
-      if(/<\/?[a-z][\s\S]*>/i.test(text)) return 'html';
-      if(/^[\s\r\n]*[.#a-zA-Z\-][^{]*\{[\s\S]*:[^}]+}/m.test(text) || /:\s*[^;\n]+;/.test(text)) return 'css';
-      return 'js';
-    }
-
-    function makeSrcdoc(type, code){
-      if(type === 'html'){
-        return code;
+    document.addEventListener('DOMContentLoaded', function() {
+      function detectType(text){
+        if(/<\/?[a-z][\s\S]*>/i.test(text)) return 'html';
+        if(/^[\s\r\n]*[.#a-zA-Z\-][^{]*\{[\s\S]*:[^}]+}/m.test(text) || /:\s*[^;\n]+;/.test(text)) return 'css';
+        return 'js';
       }
-      if(type === 'css'){
-        return '<!doctype html><html><head><meta charset="utf-8"><style>' + code + '</style></head><body><div class="preview-root" style="padding:0.5rem;font-family:system-ui;">Elemento de prueba</div></body></html>';
-      }
-      // js
-      return '<!doctype html><html><head><meta charset="utf-8"></head><body><script>' + code.replace(/<\\/g,'<\\/') + '<\/script></body></html>';
-    }
 
-    function attachCopyHandler(button, pre){
-      if(!button || !pre) return;
-      if(button.dataset.copyAttached) return;
-      button.addEventListener('click', function(){
-        var code = pre.querySelector('code');
-        if(code){
-          var text = code.innerText.replace(/\u00a0/g, ' ');
-          if(navigator.clipboard && navigator.clipboard.writeText){
-            navigator.clipboard.writeText(text);
-          } else {
-            var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} ta.remove();
-          }
-          var old = button.textContent;
-          button.textContent = '¡Copiado!';
-          setTimeout(function(){ button.textContent = old; }, 1200);
+      function makeSrcdoc(type, code){
+        if(type === 'html'){
+          return code;
         }
-      });
-      button.dataset.copyAttached = '1';
-    }
-
-    // Procesar cada bloque pre en #como-empezar
-    var pres = document.querySelectorAll('#como-empezar pre');
-    pres.forEach(function(pre){
-      var next = pre.nextElementSibling;
-      var hasExample = false;
-      if(next){
-        if(next.classList && next.classList.contains('example-wrapper')) hasExample = true;
-        if(next.nextElementSibling && next.nextElementSibling.classList && next.nextElementSibling.classList.contains('example-wrapper-block')) hasExample = true;
-      }
-
-      // localizar botón copiar existente (inmediato o en los próximos hermanos)
-      var copyBtn = null;
-      if(next && next.tagName === 'BUTTON' && /copiar/i.test(next.textContent || '')){
-        copyBtn = next;
-      } else {
-        var sib = pre.nextElementSibling;
-        for(var i=0;i<4 && sib;i++){
-          if(sib.tagName === 'BUTTON' && /copiar/i.test(sib.textContent || '')){ copyBtn = sib; break; }
-          sib = sib.nextElementSibling;
+        if(type === 'css'){
+          return '<!doctype html><html><head><meta charset="utf-8"><style>' + code + '</style></head><body><div class="preview-root" style="padding:0.5rem;font-family:system-ui;">Elemento de prueba</div></body></html>';
         }
+        // js
+        return '<!doctype html><html><head><meta charset="utf-8"></head><body><script>' + code.replace(/<\\/g,'<\\/') + '<\/script></body></html>';
       }
 
-      if(!copyBtn){
-        copyBtn = document.createElement('button');
-        copyBtn.type = 'button';
-        copyBtn.textContent = 'Copiar código';
-        copyBtn.style.marginTop = '8px';
-        copyBtn.style.background = '#2563eb';
-        copyBtn.style.color = '#fff';
-        copyBtn.style.border = 'none';
-        copyBtn.style.padding = '0.4rem 1rem';
-        copyBtn.style.borderRadius = '6px';
-        copyBtn.style.cursor = 'pointer';
-        copyBtn.style.fontSize = '0.95rem';
-        pre.parentNode.insertBefore(copyBtn, pre.nextSibling);
-      }
-      // asegurar que cualquier botón copy tenga el manejador
-      attachCopyHandler(copyBtn, pre);
-
-      // crear la previsualización si no existe
-      if(!hasExample){
-        var codeEl = pre.querySelector('code');
-        if(!codeEl) return;
-        var text = codeEl.innerText || codeEl.textContent || '';
-        var type = detectType(text);
-
-        var wrap = document.createElement('div');
-        wrap.className = 'example-wrapper';
-        wrap.style.display = 'inline-block';
-        wrap.style.marginLeft = '0.6rem';
-
-        var toggle = document.createElement('button');
-        toggle.type = 'button';
-        toggle.className = 'example-toggle';
-        toggle.textContent = 'Mostrar ejemplo';
-
-        var iframe = document.createElement('iframe');
-        iframe.className = 'example-frame';
-        iframe.setAttribute('aria-hidden','true');
-        iframe.style.display = 'none';
-
-        var srcdoc = makeSrcdoc(type, text);
-        iframe.srcdoc = srcdoc;
-        if(type === 'js' || /<script[\s>]/i.test(text)) iframe.setAttribute('sandbox','allow-scripts');
-
-        toggle.addEventListener('click', function(){
-          if(iframe.style.display === 'none'){
-            iframe.style.display = 'block';
-            iframe.setAttribute('aria-hidden','false');
-            toggle.textContent = 'Ocultar ejemplo';
-          } else {
-            iframe.style.display = 'none';
-            iframe.setAttribute('aria-hidden','true');
-            toggle.textContent = 'Mostrar ejemplo';
+      function attachCopyHandler(button, pre){
+        if(!button || !pre) return;
+        if(button.dataset.copyAttached) return;
+        button.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          if(code){
+            var text = code.innerText.replace(/\u00a0/g, ' ');
+            if(navigator.clipboard && navigator.clipboard.writeText){
+              navigator.clipboard.writeText(text);
+            } else {
+              var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} ta.remove();
+            }
+            var old = button.textContent;
+            button.textContent = '¡Copiado!';
+            setTimeout(function(){ button.textContent = old; }, 1200);
           }
         });
-
-        var insertAfter = copyBtn || pre;
-        insertAfter.parentNode.insertBefore(wrap, insertAfter.nextSibling);
-        wrap.appendChild(toggle);
-
-        var blockWrap = document.createElement('div');
-        blockWrap.className = 'example-wrapper-block';
-        blockWrap.style.marginTop = '0.5rem';
-        blockWrap.appendChild(iframe);
-        wrap.parentNode.insertBefore(blockWrap, wrap.nextSibling);
+        button.dataset.copyAttached = '1';
       }
-    });
 
-    // Eliminar botones duplicados contiguos con mismo texto dentro de #como-empezar
-    (function removeDuplicateButtons(){
-      var container = document.getElementById('como-empezar');
-      if(!container) return;
-      var btns = Array.prototype.slice.call(container.querySelectorAll('button'));
-      for(var i=0;i<btns.length-1;i++){
-        var a = btns[i];
-        var b = btns[i+1];
-        if(!a.parentNode) continue;
-        if(b && a.nextElementSibling === b && a.tagName === 'BUTTON' && b.tagName === 'BUTTON'){
-          var ta = a.textContent ? a.textContent.trim() : '';
-          var tb = b.textContent ? b.textContent.trim() : '';
-          if(ta && ta === tb){
-            b.parentNode.removeChild(b);
-            btns.splice(i+1,1);
-            i--;
+      // Procesar cada bloque pre en #como-empezar
+      var pres = document.querySelectorAll('#como-empezar pre');
+      var processedPreElements = new Set();
+      pres.forEach(function(pre){
+        if(processedPreElements.has(pre)) return;
+        processedPreElements.add(pre);
+
+        var next = pre.nextElementSibling;
+        var hasExample = false;
+        if(next){
+          if(next.classList && next.classList.contains('example-wrapper')) hasExample = true;
+          if(next.nextElementSibling && next.nextElementSibling.classList && next.nextElementSibling.classList.contains('example-wrapper-block')) hasExample = true;
+        }
+
+        // localizar botón copiar existente (inmediato o en los próximos hermanos)
+        var copyBtn = null;
+        if(next && next.tagName === 'BUTTON' && /copiar/i.test(next.textContent || '')){
+          copyBtn = next;
+        } else {
+          var sib = pre.nextElementSibling;
+          for(var i=0;i<4 && sib;i++){
+            if(sib.tagName === 'BUTTON' && /copiar/i.test(sib.textContent || '')){ copyBtn = sib; break; }
+            sib = sib.nextElementSibling;
           }
         }
-      }
-    })();
-  });
+
+        if(!copyBtn){
+          copyBtn = document.createElement('button');
+          copyBtn.type = 'button';
+          copyBtn.textContent = 'Copiar código';
+          copyBtn.style.marginTop = '8px';
+          copyBtn.style.background = '#2563eb';
+          copyBtn.style.color = '#fff';
+          copyBtn.style.border = 'none';
+          copyBtn.style.padding = '0.4rem 1rem';
+          copyBtn.style.borderRadius = '6px';
+          copyBtn.style.cursor = 'pointer';
+          copyBtn.style.fontSize = '0.95rem';
+          pre.parentNode.insertBefore(copyBtn, pre.nextSibling);
+        }
+        // asegurar que cualquier botón copy tenga el manejador
+        attachCopyHandler(copyBtn, pre);
+
+        // crear la previsualización si no existe
+        if(!hasExample){
+          var codeEl = pre.querySelector('code');
+          if(!codeEl) return;
+          var text = codeEl.innerText || codeEl.textContent || '';
+          var type = detectType(text);
+
+          var wrap = document.createElement('div');
+          wrap.className = 'example-wrapper';
+          wrap.style.display = 'inline-block';
+          wrap.style.marginLeft = '0.6rem';
+
+          var toggle = document.createElement('button');
+          toggle.type = 'button';
+          toggle.className = 'example-toggle';
+          toggle.textContent = 'Mostrar ejemplo';
+
+          var iframe = document.createElement('iframe');
+          iframe.className = 'example-frame';
+          iframe.setAttribute('aria-hidden','true');
+          iframe.style.display = 'none';
+
+          var srcdoc = makeSrcdoc(type, text);
+          iframe.srcdoc = srcdoc;
+          if(type === 'js' || /<script[\s>]/i.test(text)) iframe.setAttribute('sandbox','allow-scripts');
+
+          toggle.addEventListener('click', function(){
+            if(iframe.style.display === 'none'){
+              iframe.style.display = 'block';
+              iframe.setAttribute('aria-hidden','false');
+              toggle.textContent = 'Ocultar ejemplo';
+            } else {
+              iframe.style.display = 'none';
+              iframe.setAttribute('aria-hidden','true');
+              toggle.textContent = 'Mostrar ejemplo';
+            }
+          });
+
+          var insertAfter = copyBtn || pre;
+          insertAfter.parentNode.insertBefore(wrap, insertAfter.nextSibling);
+          wrap.appendChild(toggle);
+
+          var blockWrap = document.createElement('div');
+          blockWrap.className = 'example-wrapper-block';
+          blockWrap.style.marginTop = '0.5rem';
+          blockWrap.appendChild(iframe);
+          wrap.parentNode.insertBefore(blockWrap, wrap.nextSibling);
+        }
+      });
+
+      // Eliminar botones duplicados contiguos con mismo texto dentro de #como-empezar
+      (function removeDuplicateButtons(){
+        var container = document.getElementById('como-empezar');
+        if(!container) return;
+        var btns = Array.prototype.slice.call(container.querySelectorAll('button'));
+        for(var i=0;i<btns.length-1;i++){
+          var a = btns[i];
+          var b = btns[i+1];
+          if(!a.parentNode) continue;
+          if(b && a.nextElementSibling === b && a.tagName === 'BUTTON' && b.tagName === 'BUTTON'){
+            var ta = a.textContent ? a.textContent.trim() : '';
+            var tb = b.textContent ? b.textContent.trim() : '';
+            if(ta && ta === tb){
+              b.parentNode.removeChild(b);
+              btns.splice(i+1,1);
+              i--;
+            }
+          }
+        }
+      })();
+    });
 </script>
