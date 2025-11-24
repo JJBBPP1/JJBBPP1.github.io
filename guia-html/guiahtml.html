@@ -1,73 +1,31 @@
 <section id="como-empezar">
   <!-- Botón eliminado según solicitud del usuario -->
   <h2>Cómo empezar en HTML</h2>
-    <!-- Menú lateral: navegación entre guías (desplegable) -->
+    <!-- Menú lateral: navegación entre guías no desplegable -->
     <div class="sidebar">
     <strong style="display:block;margin-bottom:0.25rem;">Navegación</strong>
     <a href="../index.html">Inicio</a>
-    <a href="../guia-html/guiahtml.html">Guía HTML</a>
     <a href="../guia-html/cssguia.html">Guía CSS</a>
   </div>
-    <!-- Botón para abrir el sidebar cuando está oculto -->
-    <button id="open-sidebar" aria-hidden="true" title="Abrir navegación" style="position:fixed;left:1rem;top:1rem;display:none;padding:0.5rem 0.6rem;border-radius:10px;border:none;background:#2563eb;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.08);z-index:1100;">☰</button>
 
     <style>
-      /* Estilos para comportamiento desplegable del sidebar */
+      /* Removed styles for collapsable sidebar */
+      
       body.sidebar-collapsed .sidebar {
         transform: translateX(-120%);
         transition: transform 240ms ease;
         pointer-events: none;
         opacity: 0.98;
       }
-      .sidebar {
-        transition: transform 240ms ease, opacity 180ms ease;
-        will-change: transform;
-      }
-      /* Mostrar el botón flotante cuando el sidebar está colapsado */
+      
       body.sidebar-collapsed #open-sidebar {
         display: block !important;
       }
+      
     </style>
 
     <script>
-      (function(){
-        // Evitar ejecutar varias veces si el script se inyecta repetidamente
-        if (window.__sidebarToggleInit) return; window.__sidebarToggleInit = true;
-
-        var toggle = document.getElementById('sidebar-toggle');
-        var openBtn = document.getElementById('open-sidebar');
-        var body = document.body;
-
-        function collapseSidebar(shouldCollapse){
-          if(shouldCollapse){
-            body.classList.add('sidebar-collapsed');
-            if(toggle) toggle.setAttribute('aria-expanded','false');
-            if(openBtn) openBtn.setAttribute('aria-hidden','false');
-          } else {
-            body.classList.remove('sidebar-collapsed');
-            if(toggle) toggle.setAttribute('aria-expanded','true');
-            if(openBtn) openBtn.setAttribute('aria-hidden','true');
-          }
-        }
-
-        // Inicializar estado (cerrado si ventana pequeña)
-        var shouldStartCollapsed = window.matchMedia && window.matchMedia('(max-width:700px)').matches;
-        collapseSidebar(shouldStartCollapsed);
-
-        if(toggle){
-          toggle.addEventListener('click', function(e){
-            e.preventDefault();
-            collapseSidebar(!body.classList.contains('sidebar-collapsed'));
-          });
-        }
-
-        if(openBtn){
-          openBtn.addEventListener('click', function(e){
-            e.preventDefault();
-            collapseSidebar(false);
-          });
-        }
-      })();
+      /* Removed JS that manages sidebar collapsing - sidebar is now non collapsible */
     </script>
     <style>
       /* Estilos para las previsualizaciones de código */

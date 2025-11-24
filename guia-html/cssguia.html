@@ -115,18 +115,19 @@
       .sidebar { position: static; width: auto; margin-bottom: 1rem; }
       body { padding: 1rem; }
     }
-    /* Sidebar colapsable */
-    .sidebar { transition: transform 0.22s ease, opacity 0.22s ease; }
-    body.sidebar-collapsed .sidebar { transform: translateX(-240px); opacity: 0; pointer-events: none; }
-    #open-sidebar { display: none; position: fixed; left: 1rem; top: 1rem; z-index: 1100; background:#2563eb;color:#fff;border:none;border-radius:8px;padding:0.4rem 0.6rem; cursor:pointer }
-    body.sidebar-collapsed #open-sidebar { display: block; }
-    #sidebar-toggle { display:block; background:#2563eb;color:#fff;border:none;border-radius:6px;padding:0.25rem 0.5rem;margin-bottom:0.6rem; cursor:pointer }
+  /* Sidebar colapsable */
+  /* Removed to make sidebar non collapsable */
+  /*
+  .sidebar { transition: transform 0.22s ease, opacity 0.22s ease; }
+  body.sidebar-collapsed .sidebar { transform: translateX(-240px); opacity: 0; pointer-events: none; }
+  #open-sidebar { display: none; position: fixed; left: 1rem; top: 1rem; z-index: 1100; background:#2563eb;color:#fff;border:none;border-radius:8px;padding:0.4rem 0.6rem; cursor:pointer }
+  body.sidebar-collapsed #open-sidebar { display: block; }
+  #sidebar-toggle { display:block; background:#2563eb;color:#fff;border:none;border-radius:6px;padding:0.25rem 0.5rem;margin-bottom:0.6rem; cursor:pointer }
+  */
   </style>
 </head>
 <body>
-  <button id="open-sidebar" aria-label="Abrir navegación">☰</button>
   <div class="sidebar">
-    <button id="sidebar-toggle" aria-expanded="true">☰</button>
     <strong style="display:block;margin-bottom:0.25rem;">Navegación</strong>
     <a href="../index.html">Inicio</a>
     <a href="../guia-html/guiahtml.html">Guía HTML</a>
@@ -437,23 +438,7 @@ body {
   </section>
   <script>
     // Toggle del sidebar
-    (function(){
-      var toggle = document.getElementById('sidebar-toggle');
-      var open = document.getElementById('open-sidebar');
-
-      if(toggle){
-        toggle.addEventListener('click', function(){
-          document.body.classList.toggle('sidebar-collapsed');
-          toggle.setAttribute('aria-expanded', String(!document.body.classList.contains('sidebar-collapsed')));
-        });
-      }
-
-      if(open){
-        open.addEventListener('click', function(){
-          document.body.classList.remove('sidebar-collapsed');
-        });
-      }
-    })();
+/* Removed JS that manages sidebar collapsing to keep it static */
 
     // Unificar lógica de botones "Copiar código" sin duplicar
     document.addEventListener('DOMContentLoaded', function() {
