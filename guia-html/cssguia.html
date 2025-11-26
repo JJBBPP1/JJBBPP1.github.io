@@ -116,15 +116,6 @@
       .sidebar { position: static; width: auto; margin-bottom: 1rem; }
       body { padding: 1rem; }
     }
-  /* Sidebar colapsable */
-  /* Removed to make sidebar non collapsable */
-  /*
-  .sidebar { transition: transform 0.22s ease, opacity 0.22s ease; }
-  body.sidebar-collapsed .sidebar { transform: translateX(-240px); opacity: 0; pointer-events: none; }
-  #open-sidebar { display: none; position: fixed; left: 1rem; top: 1rem; z-index: 1100; background:#2563eb;color:#fff;border:none;border-radius:8px;padding:0.4rem 0.6rem; cursor:pointer }
-  body.sidebar-collapsed #open-sidebar { display: block; }
-  #sidebar-toggle { display:block; background:#2563eb;color:#fff;border:none;border-radius:6px;padding:0.25rem 0.5rem;margin-bottom:0.6rem; cursor:pointer }
-  */
   </style>
 </head>
 <body>
@@ -436,6 +427,216 @@ body {
 }
 </code></pre>
     <button>Copiar código</button>
+
+    <h3>33. Container Queries</h3>
+    <p>Permiten aplicar estilos basados en el tamaño del contenedor padre, no solo de la ventana.</p>
+    <pre><code>/* Container Queries */
+.contenedor {
+  container-type: inline-size;
+}
+@media (min-width: 400px) {
+  .contenedor .elemento { font-size: 1.2rem; }
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>34. Propiedades Lógicas de CSS</h3>
+    <p>Usa propiedades lógicas como margin-inline-start en lugar de margin-left para soporte RTL.</p>
+    <pre><code>/* Propiedades lógicas */
+.elemento {
+  margin-inline-start: 1rem;
+  padding-block-end: 0.5rem;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>35. CSS Nesting</h3>
+    <p>Permite anidar selectores dentro de otros para un código más organizado.</p>
+    <pre><code>/* Nesting */
+.padre {
+  color: blue;
+  .hijo {
+    color: red;
+  }
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>36. CSS Scoping</h3>
+    <p>Limita el alcance de los estilos con @scope para evitar conflictos globales.</p>
+    <pre><code>/* Scoping */
+@scope (.componente) {
+  .titulo { font-size: 1.5rem; }
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>37. CSS Houdini</h3>
+    <p>API para extender CSS con propiedades personalizadas y efectos avanzados.</p>
+    <pre><code>/* Houdini (ejemplo básico) */
+CSS.registerProperty({
+  name: '--mi-propiedad',
+  syntax: '<length>',
+  initialValue: '0px'
+});
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>38. CSS Containment</h3>
+    <p>Optimiza el rendimiento aislando el layout de subárboles.</p>
+    <pre><code>/* Containment */
+.contenedor {
+  contain: layout style paint;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>39. CSS Scroll Snap</h3>
+    <p>Crea experiencias de scroll suaves y precisas en galerías o secciones.</p>
+    <pre><code>/* Scroll Snap */
+.galeria {
+  scroll-snap-type: x mandatory;
+}
+.galeria > div {
+  scroll-snap-align: start;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>40. CSS Writing Modes</h3>
+    <p>Cambia la dirección del texto y layout (horizontal, vertical).</p>
+    <pre><code>/* Writing Modes */
+.vertical {
+  writing-mode: vertical-rl;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>41. CSS Shapes</h3>
+    <p>Permite que el texto fluya alrededor de formas no rectangulares.</p>
+    <pre><code>/* Shapes */
+.imagen {
+  shape-outside: circle(50%);
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>42. CSS Blend Modes</h3>
+    <p>Mezcla colores de elementos superpuestos con modos como multiply o screen.</p>
+    <pre><code>/* Blend Modes */
+.superpuesto {
+  mix-blend-mode: multiply;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>43. CSS Masks</h3>
+    <p>Oculta partes de elementos usando imágenes o gradientes.</p>
+    <pre><code>/* Masks */
+.elemento {
+  mask-image: linear-gradient(to right, transparent, black);
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>44. CSS Custom Scrollbars</h3>
+    <p>Personaliza el aspecto de las barras de scroll.</p>
+    <pre><code>/* Custom Scrollbars */
+.scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollable::-webkit-scrollbar-thumb {
+  background: #2563eb;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>45. CSS Aspect Ratio</h3>
+    <p>Mantiene proporciones de elementos sin especificar altura.</p>
+    <pre><code>/* Aspect Ratio */
+.video {
+  aspect-ratio: 16 / 9;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>46. Funciones Matemáticas de CSS</h3>
+    <p>Usa funciones como min(), max(), round() para cálculos avanzados.</p>
+    <pre><code>/* Math Functions */
+.elemento {
+  width: min(100%, 500px);
+  font-size: max(1rem, 2vw);
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>47. Funciones de Color de CSS</h3>
+    <p>Manipula colores con funciones como color-mix() o color-contrast().</p>
+    <pre><code>/* Color Functions */
+.elemento {
+  color: color-mix(in srgb, red 50%, blue 50%);
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>48. CSS Grid Subgrid</h3>
+    <p>Permite que grids hijos hereden la cuadrícula del padre.</p>
+    <pre><code>/* Subgrid */
+.padre {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+.hijo {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>49. CSS Modules</h3>
+    <p>Enfoque modular para estilos, evitando conflictos de nombres.</p>
+    <pre><code>/* CSS Modules (concepto) */
+/* En un archivo .module.css */
+.titulo { font-size: 2rem; }
+/* Se importa como objeto en JS */
+import styles from './styles.module.css';
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>50. CSS-in-JS</h3>
+    <p>Escribe estilos en JavaScript para estilos dinámicos y scoped.</p>
+    <pre><code>/* CSS-in-JS (ejemplo con styled-components) */
+const Boton = styled.button`
+  background: ${props => props.primary ? 'blue' : 'gray'};
+  color: white;
+`;
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>51. CSS Animation Libraries</h3>
+    <p>Librerías como Animate.css para animaciones predefinidas.</p>
+    <pre><code>/* Animate.css */
+.elemento {
+  animation: bounce 2s infinite;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>52. CSS Custom Properties Avanzadas</h3>
+    <p>Usa variables CSS con fallback y cálculos dinámicos.</p>
+    <pre><code>/* Custom Properties Avanzadas */
+:root {
+  --espacio: 1rem;
+}
+.elemento {
+  padding: var(--espacio, 0.5rem);
+  margin: calc(var(--espacio) * 2);
+}
+</code></pre>
+    <button>Copiar código</button>
+</code></pre>
+
   </section>
   <script>
     // Toggle del sidebar
