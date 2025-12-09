@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href=/icono.png>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Científica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+        }
+        .operation {
+            background-color: #111;
+            color: #ccc;
+            font-size: 1em;
+            text-align: right;
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            min-height: 20px;
+            overflow-x: auto;
+        }
+        .display {
+            background-color: #222;
+            color: #fff;
+            font-size: 1.5em;
+            text-align: right;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            min-height: 40px;
+            overflow-x: auto;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #666;
+            color: #fff;
+        }
+        button:hover {
+            background-color: #777;
+        }
+        .operator {
+            background-color: #f39c12;
+        }
+        .operator:hover {
+            background-color: #e67e22;
+        }
+        .equal {
+            background-color: #27ae60;
+            grid-column: span 2;
+        }
+        .equal:hover {
+            background-color: #229954;
+        }
+        .clear {
+            background-color: #e74c3c;
+        }
+        .clear:hover {
+            background-color: #c0392b;
+        }
+        .scientific {
+            background-color: #9b59b6;
+        }
+        .scientific:hover {
+            background-color: #8e44ad;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="operation" id="operation"></div>
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="scientific" onclick="calculateFunction('sin')">sin</button>
+            <button class="scientific" onclick="calculateFunction('cos')">cos</button>
+            <button class="scientific" onclick="calculateFunction('tan')">tan</button>
+            <button class="scientific" onclick="calculateFunction('log')">log</button>
+            <button class="scientific" onclick="calculateFunction('ln')">ln</button>
+            <button class="scientific" onclick="calculateFunction('sqrt')">√</button>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('/')">/</button>
+            <button onclick="appendToDisplay('^')">^</button>
+            <button class="scientific" onclick="calculateFunction('exp')">exp</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('*')">*</button>
+            <button onclick="appendToDisplay('(')">(</button>
+            <button onclick="appendToDisplay(')')">)</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('-')">-</button>
+            <button class="scientific" onclick="appendToDisplay('pi')">π</button>
+            <button class="scientific" onclick="appendToDisplay('e')">e</button>
+            <button onclick="appendToDisplay('0')" style="grid-column: span 2;">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button class="operator" onclick="appendToDisplay('+')">+</button>
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button onclick="backspace()">⌫</button>
+            <button class="equal" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+    <script>
+        let display = document.getElementById('display');
+        let operation = document.getElementById('operation');
+        let currentInput = '';
+        let operationString = '';
+
+        function appendToDisplay(value) {
+            if (value === 'pi') {
+                operationString += 'π';
+            } else if (value === 'e') {
+                operationString += 'e';
+            } else {
+                operationString += value;
+            }
+            operation.textContent = operationString;
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            try {
+                let result = math.evaluate(operationString.replace('π', Math.PI.toString()).replace('e', Math.E.toString()));
+                display.textContent = result;
+            } catch (e) {
+                display.textContent = '0';
+            }
+        }
+
+        function calculateFunction(func) {
+            operationString += func + '(';
+            operation.textContent = operationString;
+        }
+
+        function clearDisplay() {
+            display.textContent = '0';
+            operation.textContent = '';
+            operationString = '';
+        }
+
+        function backspace() {
+            operationString = operationString.slice(0, -1);
+            operation.textContent = operationString;
+            updateDisplay();
+        }
+
+        function calculate() {
+            try {
+                let result = math.evaluate(operationString.replace('π', Math.PI.toString()).replace('e', Math.E.toString()));
+                operationString += ' = ' + result;
+                operation.textContent = operationString;
+                display.textContent = result;
+            } catch (e) {
+                display.textContent = 'Error';
+                operation.textContent = operationString + ' = Error';
+            }
+        }
+    </script>
+</body>
+</html>

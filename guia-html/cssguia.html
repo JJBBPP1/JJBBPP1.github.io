@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Guía de CSS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href=/icono.png>
+  <style>
+    body {
+      background: #f4f6f8;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+    }
+    #css-guia {
+      max-width: 850px;
+      margin: auto;
+      padding: 2.5rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    nav {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    nav a {
+      background: #2563eb;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      margin: 0 0.5rem;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    nav a:hover {
+      background: #1d4ed8;
+    }
+    h2 {
+      font-size: 2.2rem;
+      color: #2563eb;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    h3 {
+      margin-top: 2rem;
+      color: #111827;
+      font-size: 1.3rem;
+      border-left: 4px solid #2563eb;
+      padding-left: 0.5rem;
+    }
+    p {
+      margin: 0.8rem 0;
+      color: red;
+      font-weight: bold;
+    }
+    pre {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 1.2rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+      overflow-x: auto;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    pre code {
+      display: block;
+      background: #23272e;
+      color: #e2e8f0;
+      font-family: "Fira Code", monospace;
+      font-size: 1rem;
+      padding: 1.2rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      white-space: pre;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    button {
+      margin-top: 1rem;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    /* Estilos del sidebar */
+    .sidebar {
+      position: fixed;
+      left: 1rem;
+      top: 1rem;
+      width: 200px;
+      background: #ffffffee;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      padding: 1rem;
+      z-index: 1000;
+    }
+    .sidebar a {
+      display: block;
+      color: #111827;
+      text-decoration: none;
+      padding: 0.5rem 0.6rem;
+      border-radius: 8px;
+      margin-bottom: 0.4rem;
+    }
+    .sidebar a:hover { background: #eef2ff; }
+    @media (max-width: 800px) {
+      .sidebar { position: static; width: auto; margin-bottom: 1rem; }
+      body { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <strong style="display:block;margin-bottom:0.25rem;">Navegación</strong>
+    <a href="../index.html">Inicio</a>
+    <a href="../guia-html/guiahtml.html">Guía HTML</a>
+    <a href="../guia-html/cssguia.html">Guía CSS</a>
+  </div>
+  <main style="max-width:900px;margin:0 auto;">
+  <section id="css-guia">
+    <h2>Cómo empezar en CSS</h2>
+    <h3>1. ¿Qué es CSS?</h3>
+    <p>CSS (<strong>Cascading Style Sheets</strong>) es el lenguaje que usamos para dar estilo y diseño a las páginas web.</p>
+    <pre><code>body {
+  background: #f4f6f8;
+  color: #333;
+  font-family: Arial, sans-serif;
+}</code></pre>
+    <button>Copiar código</button>
+    <h3>2. Cómo vincular CSS a tu HTML</h3>
+    <p>Usa la etiqueta <code>&lt;link&gt;</code> en el <code>&lt;head&gt;</code>:</p>
+    <pre><code>&lt;link rel="stylesheet" href="estilos.css"&gt;</code></pre>
+    <button>Copiar código</button>
+    <h3>3. Selectores básicos</h3>
+    <p>Selecciona elementos por etiqueta, clase o id:</p>
+    <pre><code>h1 {
+  color: #2563eb;
+}
+.caja {
+  border: 1px solid #ccc;
+}
+#principal {
+  padding: 2rem;
+}</code></pre>
+    <button>Copiar código</button>
+    <h3>4. Box Model</h3>
+    <p>El modelo de caja determina cómo se calculan el tamaño y el espacio de los elementos (content, padding, border, margin).</p>
+    <pre><code>/* Box model */
+.caja {
+  width: 200px;
+  padding: 16px;
+  border: 2px solid #ccc;
+  margin: 12px;
+  box-sizing: border-box; /* incluye padding y border en el ancho */
+}</code></pre>
+    <button>Copiar código</button>
+
+    <h3>5. Posicionamiento</h3>
+    <p>Propiedades: static, relative, absolute, fixed y sticky.</p>
+    <pre><code>/* Posicionamiento */
+.box-abs {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+.box-rel { position: relative; }</code></pre>
+    <button>Copiar código</button>
+
+    <h3>6. Flexbox</h3>
+    <p>Flexbox es útil para distribuir espacio en una dimensión (fila o columna).</p>
+    <pre><code>/* Flexbox */
+.contenedor {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.item { flex: 1; }</code></pre>
+    <button>Copiar código</button>
+
+    <h3>7. Grid</h3>
+    <p>CSS Grid permite crear layouts en dos dimensiones de forma sencilla.</p>
+    <pre><code>/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 16px;
+}
+.grid > div { padding: 8px; background: #f3f4f6; }</code></pre>
+    <button>Copiar código</button>
+
+    <h3>8. Responsive y Media Queries</h3>
+    <p>Usa media queries para adaptar el diseño según el tamaño de la pantalla.</p>
+    <pre><code>/* Responsive */
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .contenedor { flex-direction: column; }
+}</code></pre>
+    <button>Copiar código</button>
+
+    <h3>9. Variables CSS</h3>
+    <p>Las custom properties facilitan mantener valores reutilizables.</p>
+    <pre><code>/* Variables */
+:root {
+  --primary: #2563eb;
+  --gap: 12px;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>10. Unidades</h3>
+    <p>Unidades relativas (%, em, rem, vw, vh) y absolutas (px).</p>
+    <pre><code>/* Unidades */
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>11. Transiciones y Animaciones</h3>
+    <p>Transiciones para cambios suaves y @keyframes para animaciones complejas.</p>
+    <pre><code>/* Transición */
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>12. Especificidad</h3>
+    <p>La especificidad decide qué reglas aplican cuando hay conflicto entre selectores.</p>
+    <pre><code>/* Especificidad */
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>13. Pseudo-clases y Pseudo-elementos</h3>
+    <p>Permiten seleccionar estados y partes de elementos (hover, before, after).</p>
+    <pre><code>/* Pseudo */
+.btn { background: var(--primary); padding: var(--gap); color: #fff; }
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>14. Combinadores</h3>
+    <p>Seleccionan relaciones entre elementos (descendiente, hijo, adyacente).</p>
+    <pre><code>/* Combinadores */
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>15. Tipografía</h3>
+    <p>Control de fuentes, interlineado y kerning.</p>
+    <pre><code>/* Tipografía */
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>16. Colores</h3>
+    <p>Formas de definir colores: hex, rgb(a), hsl(a).</p>
+    <pre><code>/* Colores */
+.texto { font-size: 1rem; /* 1rem = tamaño de la fuente raíz */ }
+.caja { width: 50%; }
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>17. Gradientes</h3>
+    <p>Gradientes lineales y radiales para fondos más ricos.</p>
+    <pre><code>/* Gradientes */
+background: linear-gradient(to right, #2563eb, #1d4ed8);
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>18. Fondos</h3>
+    <p>Control de imágenes, repetición y posición de fondo.</p>
+    <pre><code>/* Fondos */
+.fondo {
+  background-image: url('fondo.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>19. Sombras</h3>
+    <p>Box-shadow y text-shadow para profundidad.</p>
+    <pre><code>/* Sombras */
+.caja {
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.titulo {
+  text-shadow: 1px 1px 2px #aaa;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>20. Bordes</h3>
+    <p>Control del estilo, radio y grosores de bordes.</p>
+    <pre><code>/* Bordes */
+.boton {
+  border-radius: 8px;
+  border: 2px solid var(--primary);
+  transition: background 200ms ease;
+}
+.boton:hover {
+  background: #1d4ed8;
+  color: #fff;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>21. Columnas (multi-column layout)</h3>
+    <p>Divide texto en columnas con CSS columns.</p>
+    <pre><code>/* Columnas */
+.multicolumn {
+  column-count: 3;
+  column-gap: 1rem;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>22. Filtros (filter)</h3>
+    <p>Efectos visuales como blur, saturate o grayscale.</p>
+    <pre><code>/* Filtros */
+.filter-blur {
+  filter: blur(4px);
+}
+.filter-grayscale {
+  filter: grayscale(100%);
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>23. Transformaciones (transform)</h3>
+    <p>Translate, rotate, scale y transform-origin para mover elementos.</p>
+    <pre><code>/* Transform */
+.transformar {
+  transform: rotate(15deg) translateX(20px);
+  transform-origin: center center;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>24. Cálculos con calc()</h3>
+    <p>Combina unidades y cálculos en propiedades CSS.</p>
+    <pre><code>/* calc */
+.calculado {
+  width: calc(100% - 40px);
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>25. clamp() y funciones útiles</h3>
+    <p>Controla valores responsivos con clamp(min, val, max).</p>
+    <pre><code>/* clamp */
+.texto-responsive {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>26. object-fit / object-position</h3>
+    <p>Cómo ajustar imágenes dentro de contenedores.</p>
+    <pre><code>/* object-fit */
+.imagen-ajustada {
+  object-fit: cover;
+  object-position: center;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>27. Imágenes responsivas (srcset/CSS)</h3>
+    <p>Buenas prácticas para servir imágenes adecuadas al tamaño.</p>
+    <pre><code>/* responsive images (CSS example) */
+img {
+  max-width: 100%;
+  height: auto;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>28. pointer-events y visibility</h3>
+    <p>Control de interacción y visibilidad sin afectar layout.</p>
+    <pre><code>/* interacción */
+.elemento {
+  pointer-events: none;
+  visibility: hidden;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>29. Estilado de formularios</h3>
+    <p>Mejorar inputs, selects y botones para una UI consistente.</p>
+    <pre><code>/* Formularios */
+input, select, button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>30. CSS para impresión</h3>
+    <p>Usa media=print para adaptar el contenido a papel.</p>
+    <pre><code>/* Print */
+@media print {
+  body { font-size: 12pt; color: #000; background: #fff; }
+  .sidebar { display: none; }
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>31. Accesibilidad en CSS</h3>
+    <p>Contraste, focus-visible y tamaños legibles ayudan a la accesibilidad.</p>
+    <pre><code>/* Accesibilidad */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>32. Rendimiento y buenas prácticas</h3>
+    <p>Minimiza selectores costosos, usa archivos optimizados y cache.</p>
+    <pre><code>/* Prácticas */
+body {
+  will-change: transform;
+  contain: layout style;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>33. Container Queries</h3>
+    <p>Permiten aplicar estilos basados en el tamaño del contenedor padre, no solo de la ventana.</p>
+    <pre><code>/* Container Queries */
+.contenedor {
+  container-type: inline-size;
+}
+@media (min-width: 400px) {
+  .contenedor .elemento { font-size: 1.2rem; }
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>34. Propiedades Lógicas de CSS</h3>
+    <p>Usa propiedades lógicas como margin-inline-start en lugar de margin-left para soporte RTL.</p>
+    <pre><code>/* Propiedades lógicas */
+.elemento {
+  margin-inline-start: 1rem;
+  padding-block-end: 0.5rem;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>35. CSS Nesting</h3>
+    <p>Permite anidar selectores dentro de otros para un código más organizado.</p>
+    <pre><code>/* Nesting */
+.padre {
+  color: blue;
+  .hijo {
+    color: red;
+  }
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>36. CSS Scoping</h3>
+    <p>Limita el alcance de los estilos con @scope para evitar conflictos globales.</p>
+    <pre><code>/* Scoping */
+@scope (.componente) {
+  .titulo { font-size: 1.5rem; }
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>37. CSS Houdini</h3>
+    <p>API para extender CSS con propiedades personalizadas y efectos avanzados.</p>
+    <pre><code>/* Houdini (ejemplo básico) */
+CSS.registerProperty({
+  name: '--mi-propiedad',
+  syntax: '<length>',
+  initialValue: '0px'
+});
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>38. CSS Containment</h3>
+    <p>Optimiza el rendimiento aislando el layout de subárboles.</p>
+    <pre><code>/* Containment */
+.contenedor {
+  contain: layout style paint;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>39. CSS Scroll Snap</h3>
+    <p>Crea experiencias de scroll suaves y precisas en galerías o secciones.</p>
+    <pre><code>/* Scroll Snap */
+.galeria {
+  scroll-snap-type: x mandatory;
+}
+.galeria > div {
+  scroll-snap-align: start;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>40. CSS Writing Modes</h3>
+    <p>Cambia la dirección del texto y layout (horizontal, vertical).</p>
+    <pre><code>/* Writing Modes */
+.vertical {
+  writing-mode: vertical-rl;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>41. CSS Shapes</h3>
+    <p>Permite que el texto fluya alrededor de formas no rectangulares.</p>
+    <pre><code>/* Shapes */
+.imagen {
+  shape-outside: circle(50%);
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>42. CSS Blend Modes</h3>
+    <p>Mezcla colores de elementos superpuestos con modos como multiply o screen.</p>
+    <pre><code>/* Blend Modes */
+.superpuesto {
+  mix-blend-mode: multiply;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>43. CSS Masks</h3>
+    <p>Oculta partes de elementos usando imágenes o gradientes.</p>
+    <pre><code>/* Masks */
+.elemento {
+  mask-image: linear-gradient(to right, transparent, black);
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>44. CSS Custom Scrollbars</h3>
+    <p>Personaliza el aspecto de las barras de scroll.</p>
+    <pre><code>/* Custom Scrollbars */
+.scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollable::-webkit-scrollbar-thumb {
+  background: #2563eb;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>45. CSS Aspect Ratio</h3>
+    <p>Mantiene proporciones de elementos sin especificar altura.</p>
+    <pre><code>/* Aspect Ratio */
+.video {
+  aspect-ratio: 16 / 9;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>46. Funciones Matemáticas de CSS</h3>
+    <p>Usa funciones como min(), max(), round() para cálculos avanzados.</p>
+    <pre><code>/* Math Functions */
+.elemento {
+  width: min(100%, 500px);
+  font-size: max(1rem, 2vw);
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>47. Funciones de Color de CSS</h3>
+    <p>Manipula colores con funciones como color-mix() o color-contrast().</p>
+    <pre><code>/* Color Functions */
+.elemento {
+  color: color-mix(in srgb, red 50%, blue 50%);
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>48. CSS Grid Subgrid</h3>
+    <p>Permite que grids hijos hereden la cuadrícula del padre.</p>
+    <pre><code>/* Subgrid */
+.padre {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+.hijo {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>49. CSS Modules</h3>
+    <p>Enfoque modular para estilos, evitando conflictos de nombres.</p>
+    <pre><code>/* CSS Modules (concepto) */
+/* En un archivo .module.css */
+.titulo { font-size: 2rem; }
+/* Se importa como objeto en JS */
+import styles from './styles.module.css';
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>50. CSS-in-JS</h3>
+    <p>Escribe estilos en JavaScript para estilos dinámicos y scoped.</p>
+    <pre><code>/* CSS-in-JS (ejemplo con styled-components) */
+const Boton = styled.button`
+  background: ${props => props.primary ? 'blue' : 'gray'};
+  color: white;
+`;
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>51. CSS Animation Libraries</h3>
+    <p>Librerías como Animate.css para animaciones predefinidas.</p>
+    <pre><code>/* Animate.css */
+.elemento {
+  animation: bounce 2s infinite;
+}
+</code></pre>
+    <button>Copiar código</button>
+
+    <h3>52. CSS Custom Properties Avanzadas</h3>
+    <p>Usa variables CSS con fallback y cálculos dinámicos.</p>
+    <pre><code>/* Custom Properties Avanzadas */
+:root {
+  --espacio: 1rem;
+}
+.elemento {
+  padding: var(--espacio, 0.5rem);
+  margin: calc(var(--espacio) * 2);
+}
+</code></pre>
+    <button>Copiar código</button>
+</code></pre>
+
+  </section>
+  <script>
+    // Toggle del sidebar
+/* Removed JS that manages sidebar collapsing to keep it static */
+
+    // Unificar lógica de botones "Copiar código" sin duplicar
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('#css-guia pre').forEach(function(pre) {
+        // Si ya hay un botón justo después del <pre>, reutilizarlo
+        var existing = pre.nextElementSibling;
+        var btn = null;
+        if (existing && existing.tagName === 'BUTTON' && /copiar/i.test(existing.textContent)) {
+          btn = existing;
+          btn.classList.add('copy-btn');
+        }
+        if (!btn) {
+          btn = document.createElement('button');
+          btn.className = 'copy-btn';
+          btn.textContent = 'Copiar código';
+          btn.style.marginTop = '8px';
+          btn.style.background = '#2563eb';
+          btn.style.color = '#fff';
+          btn.style.border = 'none';
+          btn.style.padding = '0.4rem 1rem';
+          btn.style.borderRadius = '6px';
+          btn.style.cursor = 'pointer';
+          btn.style.fontSize = '0.95rem';
+          pre.parentNode.insertBefore(btn, pre.nextSibling);
+        }
+
+        // Añadir handler (una sola vez)
+        if (!btn.dataset.handlerAttached) {
+          btn.addEventListener('click', function() {
+            var code = pre.querySelector('code');
+            if (code) {
+              var text = code.innerText.replace(/\u00a0/g, ' ');
+              navigator.clipboard.writeText(text);
+              var original = btn.textContent;
+              btn.textContent = '¡Copiado!';
+              setTimeout(function() { btn.textContent = original; }, 1200);
+            }
+          });
+          btn.dataset.handlerAttached = 'true';
+        }
+      });
+    });
+
+  </script>
+</body>
+</html>

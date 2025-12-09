@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href=/icono.png>
+    <title>DHCP: El Protocolo para la Asignación Automática de Direcciones IP</title>
+    <style>
+        :root {
+            --bg: #374151;
+            --card: #1f2937;
+            --accent: #60a5fa;
+            --muted: #94a3b8;
+            --surface: #1f2937;
+        }
+        html, body {
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            font-family: Inter, Segoe UI, Arial;
+            background: #4b5563;
+            color: #e6eef8;
+            line-height: 1.5;
+        }
+        header {
+            padding: 28px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+        main {
+            padding: 28px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
+            margin-bottom: 22px;
+        }
+        h2 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        strong {
+            color: #e6eef8;
+        }
+        footer {
+            padding: 18px 32px;
+            color: white;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DHCP: El Protocolo para la Asignación Automática de Direcciones IP</h1>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Introducción y Definición</h2>
+            <p>
+                DHCP (Protocolo de Configuración Dinámica de Host) es un protocolo estándar TCP/IP que automatiza la asignación de direcciones IP y otros parámetros de red a los dispositivos al conectarse.
+                Su implementación resuelve el problema de la configuración manual de direcciones IP, evitando errores humanos y simplificando la administración de redes.
+            </p>
+            <p>
+                Un servidor DHCP proporciona, como mínimo, la dirección IP y la máscara de subred. Opcionalmente, también puede asignar la puerta de enlace (*gateway*) y los servidores DNS.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>Funcionamiento Detallado: El Ciclo DORA</h2>
+            <p>
+                DHCP opera bajo un modelo cliente/servidor y sigue un ciclo de cuatro pasos conocido como DORA:
+            </p>
+            <ul>
+                <li>
+                    <strong>Discover (DHCPDISCOVER):</strong> El cliente localiza un servidor enviando un mensaje de difusión (*broadcast*).
+                </li>
+                <li>
+                    <strong>Offer (DHCPOFFER):</strong> El servidor responde con una oferta de una dirección IP disponible y otros parámetros de red.
+                </li>
+                <li>
+                    <strong>Request (DHCPREQUEST):</strong> El cliente acepta la oferta enviada por el servidor.
+                </li>
+                <li>
+                    <strong>Acknowledge (DHCPACK):</strong> El servidor confirma la asignación y reserva la dirección IP para el cliente.
+                </li>
+            </ul>
+            <p>
+                Los puertos utilizados son: <strong>UDP 67</strong> en el servidor y <strong>UDP 68</strong> en el cliente. Es importante notar que si un cliente no logra encontrar un servidor DHCP, no podrá conectarse a la red.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>Gestión de Concesiones (Alquiler)</h2>
+            <p>
+                La <strong>concesión o alquiler de direcciones</strong> es el período durante el cual un cliente puede utilizar la dirección IP asignada por el servidor DHCP.
+            </p>
+            <p>
+                El proceso de renovación ocurre cuando el cliente alcanza el 50% del período de la concesión. Si la concesión sigue vigente, el cliente puede mantener la misma IP; de lo contrario, debe solicitar una nueva dirección IP.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>Ventajas Clave de Implementar DHCP</h2>
+            <ul>
+                <li>Configuración <strong>rápida y automática</strong> (*Plug and play*).</li>
+                <li>Evita conflictos de direcciones repetidas (conflictos de IP).</li>
+                <li>Simplifica la administración de la red mediante administración centralizada.</li>
+                <li>Permite realizar cambios de configuración IP desde el servidor sin intervención física en cada equipo.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>Administración Avanzada y Métodos de Asignación</h2>
+            <h3>Métodos de Asignación</h3>
+            <ol>
+                <li><strong>Manual:</strong> El administrador configura la IP manualmente en el servidor, usando DHCP solo para entregar el valor.</li>
+                <li><strong>Automática:</strong> El servidor asigna una IP permanente en el primer contacto.</li>
+                <li><strong>Dinámica:</strong> Asigna la IP por un tiempo determinado (concesión); la dirección se revoca al expirar y el cliente debe solicitarla de nuevo.</li>
+            </ol>
+            <h3>Conceptos Clave de Administración</h3>
+            <ul>
+                <li><strong>Ámbito (*Scope*):</strong> Agrupamiento administrativo de clientes de una subred.</li>
+                <li><strong>Rango (*Range*):</strong> Conjunto de direcciones IP que el servidor puede conceder.</li>
+                <li><strong>Exclusiones:</strong> IP que pertenecen al rango, pero que no serán asignadas.</li>
+                <li><strong>Reserva de direcciones IP:</strong> Mecanismo para asignar siempre la misma IP a un equipo específico (asociando MAC a IP).</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div>Diseñado para uso técnico — puedes exportar este documento como .html y usarlo como página de referencia.</div>
+    </footer>
+</body>
+</html>

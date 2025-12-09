@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de HTML: Cómo Empezar en HTML</title>
+  <meta name="description" content="Guía completa y práctica para aprender HTML desde cero. Aprende la estructura básica, etiquetas, formularios, multimedia y más con ejemplos interactivos.">
+  <meta name="keywords" content="HTML, tutorial HTML, guía HTML, aprender HTML, etiquetas HTML, estructura web, desarrollo web">
+  <meta name="author" content="javier bravo">
+  <meta property="og:title" content="Guía de HTML: Cómo Empezar en HTML">
+  <meta property="og:description" content="Aprende HTML con esta guía paso a paso, desde lo básico hasta conceptos avanzados.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://tu-sitio.com/guia-html/guiahtml.html">
+  <meta property="og:image" content="https://tu-sitio.com/icono.png">
+  <link rel="icon" type="image/png" href="../icono.png">
+  <link rel="canonical" href="https://tu-sitio.com/guia-html/guiahtml.html">
+</head>
+<body>
+<section id="como-empezar">
+  <!-- Botón eliminado según solicitud del usuario -->
+  <h1>Cómo empezar en HTML</h1>
+    <!-- Menú lateral: navegación entre guías no desplegable -->
+    <div class="sidebar">
+    <strong style="display:block;margin-bottom:0.25rem;">Navegación</strong>
+    <a href="../index.html">Inicio</a>
+    <a href="../guia-html/cssguia.html">Guía CSS</a>
+    <link rel="icon" type="image/png" href=/icono.png>
+  </div>
+
+    <style>
+      /* Removed styles for collapsable sidebar */
+      
+      body.sidebar-collapsed .sidebar {
+        transform: translateX(-120%);
+        transition: transform 240ms ease;
+        pointer-events: none;
+        opacity: 0.98;
+      }
+      
+      body.sidebar-collapsed #open-sidebar {
+        display: block !important;
+      }
+      body {
+    background: #f4f6f8;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 2rem;
+    color: #333;
+  }
+
+  #como-empezar {
+    max-width: 850px;
+    margin: auto;
+    padding: 2.5rem;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    white-space: pre;
+  display: block;
+}
+  
+
+  #como-empezar h2 {
+    font-size: 2.2rem;
+    color: #2563eb;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  #como-empezar h3 {
+    margin-top: 2rem;
+    color: #111827;
+    font-size: 1.3rem;
+    border-left: 4px solid #2563eb;
+    padding-left: 0.5rem;
+  }
+
+  #como-empezar p {
+    margin: 0.8rem 0;
+    color: red;
+    font-weight: bold;
+  }
+
+  #como-empezar ul,
+  #como-empezar ol {
+    padding-left: 1.5rem;
+    margin: 0.8rem 0;
+  }
+
+  #como-empezar code {
+    background: #f3f4f6;
+    padding: 3px 6px;
+    border-radius: 6px;
+    font-family: "Fira Code", monospace;
+    font-size: 0.95rem;
+  }
+
+  #como-empezar pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 1.2rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    overflow-x: auto;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  #como-empezar pre code {
+    display: block;
+    background: #23272e;
+    color: #e2e8f0;
+    font-family: "Fira Code", monospace;
+    font-size: 1rem;
+    padding: 1.2rem;
+    border-radius: 10px;
+    overflow-x: auto;
+    white-space: pre;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+
+  #como-empezar button {
+    margin-top: 1rem;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+
+  #como-empezar button:hover {
+    background: #1d4ed8;
+  }
+    </style>
+
+    <script>
+      /* Removed JS that manages sidebar collapsing - sidebar is now non collapsible */
+    </script>
+    <style>
+      /* Estilos para las previsualizaciones de código */
+      .example-toggle { background: #10b981; color:#fff; border:none; padding:0.35rem 0.7rem; border-radius:6px; cursor:pointer; font-size:0.9rem; margin-bottom:0.5rem }
+      .example-frame { width:100%; height:160px; border:1px solid #e5e7eb; border-radius:8px; }
+      .example-wrapper { margin: 0.6rem 0 1rem; }
+    </style>
+
+    <script>
+      (function(){
+        if (window.__codePreviewInit) return; window.__codePreviewInit = true;
+
+        function detectType(text){
+          if(/<\/?[a-z][\s\S]*>/i.test(text)) return 'html';
+          if(/^[\s\r\n]*[.#a-zA-Z\-][^{]*\{[\s\S]*:[^}]+}/m.test(text) || /:\s*[^;\n]+;/.test(text)) return 'css';
+          return 'js';
+        }
+
+        function escapeScript(s){
+          return s.replace(/<\\/g, '<\\/');
+        }
+
+        function wrapForCSS(css){
+          // Plantilla neutra para mostrar efectos de CSS sin contenido adicional innecesario
+          return '<!doctype html><html><head><meta charset="utf-8"><style>' + css + '</style></head><body><div class="preview-root" style="padding:0.5rem;">Elemento</div></body></html><!doctype html><html><head><meta charset="utf-8"></head><body><script>' + safe + '<\\/script></body></html>';
+        }
+
+        function makePreview(codeText){
+          var type = detectType(codeText);
+          var srcdoc = '';
+          var sandbox = '';
+          if(type === 'html'){
+            srcdoc = codeText;
+            // permitir scripts solo si detectamos <script>
+            sandbox = /<script[\s>]/i.test(codeText) ? 'allow-scripts' : '';
+          } else if(type === 'css'){
+            srcdoc = wrapForCSS(codeText);
+          } else { // js
+            srcdoc = wrapForJS(codeText);
+            sandbox = 'allow-scripts';
+          }
+          return { srcdoc: srcdoc, sandbox: sandbox };
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+          var pres = document.querySelectorAll('pre');
+          pres.forEach(function(pre){
+            var code = pre.querySelector('code');
+            if(!code) return;
+            var text = code.innerText || code.textContent || '';
+
+            // Determinar lugar de inserción: si existe un botón "Copiar código" justo después del <pre>, insertar junto a él
+            var insertAfter = null;
+            var next = pre.nextElementSibling;
+            if(next && next.tagName === 'BUTTON' && /copiar/i.test(next.textContent || '')){
+              insertAfter = next;
+            } else {
+              insertAfter = pre;
+            }
+
+            // Evitar duplicar previews: comprobar si ya hay un .example-wrapper después del insertAfter
+            var maybe = insertAfter.nextElementSibling;
+            if(maybe && maybe.classList && maybe.classList.contains('example-wrapper')) return;
+
+            var wrap = document.createElement('div');
+            wrap.className = 'example-wrapper';
+            wrap.style.display = 'inline-block';
+            wrap.style.marginLeft = '0.6rem';
+
+            var toggle = document.createElement('button');
+            toggle.type = 'button';
+            toggle.className = 'example-toggle';
+            toggle.textContent = 'Mostrar ejemplo';
+
+            var iframe = document.createElement('iframe');
+            iframe.className = 'example-frame';
+            iframe.setAttribute('aria-hidden','true');
+            iframe.style.display = 'none';
+
+            var preview = makePreview(text);
+            iframe.srcdoc = preview.srcdoc;
+            if(preview.sandbox) iframe.setAttribute('sandbox', preview.sandbox);
+
+            toggle.addEventListener('click', function(){
+              if(iframe.style.display === 'none'){
+                iframe.style.display = 'block';
+                iframe.setAttribute('aria-hidden','false');
+                toggle.textContent = 'Ocultar ejemplo';
+              } else {
+                iframe.style.display = 'none';
+                iframe.setAttribute('aria-hidden','true');
+                toggle.textContent = 'Mostrar ejemplo';
+              }
+            });
+
+            // Si insertAfter es el botón de copiar, insertamos el toggle (inline) después de ese botón, y la iframe después en bloque
+            if(insertAfter !== pre){
+              // insertar el toggle junto al botón copiar
+              insertAfter.parentNode.insertBefore(wrap, insertAfter.nextSibling);
+              wrap.appendChild(toggle);
+              // crear un wrapper en bloque para el iframe y colocarlo después del toggle wrapper
+              var blockWrap = document.createElement('div');
+              blockWrap.className = 'example-wrapper-block';
+              blockWrap.style.marginTop = '0.5rem';
+              blockWrap.appendChild(iframe);
+              insertAfter.parentNode.insertBefore(blockWrap, wrap.nextSibling);
+            } else {
+              // no hay botón copiar, insertar ambos después del <pre>
+              wrap.appendChild(toggle);
+              wrap.appendChild(iframe);
+              pre.parentNode.insertBefore(wrap, pre.nextSibling);
+            }
+          });
+        });
+      })();
+    </script>
+    <div style="max-width:900px;margin:0 auto;">
+  <p>
+    HTML (<strong>HyperText Markup Language</strong>) es el lenguaje que usamos para
+    crear la estructura de una página web. Con él podemos definir títulos, párrafos,
+    imágenes, enlaces ¡y mucho más!
+  </p>
+
+  <h3>1. Lo que necesitas</h3>
+  <ul>
+    <li><strong>Un editor de texto</strong>: VS Code, Sublime Text, Atom o incluso el bloc de notas.</li>
+    <li><strong>Un navegador web</strong>: Chrome, Firefox, Edge o el que prefieras.</li>
+  </ul>
+
+  <h3>2. Crear tu primer archivo</h3>
+  <ol>
+    <li>Abre tu editor de texto.</li>
+    <li>Crea un archivo nuevo y guárdalo como <code>index.html</code>.</li>
+  </ol>
+
+  <h3>3. Estructura básica de HTML</h3>
+  <p>Copia este código en tu archivo:</p>
+
+  <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Mi primera página&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;¡Hola, mundo!&lt;/h1&gt;
+  &lt;p&gt;Esta es mi primera página en HTML.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+  <button>Copiar código</button>
+
+  <h3>4. Ver tu página</h3>
+  <p>
+    Guarda el archivo, haz doble clic sobre <code>index.html</code> y se abrirá en tu
+    navegador. ¡Ya creaste tu primera página web!
+  </p>
+
+  <h3>5. Próximos pasos</h3>
+  <ul>
+    <li>Añadir imágenes con <code>&lt;img&gt;</code>.</li>
+    <li>Crear enlaces con <code>&lt;a&gt;</code>.</li>
+    <li>Hacer listas con <code>&lt;ul&gt;</code> y <code>&lt;ol&gt;</code>.</li>
+    <li>Dar estilos básicos con CSS.</li>
+  </ul>
+
+  <h3>6. Cómo agregar imágenes</h3>
+  <p>Para mostrar una imagen usa la etiqueta <code>&lt;img&gt;</code>:</p>
+  <pre><code>&lt;img src="ruta/a/tu-imagen.jpg" alt="Descripción de la imagen"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>7. Cómo crear enlaces</h3>
+  <p>Para crear un enlace utiliza la etiqueta <code>&lt;a&gt;</code>:</p>
+  <pre><code>&lt;a href="https://www.ejemplo.com"&gt;Visita Ejemplo&lt;/a&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>8. Cómo hacer listas</h3>
+  <p>Las listas pueden ser ordenadas (<code>&lt;ol&gt;</code>) o desordenadas (<code>&lt;ul&gt;</code>):</p>
+  <pre><code>&lt;ul&gt;
+  &lt;li&gt;Elemento 1&lt;/li&gt;
+  &lt;li&gt;Elemento 2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Primero&lt;/li&gt;
+  &lt;li&gt;Segundo&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>9. Cómo dar estilos con CSS</h3>
+  <p>Puedes agregar estilos usando la etiqueta <code>&lt;style&gt;</code> dentro del <code>&lt;head&gt;</code>:</p>
+  <pre><code>&lt;style&gt;
+  body {
+    background: #f4f6f8;
+    color: #333;
+  }
+&lt;/style&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>10. Cómo crear tablas</h3>
+  <p>Las tablas se crean con <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code> (fila) y <code>&lt;td&gt;</code> (celda):</p>
+  <pre><code>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Nombre&lt;/td&gt;
+    &lt;td&gt;Edad&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Ana&lt;/td&gt;
+    &lt;td&gt;23&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>11. Cómo usar comentarios</h3>
+  <p>Los comentarios en HTML no se muestran en la página:</p>
+  <pre><code>&lt;!-- Esto es un comentario --&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>12. Cómo estructurar formularios</h3>
+  <p>Los formularios permiten recopilar datos del usuario:</p>
+  <pre><code>&lt;form&gt;
+  &lt;label&gt;Nombre:&lt;/label&gt;
+  &lt;input type="text" name="nombre"&gt;
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>13. Cómo insertar videos</h3>
+  <p>Puedes insertar videos con la etiqueta <code>&lt;video&gt;</code>:</p>
+  <pre><code>&lt;video src="video.mp4" controls&gt;Tu navegador no soporta el video.&lt;/video&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>14. Cómo usar favicon</h3>
+  <p>El favicon es el ícono que aparece en la pestaña del navegador:</p>
+  <pre><code>&lt;link rel="icon" href="favicon.ico"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>15. Recursos para aprender más</h3>
+  <ul>
+    <li><a href="https://developer.mozilla.org/es/docs/Web/HTML" target="_blank">MDN Web Docs: HTML</a></li>
+    <li><a href="https://www.w3schools.com/html/" target="_blank">W3Schools: HTML Tutorial</a></li>
+    <li><a href="https://htmlreference.io/" target="_blank">HTML Reference</a></li>
+  </ul>
+
+  <h3>16. Cómo insertar audio</h3>
+  <p>Puedes insertar audio con la etiqueta <code>&lt;audio&gt;</code>:</p>
+  <pre><code>&lt;audio src="audio.mp3" controls&gt;Tu navegador no soporta el audio.&lt;/audio&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>17. Cómo usar etiquetas semánticas</h3>
+  <p>Las etiquetas semánticas ayudan a estructurar mejor tu página:</p>
+  <pre><code>&lt;header&gt;Encabezado&lt;/header&gt;
+&lt;nav&gt;Menú de navegación&lt;/nav&gt;
+&lt;main&gt;Contenido principal&lt;/main&gt;
+&lt;footer&gt;Pie de página&lt;/footer&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>18. Cómo crear botones personalizados</h3>
+  <p>Usa la etiqueta <code>&lt;button&gt;</code> y personalízala con CSS:</p>
+  <pre><code>&lt;button&gt;Haz clic aquí&lt;/button&gt;
+&lt;style&gt;
+  button {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+&lt;/style&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>19. Cómo usar fuentes externas</h3>
+  <p>Puedes usar Google Fonts para mejorar la tipografía:</p>
+  <pre><code>&lt;link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"&gt;
+&lt;style&gt;
+  body {
+    font-family: 'Roboto', sans-serif;
+  }
+&lt;/style&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>20. Cómo hacer responsive tu página</h3>
+  <p>Agrega la meta etiqueta viewport y usa media queries en CSS:</p>
+  <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;style&gt;
+  @media (max-width: 600px) {
+    body {
+      padding: 1rem;
+    }
+    #como-empezar {
+      padding: 1rem;
+    }
+  }
+&lt;/style&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>21. Cómo usar imágenes SVG</h3>
+  <p>Las imágenes SVG se insertan igual que otras imágenes, pero permiten gráficos escalables:</p>
+  <pre><code>&lt;img src="logo.svg" alt="Logo en SVG"&gt;
+&lt;!-- O directamente en el HTML --&gt;
+&lt;svg width="100" height="100"&gt;
+  &lt;circle cx="50" cy="50" r="40" stroke="blue" stroke-width="4" fill="lightblue" /&gt;
+&lt;/svg&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>22. Cómo crear menús de navegación</h3>
+  <p>Un menú de navegación básico se hace con listas y enlaces:</p>
+  <pre><code>&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#inicio"&gt;Inicio&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#servicios"&gt;Servicios&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#contacto"&gt;Contacto&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>23. Cómo agregar animaciones con CSS</h3>
+  <p>Las animaciones se logran con la propiedad <code>animation</code>:</p>
+  <pre><code>&lt;style&gt;
+  .animado {
+    animation: girar 2s infinite linear;
+  }
+  @keyframes girar {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+&lt;/style&gt;
+&lt;div class="animado"&gt;Animación CSS&lt;/div&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>24. Cómo validar formularios en HTML</h3>
+  <p>HTML permite validaciones básicas con atributos:</p>
+  <pre><code>&lt;form&gt;
+  &lt;input type="email" required placeholder="Correo electrónico"&gt;
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>25. Cómo usar atributos data-* personalizados</h3>
+  <p>Los atributos <code>data-*</code> permiten guardar información extra en los elementos:</p>
+  <pre><code>&lt;div data-usuario="Juan"&gt;Hola, Juan&lt;/div&gt;
+&lt;!-- Se accede con JavaScript: --&gt;
+&lt;script&gt;
+  const div = document.querySelector('[data-usuario]');
+  alert(div.dataset.usuario);
+&lt;/script&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>26. Cómo usar el atributo alt en imágenes</h3>
+  <p>El atributo <code>alt</code> describe la imagen para accesibilidad y SEO:</p>
+  <pre><code>&lt;img src="foto.jpg" alt="Foto de perfil"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>27. Cómo usar el atributo title</h3>
+  <p>El atributo <code>title</code> muestra un tooltip al pasar el mouse:</p>
+  <pre><code>&lt;a href="#" title="Ir al inicio"&gt;Inicio&lt;/a&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>28. Cómo usar el atributo tabindex</h3>
+  <p>Controla el orden de tabulación en los elementos:</p>
+  <pre><code>&lt;input type="text" tabindex="1"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>29. Cómo usar el atributo aria-label</h3>
+  <p>Mejora la accesibilidad describiendo elementos:</p>
+  <pre><code>&lt;button aria-label="Cerrar ventana"&gt;X&lt;/button&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>30. Cómo usar el atributo rel en enlaces</h3>
+  <p>Define la relación entre el documento y el enlace:</p>
+  <pre><code>&lt;a href="https://ejemplo.com" rel="noopener"&gt;Abrir Ejemplo&lt;/a&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>31. Cómo usar el atributo target</h3>
+  <p>Abre enlaces en una nueva pestaña:</p>
+  <pre><code>&lt;a href="https://ejemplo.com" target="_blank"&gt;Abrir Ejemplo&lt;/a&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>32. Cómo usar el atributo download</h3>
+  <p>Permite descargar archivos desde un enlace:</p>
+  <pre><code>&lt;a href="archivo.pdf" download&gt;Descargar PDF&lt;/a&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>33. Cómo usar el atributo placeholder</h3>
+  <p>Muestra texto de ayuda en campos de formulario:</p>
+  <pre><code>&lt;input type="text" placeholder="Escribe tu nombre"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>34. Cómo usar el atributo required</h3>
+  <p>Hace obligatorio un campo de formulario:</p>
+  <pre><code>&lt;input type="email" required&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>35. Cómo usar el atributo readonly</h3>
+  <p>Hace que un campo no se pueda modificar:</p>
+  <pre><code>&lt;input type="text" value="Solo lectura" readonly&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>36. Cómo usar el atributo disabled</h3>
+  <p>Desactiva un campo o botón:</p>
+  <pre><code>&lt;button disabled&gt;No disponible&lt;/button&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>37. Cómo usar el atributo autofocus</h3>
+  <p>Enfoca automáticamente un campo al cargar la página:</p>
+  <pre><code>&lt;input type="text" autofocus&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>38. Cómo usar el atributo maxlength</h3>
+  <p>Limita la cantidad de caracteres en un campo:</p>
+  <pre><code>&lt;input type="text" maxlength="10"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>39. Cómo usar el atributo pattern</h3>
+  <p>Valida el formato de entrada con una expresión regular:</p>
+  <pre><code>&lt;input type="text" pattern="[A-Za-z]{3,}"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>40. Cómo usar el atributo value</h3>
+  <p>Define el valor inicial de un campo:</p>
+  <pre><code>&lt;input type="text" value="Ejemplo"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>41. Cómo usar el atributo min y max</h3>
+  <p>Limita el rango de valores numéricos:</p>
+  <pre><code>&lt;input type="number" min="1" max="10"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>42. Cómo usar el atributo step</h3>
+  <p>Define el incremento de los valores numéricos:</p>
+  <pre><code>&lt;input type="number" step="0.5"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>43. Cómo usar el atributo multiple</h3>
+  <p>Permite seleccionar varios archivos o valores:</p>
+  <pre><code>&lt;input type="file" multiple&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>44. Cómo usar el atributo checked</h3>
+  <p>Marca una casilla o radio por defecto:</p>
+  <pre><code>&lt;input type="checkbox" checked&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>45. Cómo usar el atributo selected</h3>
+  <p>Selecciona una opción por defecto en un select:</p>
+  <pre><code>&lt;option selected&gt;Opción 1&lt;/option&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>46. Cómo usar el atributo name</h3>
+  <p>Identifica los campos de formulario para el envío:</p>
+  <pre><code>&lt;input type="text" name="usuario"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>47. Cómo usar el atributo id</h3>
+  <p>Identifica elementos únicos en la página:</p>
+  <pre><code>&lt;div id="principal"&gt;Contenido&lt;/div&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>48. Cómo usar el atributo class</h3>
+  <p>Agrupa elementos para aplicar estilos o scripts:</p>
+  <pre><code>&lt;div class="caja"&gt;Caja&lt;/div&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>49. Cómo usar el atributo style</h3>
+  <p>Aplica estilos en línea a un elemento:</p>
+  <pre><code>&lt;p style="color: green;"&gt;Texto verde&lt;/p&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>50. Cómo usar el atributo lang</h3>
+  <p>Define el idioma del contenido:</p>
+  <pre><code>&lt;html lang="es"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>51. Cómo usar el atributo charset</h3>
+  <p>Define la codificación de caracteres:</p>
+  <pre><code>&lt;meta charset="UTF-8"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>52. Cómo usar el atributo defer en scripts</h3>
+  <p>Retrasa la ejecución de scripts hasta que el HTML esté listo:</p>
+  <pre><code>&lt;script src="app.js" defer&gt;&lt;/script&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>53. Cómo usar el atributo async en scripts</h3>
+  <p>Ejecuta scripts de forma asíncrona:</p>
+  <pre><code>&lt;script src="app.js" async&gt;&lt;/script&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>54. Cómo usar el atributo src en scripts e imágenes</h3>
+  <p>Define la fuente de archivos externos:</p>
+  <pre><code>&lt;script src="app.js"&gt;&lt;/script&gt;
+&lt;img src="foto.jpg"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>55. Cómo usar el atributo href en enlaces y hojas de estilo</h3>
+  <p>Define la dirección de destino:</p>
+  <pre><code>&lt;a href="https://ejemplo.com"&gt;Enlace&lt;/a&gt;
+&lt;link href="estilos.css" rel="stylesheet"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>56. Cómo usar el atributo type</h3>
+  <p>Define el tipo de elemento o archivo:</p>
+  <pre><code>&lt;input type="password"&gt;
+&lt;script type="module" src="main.js"&gt;&lt;/script&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>57. Cómo usar el atributo for en etiquetas label</h3>
+  <p>Asocia una etiqueta label con un campo de formulario:</p>
+  <pre><code>&lt;label for="email"&gt;Correo:&lt;/label&gt;
+&lt;input id="email" type="email"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>58. Cómo usar el atributo action en formularios</h3>
+  <p>Define la URL a la que se envían los datos:</p>
+  <pre><code>&lt;form action="procesar.php"&gt;...&lt;/form&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>59. Cómo usar el atributo method en formularios</h3>
+  <p>Define el método de envío (GET o POST):</p>
+  <pre><code>&lt;form method="post"&gt;...&lt;/form&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>60. Cómo usar el atributo enctype en formularios</h3>
+  <p>Define el tipo de codificación para archivos:</p>
+  <pre><code>&lt;form enctype="multipart/form-data"&gt;...&lt;/form&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>61. Cómo usar el atributo rows y cols en textarea</h3>
+  <p>Define el tamaño de un área de texto:</p>
+  <pre><code>&lt;textarea rows="4" cols="50"&gt;&lt;/textarea&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>62. Cómo usar el atributo wrap en textarea</h3>
+  <p>Controla el ajuste de texto en textarea:</p>
+  <pre><code>&lt;textarea wrap="hard"&gt;&lt;/textarea&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>63. Cómo usar el atributo spellcheck</h3>
+  <p>Activa la revisión ortográfica en campos de texto:</p>
+  <pre><code>&lt;textarea spellcheck="true"&gt;&lt;/textarea&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>64. Cómo usar el atributo autocomplete</h3>
+  <p>Activa o desactiva el autocompletado en formularios:</p>
+  <pre><code>&lt;input type="text" autocomplete="off"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>65. Cómo usar el atributo list en campos de texto</h3>
+  <p>Permite sugerencias con datalist:</p>
+  <pre><code>&lt;input list="frutas"&gt;
+&lt;datalist id="frutas"&gt;
+  &lt;option value="Manzana"&gt;
+  &lt;option value="Banana"&gt;
+&lt;/datalist&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>66. Cómo usar el atributo accept en input file</h3>
+  <p>Restringe los tipos de archivos que se pueden subir:</p>
+  <pre><code>&lt;input type="file" accept="image/*"&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>67. Cómo usar el atributo draggable</h3>
+  <p>Permite arrastrar elementos en la página:</p>
+  <pre><code>&lt;div draggable="true"&gt;Arrástrame&lt;/div&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>68. Cómo usar el atributo contenteditable</h3>
+  <p>Permite editar el contenido de un elemento:</p>
+  <pre><code>&lt;div contenteditable="true"&gt;Texto editable&lt;/div&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>69. Cómo usar el atributo hidden</h3>
+  <p>Oculta elementos en la página:</p>
+  <pre><code>&lt;div hidden&gt;No se muestra&lt;/div&gt;</code></pre>
+  <button>Copiar código</button>
+
+  <h3>70. Cómo usar el atributo data-* para JavaScript</h3>
+  <p>Guarda información personalizada para scripts:</p>
+  <pre><code>&lt;div data-rol="admin"&gt;Administrador&lt;/div&gt;
+&lt;script&gt;
+  const rol = document.querySelector('[data-rol]').dataset.rol;
+  console.log(rol);
+&lt;/script&gt;</code></pre>
+  <button>Copiar código</button>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function detectType(text){
+        if(/<\/?[a-z][\s\S]*>/i.test(text)) return 'html';
+        if(/^[\s\r\n]*[.#a-zA-Z\-][^{]*\{[\s\S]*:[^}]+}/m.test(text) || /:\s*[^;\n]+;/.test(text)) return 'css';
+        return 'js';
+      }
+
+      function makeSrcdoc(type, code){
+        if(type === 'html'){
+          return code;
+        }
+        if(type === 'css'){
+          return '<!doctype html><html><head><meta charset="utf-8"><style>' + code + '</style></head><body><div class="preview-root" style="padding:0.5rem;font-family:system-ui;">Elemento de prueba</div></body></html>';
+        }
+        // js
+        return '<!doctype html><html><head><meta charset="utf-8"></head><body><script>' + code.replace(/<\\/g,'<\\/') + '<\/script></body></html>';
+      }
+
+      function attachCopyHandler(button, pre){
+        if(!button || !pre) return;
+        if(button.dataset.copyAttached) return;
+        button.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          if(code){
+            var text = code.innerText.replace(/\u00a0/g, ' ');
+            if(navigator.clipboard && navigator.clipboard.writeText){
+              navigator.clipboard.writeText(text);
+            } else {
+              var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} ta.remove();
+            }
+            var old = button.textContent;
+            button.textContent = '¡Copiado!';
+            setTimeout(function(){ button.textContent = old; }, 1200);
+          }
+        });
+        button.dataset.copyAttached = '1';
+      }
+
+      // Procesar cada bloque pre en #como-empezar
+      var pres = document.querySelectorAll('#como-empezar pre');
+      var processedPreElements = new Set();
+      pres.forEach(function(pre){
+        if(processedPreElements.has(pre)) return;
+        processedPreElements.add(pre);
+
+        var next = pre.nextElementSibling;
+        var hasExample = false;
+        if(next){
+          if(next.classList && next.classList.contains('example-wrapper')) hasExample = true;
+          if(next.nextElementSibling && next.nextElementSibling.classList && next.nextElementSibling.classList.contains('example-wrapper-block')) hasExample = true;
+        }
+
+        // localizar botón copiar existente (inmediato o en los próximos hermanos)
+        var copyBtn = null;
+        if(next && next.tagName === 'BUTTON' && /copiar/i.test(next.textContent || '')){
+          copyBtn = next;
+        } else {
+          var sib = pre.nextElementSibling;
+          for(var i=0;i<4 && sib;i++){
+            if(sib.tagName === 'BUTTON' && /copiar/i.test(sib.textContent || '')){ copyBtn = sib; break; }
+            sib = sib.nextElementSibling;
+          }
+        }
+
+        if(!copyBtn){
+          copyBtn = document.createElement('button');
+          copyBtn.type = 'button';
+          copyBtn.textContent = 'Copiar código';
+          copyBtn.style.marginTop = '8px';
+          copyBtn.style.background = '#2563eb';
+          copyBtn.style.color = '#fff';
+          copyBtn.style.border = 'none';
+          copyBtn.style.padding = '0.4rem 1rem';
+          copyBtn.style.borderRadius = '6px';
+          copyBtn.style.cursor = 'pointer';
+          copyBtn.style.fontSize = '0.95rem';
+          pre.parentNode.insertBefore(copyBtn, pre.nextSibling);
+        }
+        // asegurar que cualquier botón copy tenga el manejador
+        attachCopyHandler(copyBtn, pre);
+
+        // crear la previsualización si no existe
+        if(!hasExample){
+          var codeEl = pre.querySelector('code');
+          if(!codeEl) return;
+          var text = codeEl.innerText || codeEl.textContent || '';
+          var type = detectType(text);
+
+          var wrap = document.createElement('div');
+          wrap.className = 'example-wrapper';
+          wrap.style.display = 'inline-block';
+          wrap.style.marginLeft = '0.6rem';
+
+          var toggle = document.createElement('button');
+          toggle.type = 'button';
+          toggle.className = 'example-toggle';
+          toggle.textContent = 'Mostrar ejemplo';
+
+          var iframe = document.createElement('iframe');
+          iframe.className = 'example-frame';
+          iframe.setAttribute('aria-hidden','true');
+          iframe.style.display = 'none';
+
+          var srcdoc = makeSrcdoc(type, text);
+          iframe.srcdoc = srcdoc;
+          if(type === 'js' || /<script[\s>]/i.test(text)) iframe.setAttribute('sandbox','allow-scripts');
+
+          toggle.addEventListener('click', function(){
+            if(iframe.style.display === 'none'){
+              iframe.style.display = 'block';
+              iframe.setAttribute('aria-hidden','false');
+              toggle.textContent = 'Ocultar ejemplo';
+            } else {
+              iframe.style.display = 'none';
+              iframe.setAttribute('aria-hidden','true');
+              toggle.textContent = 'Mostrar ejemplo';
+            }
+          });
+
+          var insertAfter = copyBtn || pre;
+          insertAfter.parentNode.insertBefore(wrap, insertAfter.nextSibling);
+          wrap.appendChild(toggle);
+
+          var blockWrap = document.createElement('div');
+          blockWrap.className = 'example-wrapper-block';
+          blockWrap.style.marginTop = '0.5rem';
+          blockWrap.appendChild(iframe);
+          wrap.parentNode.insertBefore(blockWrap, wrap.nextSibling);
+        }
+      });
+
+      // Eliminar botones duplicados contiguos con mismo texto dentro de #como-empezar
+      (function removeDuplicateButtons(){
+        var container = document.getElementById('como-empezar');
+        if(!container) return;
+        var btns = Array.prototype.slice.call(container.querySelectorAll('button'));
+        for(var i=0;i<btns.length-1;i++){
+          var a = btns[i];
+          var b = btns[i+1];
+          if(!a.parentNode) continue;
+          if(b && a.nextElementSibling === b && a.tagName === 'BUTTON' && b.tagName === 'BUTTON'){
+            var ta = a.textContent ? a.textContent.trim() : '';
+            var tb = b.textContent ? b.textContent.trim() : '';
+            if(ta && ta === tb){
+              b.parentNode.removeChild(b);
+              btns.splice(i+1,1);
+              i--;
+            }
+          }
+        }
+      })();
+    });
+</script>

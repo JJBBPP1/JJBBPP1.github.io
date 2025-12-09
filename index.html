@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Etiquetas semanticas</title>
+    
+    <link rel="icon" type="image/png" href=/icono.png>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Author" content="Javier Bravo">
+    <meta name="Description" content="Pagina web de tarea de apw">
+    <meta name="Keywords" content="HTML, Tarea, FP, SMR">
+
+    <meta property="og:title" content="IES Donoso Cortés - Página Web" />
+    <meta property="og:description" content="Información sobre el IES Donoso Cortés, Educarex y Formación Profesional en Extremadura." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://iesdonosocortes.educarex.es/" />
+    <meta property="og:image" content="icono.png" />
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="IES Donoso Cortés - Página Web" />
+    <meta name="twitter:description" content="Información sobre el IES Donoso Cortés, Educarex y Formación Profesional en Extremadura." />
+    <meta name="twitter:image" content="icono.png" />
+    <meta name="twitter:locale" content="es_ES">
+    <meta name="twitter:image:width" content="1200">
+    <meta name="twitter:image:height" content="630">
+
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: rgb(110, 110, 76);
+        }
+        .header {
+            background-color: lightblue;
+            border-radius: 15%;
+            text-align: center;
+            padding: 10px;
+            font-size: 20px;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .translator {
+            flex: 1;
+            text-align: center;
+        }
+        .map {
+            text-align: center;
+        }
+        .nav {
+            background-color: rgb(95, 202, 122);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .content {
+            overflow: hidden;
+            margin-top: 10px;
+            display: flex;
+        }
+        .aside {
+            background-color: lightgray;
+            width: 20%;
+            height: 450px;
+            float: left;
+            margin-right: 10px;
+            border-radius: 20%;
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .main {
+            background-color: rgb(255, 255, 253);
+            width: 75vw;
+            float: left;
+            padding: 15px;
+            border-radius: 7%;
+            text-align: justify;
+        }
+        .footer {
+            background-color: lightcoral;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 15%;
+        }
+        .colmizquierda {
+            width: 40vw;
+            height: 50px;
+            display: inline-block;
+            margin: 5px;
+        }
+        .colmderecha {
+            width: 40vw;
+            height: 50px;
+            display: inline-block;
+            margin: 5px;
+        }
+        img.center-block {
+            display: block;
+            margin: 20px auto 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+    <!--cuadro del header-->
+    <div class="header">
+        <header>
+            <h1>Etiquetas semánticas</h1>
+            <div class="header-content">
+                <div class="translator">
+                    <div id="google_translate_element"></div>
+                </div>
+                <div class="map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1219.3477698294696!2d-5.867789104318055!3d38.96179215524698!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd145b0335e1715b%3A0x485f02fe56f2d511!2sIES%20Donoso%20Cort%C3%A9s!5e1!3m2!1ses!2ses!4v1762337563845!5m2!1ses!2ses" style="border:0; border-radius: 10%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <p>Ubicación del IES Donoso Cortés en Don Benito, Badajoz, España.</p>
+                </div>
+            </div>
+        </header>
+
+    </div>
+    <!--cuadro del nav-->
+    <div class="nav">
+        <nav>
+            <ul>
+                <li><a href="/ejemplos-de-estilo/ejemplos-de-estilo.html">Tarea ejemplos-de-estilo</a></li>
+                <li><a href="/ejercicio2/ejercico-2.html">Ejercico-2</a></li>
+                <li><a href="ejercicio-web/ejercicio-web.html">Ejercicio-web</a></li>
+                <li><a href="horario/horario.html">Horario</a></li>
+                <li><a href="tarea 5/mapa-sensible.html">Mapa sensible</a></li>
+                <li><a href="posicion/posiciones.html">Posicion</a></li>
+                <li><a href="ancors/ancors.html">Ancors</a></li>
+                <li><a href="calculadora/calculadora.html">Calculadora</a></li>
+                <li><a href="proyecto/proyecto.html">Proyecto</a></li>
+                <li><a href="dhcp/dhcp.html">Dhcp</a></li>
+                <li><a href="guia-html/cssguia.html">guia css</a></li>
+                <li><a href="guia-html/guiahtml.html">guia html</a></li>
+                <li><a href="formularios/formularios.html">formularios</a></li>
+                <li>
+                    <button type="button" onclick="document.getElementById('fechaHora').innerHTML = Date()">Cick sobre mi: Fecha y Hora</button>
+                    <p id="fechaHora"></p>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!--cuadro del main y el aside-->
+    <div class="content">
+        <div class="aside">
+            <aside>
+                <a href="https://iesdonosocortes.educarex.es/"><img src="/multimedia/index/logo-donosocortes-removebg-preview.png" alt="logo-donoso" width="120px"></a>
+
+                <a href="https://www.educarex.es/"><img src="/multimedia/index/LOGO_EDUCAREx.png" alt="logo-educarex" width="100px"></a>
+
+                <a href="https://www.educarex.es/fp.html"><img src="/multimedia/index/logo-fp-extremadura.jpeg" alt="logo-fp-extremadura" width="100px"></a>
+                
+                <a href="https://www.juntaex.es/"><img src="/multimedia/index/logo-junta-extremadura.png" alt="logo-junta-extremadura" width="100px"></a>
+
+                <img src="/multimedia/index/logo-UE.png" alt="logo UE" width="150px">
+            </aside>
+        </div>
+        <div class="main">
+            <main class="acordeon">
+                <details> 
+                    <summary><b>IES DONOSO CORTES</b></summary>
+                    
+                    <p>
+                        El IES Donoso Cortés es un centro educativo público ubicado en la localidad de Don Benito, en la provincia de Badajoz (Extremadura). Es uno de los institutos con mayor tradición del municipio y destaca por su ambiente cercano, su compromiso con la educación integral del alumnado y su participación activa en la vida cultural y social de la ciudad.
+                        <br>
+                        <br>
+                        El centro ofrece enseñanzas de Educación Secundaria Obligatoria (ESO) y Bachillerato, con diferentes modalidades orientadas tanto a las ciencias como a las humanidades y ciencias sociales. Además, el instituto apuesta por metodologías actuales, el trabajo cooperativo y el uso de las nuevas tecnologías en el aula.
+                        <br>
+                        <br>
+                        El IES Donoso Cortés promueve valores como el respeto, la responsabilidad, la igualdad y la convivencia positiva. Para ello, desarrolla proyectos educativos, actividades complementarias, jornadas culturales, intercambios y participación en programas de innovación educativa. 
+                        <br>
+                        <br>
+                        Su profesorado se caracteriza por la cercanía con el alumnado y por el esfuerzo en ofrecer una enseñanza de calidad que favorezca tanto el crecimiento personal como el académico. El instituto dispone de biblioteca, laboratorios, aulas específicas, instalaciones deportivas y espacios habilitados para actividades creativas y de estudio.
+                    </p>
+                    
+                    <img src="/multimedia/index/foto-instituto.png" alt="foto-instituto" width="300px" style="display: block; margin: 20px auto 0 auto;">
+                </details>
+                <details>
+                    <summary><b>Educarex</b></summary>
+                    
+                    <p>
+                        Educarex es el portal educativo de la Junta de Extremadura, diseñado para proporcionar recursos, información y servicios relacionados con la educación en la región. Su objetivo principal es apoyar a estudiantes, docentes, familias y centros educativos en el proceso de enseñanza-aprendizaje.
+                        <br>
+                        <br>
+                        El portal ofrece una amplia variedad de recursos educativos, incluyendo materiales didácticos, guías para docentes, actividades interactivas y herramientas tecnológicas que facilitan el aprendizaje tanto en el aula como en entornos virtuales. Además, Educarex proporciona información sobre programas educativos, convocatorias, becas y eventos relacionados con la educación en Extremadura.
+                        <br>
+                        <br>
+                        Educarex también sirve como plataforma de comunicación entre los diferentes actores del sistema educativo, permitiendo a los usuarios acceder a noticias, novedades y actualizaciones relevantes. Asimismo, fomenta la participación activa de la comunidad educativa a través de foros, blogs y redes sociales.
+                        
+                    </p>
+                    
+                    <img src="/multimedia/index/LOGO_EDUCAREx.png" alt="logo-educarex" width="200px" style="display: block; margin: 20px auto 0 auto;">
+                </details>
+                <details>
+                    <summary><b>Formación Profesional en Extremadura</b></summary>
+                    
+                    <p>
+                        La Formación Profesional (FP) en Extremadura es una opción educativa que ofrece a los estudiantes la oportunidad de adquirir conocimientos y habilidades prácticas en diversas áreas profesionales. La FP está diseñada para preparar a los alumnos para el mundo laboral, proporcionando una formación técnica y especializada que responde a las demandas del mercado de trabajo.
+                        <br>
+                        <br>
+                        En Extremadura, la FP se imparte en centros educativos públicos y privados, ofreciendo una amplia gama de ciclos formativos de grado medio y grado superior en sectores como la administración, la informática, la salud, la hostelería, la agricultura, entre otros. Estos programas combinan teoría y práctica, incluyendo períodos de formación en empresas para facilitar la inserción laboral.
+                        <br>
+                        <br>
+                        La FP en Extremadura está orientada a fomentar la empleabilidad y el desarrollo profesional de los estudiantes, adaptándose a las necesidades del tejido empresarial regional. Además, se promueve la innovación educativa y el uso de nuevas tecnologías para mejorar la calidad de la enseñanza.
+                    </p>
+                    
+                    <img src="/multimedia/index/mapafp.jpg" alt="logo-fp-extremadura" width="200px" style="display: block; margin: 20px auto 0 auto;">
+                </details>
+                <details>
+                    <summary><b>Grados de formación profesional que se ejercen en Extremadura</b></summary>
+                    <p>
+                        En Extremadura, se ofrecen diversos grados de Formación Profesional (FP) que abarcan una amplia gama de sectores y especialidades. Algunos de los grados más comunes incluyen:
+                        <br>
+                        <br>
+                        1. Administración y Gestión: Ciclos formativos relacionados con la administración de empresas, gestión financiera, recursos humanos y contabilidad.
+                        <br>
+                        2. Informática y Comunicaciones: Programas enfocados en el desarrollo de software, redes, sistemas informáticos y soporte técnico.
+                        <br>
+                        3. Sanidad: Ciclos formativos en cuidados auxiliares de enfermería, farmacia, radioterapia y otras áreas relacionadas con la salud.
+                        <br>
+                        4. Hostelería y Turismo: Formación en gestión hotelera, cocina, servicios en restauración y turismo.
+                        <br>
+                        5. Agricultura y Medio Ambiente: Programas centrados en la producción agrícola, jardinería, gestión ambiental y desarrollo rural.
+                        <br>
+                        6. Electricidad y Electrónica: Ciclos formativos en instalaciones eléctricas, mantenimiento electrónico y automatización industrial.
+                        <br>
+                        7. Mantenimiento de Vehículos: Formación en mecánica automotriz, reparación y mantenimiento de vehículos.
+                        <br>
+                        8. Artes Gráficas: Programas relacionados con el diseño gráfico, impresión y producción audiovisual.
+                </details>
+            </main>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const detailsElements = document.querySelectorAll('main.acordeon details');
+            detailsElements.forEach((detail) => {
+                detail.addEventListener('toggle', () => {
+                    if (detail.open) {
+                        detailsElements.forEach((otherDetail) => {
+                            if (otherDetail !== detail && otherDetail.open) {
+                                otherDetail.open = false;
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    <!--cuadro del footer-->
+    <div class="footer">
+        <footer>
+            <p>Derechos reservados &copy; 2025</p>
+            <div class="colmizquierda">
+                <p>Pagina creada por Javier Bravo Pintado<br>Curso 2025-2026</p>
+            </div>
+            <div class="colmderecha">
+                <p>Asignatura: Aplicaciones Web<br>Este trabajo se a mandado el dia 04/11/2025</p>
+            </div>
+        </footer>
+    </div>
+</body>
+<script>
+    function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'es'}, 'google_translate_element');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const detailsElements = document.querySelectorAll('main.acordeon details');
+    detailsElements.forEach((detail) => {
+        detail.addEventListener('toggle', () => {
+            if (detail.open) {
+                detailsElements.forEach((otherDetail) => {
+                    if (otherDetail !== detail && otherDetail.open) {
+                        otherDetail.open = false;
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
+</html>
