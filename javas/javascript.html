@@ -13,64 +13,82 @@
             padding: 0px;
             box-sizing: border-box;
         }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .section h2 {
+            margin-bottom: 15px;
+            color: #34495e;
+        }
         .tamaño {
             width: 200px;
             height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-
-
-
         .tamaño-temas {
             width: 65px;
             height: 65px;
             object-fit: cover;
             border-radius: 50%;
         }
-
-
-
         .contenedor-emociones {
             height: 250px;
             position: relative;
-
-
-
+            margin: 20px 0;
         }
         .contenedor-emociones img {
             position: absolute;
             top: 0;
             left: 0;
+            transition: opacity 0.3s;
         }
-
-
-
         .buttons-1 {
             width: 150px;
-            margin-bottom: 20px;
+            margin: 10px 5px;
             padding: 10px 20px;
             font-size: 16px;
             color: white;
             border: none;
-            background-color: gray;
+            background-color: #3498db;
             border-radius: 5px;
-            box-shadow: inset 0 0 5px #000000;
-            cursor: crosshair;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
         .buttons-1:hover {
-            background-color: darkgray;
+            background-color: #2980b9;
         }
-
-
-
         .temas {
             width: 75px;
             height: 75px;
             display: flex;
             justify-content: center;
             align-items: center;
-
-
-
             margin: 10px;
             padding: 5px;
             border-radius: 50%;
@@ -78,31 +96,35 @@
             box-shadow: inset 0 0 5px #000000;
             border: none;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         .temas:hover {
             background-color: silver;
         }
-
-
-
-        /*------------------------------------------*/
         .parrafo1 {
-            color: yellow;
+            color: #f39c12;
             font-style: oblique;
+            font-weight: bold;
         }
-
-
-
         .clase-coleccion {
             color: red;
             background-color: pink;
             font-size: 18px;
+            padding: 5px;
+            border-radius: 4px;
         }
-
-
-
-
-
+        pre {
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -160,9 +182,9 @@
     <img id="arbol" class="tamaño" src="../multimedia/javas/arbol.jpg">
 
     <!--En lugar de ocultar con hidden, quiero hacero con display-->
-    <img id="arbol" class="tamaño" src="../multimedia/javas/arbol2.png">
-    <button class="buttons-1" onclick="document.getElementById('arbol').style.display = 'none';"> Quitar árbol </button>
-    <button class="buttons-1" onclick="document.getElementById('arbol').style.display = 'block';"> Mostrar árbol </button>
+    <img id="arbol2" class="tamaño" src="../multimedia/javas/arbol2.png">
+    <button class="buttons-1" onclick="document.getElementById('arbol2').style.display = 'none';"> Quitar árbol </button>
+    <button class="buttons-1" onclick="document.getElementById('arbol2').style.display = 'block';"> Mostrar árbol </button>
 
     <p>
 
