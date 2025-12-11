@@ -112,9 +112,9 @@
     <p id="saludo">Hola buenos días</p>
 
     <div class="contenedor-emociones">
-        <img class="tamaño" id="neutral" src="img/neutral.png">
-        <img class="tamaño" id="sonrie" src="img/sonriente.jpg" hidden>
-        <img class="tamaño" id="triste" src="img/triste.jpg" hidden>
+        <img class="tamaño" id="neutral" src="../multimedia/javas/cara normal.jpg">
+        <img class="tamaño" id="sonrie" src="../multimedia/javas/cara sonriente.jpg" hidden>
+        <img class="tamaño" id="triste" src="../multimedia/javas/cara triste.jpg" hidden>
     </div>
 
     <!--Aquí vemos los botones que alternan entre Sonriente, Triste y Neutral-->
@@ -139,13 +139,13 @@
     <button class="temas" onclick="
         document.body.style.backgroundColor = 'rgb(57, 57, 57)';
         document.body.style.color = 'white';">
-        <img id="luna" class="tamaño-temas" src="img/noche.png">
+        <img id="luna" class="tamaño-temas" src="../multimedia/javas/luna.jpg">
     </button>
 
     <button class="temas" onclick="
         document.body.style.backgroundColor = 'white';
         document.body.style.color = 'black';">
-        <img id="sol" class="tamaño-temas" src="img/sol.png">
+        <img id="sol" class="tamaño-temas" src="../multimedia/javas/sol.jpg">
     </button>
 
 
@@ -157,31 +157,32 @@
         this.innerHTML = arbol.hidden ? 'Mostrar árbol' : 'Quitar árbol'; /* Cambia el texto */
     ">Quitar árbol</button>
 
-    <img id="arbol" class="tamaño" src="img/Imagen pegada.png">
+    <img id="arbol" class="tamaño" src="../multimedia/javas/arbol.png">
 
     <!--En lugar de ocultar con hidden, quiero hacero con display-->
-    <img id="arbol" class="tamaño" src="img/arbol2.png">
+    <img id="arbol" class="tamaño" src="../multimedia/javas/arbol2.png">
     <button class="buttons-1" onclick="document.getElementById('arbol').style.display = 'none';"> Quitar árbol </button>
     <button class="buttons-1" onclick="document.getElementById('arbol').style.display = 'block';"> Mostrar árbol </button>
 
     <p>
 
-El DOM (siglas de Document Object Model, o Modelo de Objetos del Documento) es una interfaz de programación para documentos HTML y XML. Representa la estructura de una página web como un árbol de objetos, permitiendo a los lenguajes de programación, como JavaScript, acceder a los elementos del documento y manipular su contenido, estructura y estilo de forma dinámica.
-¿Cómo funciona el DOM?
-Cuando un navegador web carga una página HTML, crea internamente una representación en memoria de esa página. Esta representación es el DOM y sigue una estructura jerárquica de árbol.
-Documento: Es el nodo raíz del árbol, que representa toda la página web.
-Elementos: Cada etiqueta HTML (como &lt;body &gt;, &lt;h1 &gt;, &lt;div &gt;, &lt;p &gt;) se convierte en un objeto, o nodo, dentro del árbol.
-Atributos: Los atributos de las etiquetas (id, class, src, etc.) también se representan como nodos.
-Contenido de texto: El texto dentro de las etiquetas también es un nodo.
-¿Para qué sirve?
-El DOM actúa como un puente entre la página web estática y el código de programación, permitiendo que los desarrolladores:
-Modifiquen el contenido: Actualicen textos o imágenes sin recargar la página.
-Cambien la estructura: Añadan, eliminen o reordenen elementos HTML.
-Alteran el estilo: Cambien las propiedades CSS para modificar la apariencia de los elementos.
-Manejen eventos: Reaccionen a las interacciones del usuario, como clics en botones o entradas de texto.
-Ejemplo de manipulación del DOM </p>
-Imagina un documento HTML simple:
-html <pre>
+        El DOM (siglas de Document Object Model, o Modelo de Objetos del Documento) es una interfaz de programación para documentos HTML y XML. Representa la estructura de una página web como un árbol de objetos, permitiendo a los lenguajes de programación, como JavaScript, acceder a los elementos del documento y manipular su contenido, estructura y estilo de forma dinámica.
+        ¿Cómo funciona el DOM?
+        Cuando un navegador web carga una página HTML, crea internamente una representación en memoria de esa página. Esta representación es el DOM y sigue una estructura jerárquica de árbol.
+        Documento: Es el nodo raíz del árbol, que representa toda la página web.
+        Elementos: Cada etiqueta HTML (como &lt;body &gt;, &lt;h1 &gt;, &lt;div &gt;, &lt;p &gt;) se convierte en un objeto, o nodo, dentro del árbol.
+        Atributos: Los atributos de las etiquetas (id, class, src, etc.) también se representan como nodos.
+        Contenido de texto: El texto dentro de las etiquetas también es un nodo.
+        ¿Para qué sirve?
+        El DOM actúa como un puente entre la página web estática y el código de programación, permitiendo que los desarrolladores:
+        Modifiquen el contenido: Actualicen textos o imágenes sin recargar la página.
+        Cambien la estructura: Añadan, eliminen o reordenen elementos HTML.
+        Alteran el estilo: Cambien las propiedades CSS para modificar la apariencia de los elementos.
+        Manejen eventos: Reaccionen a las interacciones del usuario, como clics en botones o entradas de texto.
+        Ejemplo de manipulación del DOM 
+    </p>
+    Imagina un documento HTML simple:html 
+    <pre>
 &lt;!DOCTYPE html&gt;
 &lt;html &gt;
 &lt;body &gt;
