@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introducción a JavaScript</title>
+    <link rel="icon" type="image/png" href="../multimedia/icono.png">
     
    <link rel="stylesheet" href="../css/javas.css">
 </head>
@@ -14,9 +15,9 @@
     <p id="saludo">Hola buenos días</p>
 
     <div class="contenedor-emociones">
-        <img class="tamaño" id="neutral" src="../multimedia/javas/cara normal.jpg">
-        <img class="tamaño" id="sonrie" src="../multimedia/javas/cara sonriente.jpg" hidden>
-        <img class="tamaño" id="triste" src="../multimedia/javas/cara triste.jpg" hidden>
+        <img class="tamaño" id="neutral" src="../multimedia/cara normal.jpg">
+        <img class="tamaño" id="sonrie" src="../multimedia/cara sonriente.jpg" hidden>
+        <img class="tamaño" id="triste" src="../multimedia/cara triste.jpg" hidden>
     </div>
 
     <!--Aquí vemos los botones que alternan entre Sonriente, Triste y Neutral-->
@@ -41,13 +42,13 @@
     <button class="temas" onclick="
         document.body.style.backgroundColor = 'rgb(57, 57, 57)';
         document.body.style.color = 'white';">
-        <img id="luna" class="tamaño-temas" src="../multimedia/javas/luna.jpg">
+        <img id="luna" class="tamaño-temas" src="../multimedia/luna.jpg">
     </button>
 
     <button class="temas" onclick="
         document.body.style.backgroundColor = 'white';
         document.body.style.color = 'black';">
-        <img id="sol" class="tamaño-temas" src="../multimedia/javas/sol.jpg">
+        <img id="sol" class="tamaño-temas" src="../multimedia/sol.jpg">
     </button>
 
 
@@ -59,10 +60,10 @@
         this.innerHTML = arbol.hidden ? 'Mostrar árbol' : 'Quitar árbol'; /* Cambia el texto */
     ">Quitar árbol</button>
 
-    <img id="arbol" class="tamaño" src="../multimedia/javas/arbol.jpg">
+    <img id="arbol" class="tamaño" src="../multimedia/arbol.jpg">
 
     <!--En lugar de ocultar con hidden, quiero hacero con display-->
-    <img id="arbol2" class="tamaño" src="../multimedia/javas/arbol2.png">
+    <img id="arbol2" class="tamaño" src="../multimedia/arbol2.png">
     <button class="buttons-1" onclick="document.getElementById('arbol2').style.display = 'none';"> Quitar árbol </button>
     <button class="buttons-1" onclick="document.getElementById('arbol2').style.display = 'block';"> Mostrar árbol </button>
 
