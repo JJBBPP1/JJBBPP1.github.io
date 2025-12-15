@@ -1,0 +1,84 @@
+* {
+            box-sizing: border-box;
+        }
+        body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: rgb(110, 110, 76);
+        }
+        .header {
+            background-color: lightblue;
+            border-radius: 15%;
+            text-align: center;
+            padding: 10px;
+            font-size: 20px;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .translator {
+            flex: 1;
+            text-align: center;
+        }
+        .map {
+            text-align: center;
+        }
+        .nav {
+            background-color: rgb(95, 202, 122);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .content {
+            overflow: hidden;
+            margin-top: 10px;
+            display: flex;
+        }
+        .aside {
+            background-color: lightgray;
+            width: 20%;
+            height: 450px;
+            float: left;
+            margin-right: 10px;
+            border-radius: 20%;
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .main {
+            background-color: rgb(255, 255, 253);
+            width: 75vw;
+            float: left;
+            padding: 15px;
+            border-radius: 7%;
+            text-align: justify;
+        }
+        .footer {
+            background-color: lightcoral;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 15%;
+        }
+        .colmizquierda {
+            width: 40vw;
+            height: 50px;
+            display: inline-block;
+            margin: 5px;
+        }
+        .colmderecha {
+            width: 40vw;
+            height: 50px;
+            display: inline-block;
+            margin: 5px;
+        }
+        img.center-block {
+            display: block;
+            margin: 20px auto 0 auto;
+        }

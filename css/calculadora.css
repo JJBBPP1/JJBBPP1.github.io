@@ -1,0 +1,80 @@
+body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+        }
+        .operation {
+            background-color: #111;
+            color: #ccc;
+            font-size: 1em;
+            text-align: right;
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            min-height: 20px;
+            overflow-x: auto;
+        }
+        .display {
+            background-color: #222;
+            color: #fff;
+            font-size: 1.5em;
+            text-align: right;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            min-height: 40px;
+            overflow-x: auto;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #666;
+            color: #fff;
+        }
+        button:hover {
+            background-color: #777;
+        }
+        .operator {
+            background-color: #f39c12;
+        }
+        .operator:hover {
+            background-color: #e67e22;
+        }
+        .equal {
+            background-color: #27ae60;
+            grid-column: span 2;
+        }
+        .equal:hover {
+            background-color: #229954;
+        }
+        .clear {
+            background-color: #e74c3c;
+        }
+        .clear:hover {
+            background-color: #c0392b;
+        }
+        .scientific {
+            background-color: #9b59b6;
+        }
+        .scientific:hover {
+            background-color: #8e44ad;
+        }

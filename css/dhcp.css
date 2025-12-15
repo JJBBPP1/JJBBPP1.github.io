@@ -1,0 +1,53 @@
+:root {
+            --bg: #374151;
+            --card: #1f2937;
+            --accent: #60a5fa;
+            --muted: #94a3b8;
+            --surface: #1f2937;
+        }
+        html, body {
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            font-family: Inter, Segoe UI, Arial;
+            background: #4b5563;
+            color: #e6eef8;
+            line-height: 1.5;
+        }
+        header {
+            padding: 28px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+        main {
+            padding: 28px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
+            margin-bottom: 22px;
+        }
+        h2 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        strong {
+            color: #e6eef8;
+        }
+        footer {
+            padding: 18px 32px;
+            color: white;
+            font-size: 13px;
+        }
