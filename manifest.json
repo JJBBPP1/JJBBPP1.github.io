@@ -13,7 +13,7 @@
   "categories": ["education", "reference"],
   "icons": [
     {
-      "src": "/icono.png",
+      "src": "/multimedia/icono.png",
       "sizes": "any",
       "type": "image/png",
       "purpose": "any maskable"
@@ -27,7 +27,7 @@
       "url": "/pages/ejemplos-de-estilo.html",
       "icons": [
         {
-          "src": "/icono.png",
+          "src": "/multimedia/icono.png",
           "sizes": "96x96"
         }
       ]
@@ -39,7 +39,7 @@
       "url": "/pages/calculadora.html",
       "icons": [
         {
-          "src": "/icono.png",
+          "src": "/multimedia/icono.png",
           "sizes": "96x96"
         }
       ]
@@ -48,10 +48,34 @@
       "name": "Proyecto",
       "short_name": "Proyecto",
       "description": "Acceder al proyecto principal",
-      "url": "/proyecto/proyecto.html",
+      "url": "/pages/proyecto.html",
       "icons": [
         {
-          "src": "/icono.png",
+          "src": "/multimedia/icono.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Guía HTML",
+      "short_name": "HTML",
+      "description": "Acceder a la guía de HTML",
+      "url": "/pages/guiahtml.html",
+      "icons": [
+        {
+          "src": "/multimedia/icono.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "JavaScript",
+      "short_name": "JS",
+      "description": "Acceder a ejemplos de JavaScript",
+      "url": "/pages/javascript.html",
+      "icons": [
+        {
+          "src": "/multimedia/icono.png",
           "sizes": "96x96"
         }
       ]
