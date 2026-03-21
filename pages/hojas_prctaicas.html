@@ -14,8 +14,9 @@
         <h3>📁 Subir archivo de práctica</h3>
         <p>Arrastra archivos o haz clic para seleccionar</p>
         <label for="fileInput" style="display: block; margin-bottom: 10px; font-weight: bold;">Seleccionar archivos de práctica:</label>
-        <input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt,.doc,.docx">
-        <button class="upload-btn">Seleccionar archivos</button>
+        <label for="fileInput" style="display: block; margin-bottom: 10px; font-weight: bold; cursor: pointer;">Seleccionar archivos de práctica (PDF, imágenes, texto):</label>
+        <input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt">
+        <button class="upload-btn">Examinar archivos</button>
 
     </div>
     
@@ -75,11 +76,21 @@ document.addEventListener('DOMContentLoaded', function() {
             reader.onload = (e) => img.src = e.target.result;
             reader.readAsDataURL(file);
             previewDiv.appendChild(img);
+        } else if (file.name.toLowerCase().endsWith('.pdf')) {
+            const contentDiv = document.createElement('div');
+            contentDiv.innerHTML = '<strong>📄 PDF detectado:</strong> ' + file.name + '<br><small>Para ver con formato, <a href="" target="_blank" id="pdfLink_' + Date.now() + '">descargar PDF</a></small>';
+            const link = contentDiv.querySelector('a');
+            const reader = new FileReader();
+            reader.onload = (e) => link.href = e.target.result;
+            reader.readAsDataURL(file);
+            previewDiv.appendChild(contentDiv);
         } else {
             const contentDiv = document.createElement('div');
+            contentDiv.style.whiteSpace = 'pre-wrap';
+            contentDiv.style.fontFamily = 'monospace';
             const reader = new FileReader();
             reader.onload = (e) => {
-                contentDiv.textContent = e.target.result.substring(0, 500) + '...';
+                contentDiv.textContent = e.target.result.substring(0, 2000);
             };
             reader.readAsText(file);
             previewDiv.appendChild(contentDiv);
