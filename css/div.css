@@ -9,11 +9,11 @@
         /* Estilo para la caja de inicio */
         .inicio {
             height: 20vh;
-            background-color: red;;
+background-color: red;
             border: 5px solid black ;
             margin: 5vh;
             border-radius: 50%;
-            text-justify: center;
+text-align: center;
             text-align: center;
             font-size: 50px;
             display: flex;
@@ -70,7 +70,7 @@
             height: 20vh;
             width: 50vw;
             background-color: brown;
-            border: 5px solid rgb(255, 15, 251);;
+border: 5px solid rgb(255, 15, 251);
             margin: 5vh;
             border-radius: 10%;
         }

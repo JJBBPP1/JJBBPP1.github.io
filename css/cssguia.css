@@ -43,11 +43,12 @@ body {
       border-left: 4px solid #2563eb;
       padding-left: 0.5rem;
     }
-    p {
+    /* Commented out erroneous p styling to prevent red text */
+    /* p {
       margin: 0.8rem 0;
       color: red;
       font-weight: bold;
-    }
+    } */
     pre {
       background: #1e293b;
       color: #e2e8f0;

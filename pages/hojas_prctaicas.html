@@ -1,11 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
+<link rel="stylesheet" href="../css/hojas_practicas.css">
+    <title>Hoja de Seguimiento de Prácticas 2025-2026</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoja seguimiento practicas 2026 </title>
+
 </head>
 <body>
+    <h1>Hoja de Seguimiento de Prácticas</h1>
+    <p>Curso 2025-2026 - Aplicaciones Web</p>
+    <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+        <h3>📁 Subir archivo de práctica</h3>
+        <p>Arrastra archivos o haz clic para seleccionar</p>
+        <label for="fileInput" style="display: block; margin-bottom: 10px; font-weight: bold;">Seleccionar archivos de práctica:</label>
+        <input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt,.doc,.docx">
+        <button class="upload-btn">Seleccionar archivos</button>
+
+    </div>
     
+    <div id="previewContainer" class="preview-container"></div>
 </body>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('fileInput');
+    const previewContainer = document.getElementById('previewContainer');
+    const uploadArea = document.querySelector('.file-upload-area');
+
+    fileInput.addEventListener('change', handleFiles);
+    uploadArea.addEventListener('dragover', handleDragOver);
+    uploadArea.addEventListener('dragleave', handleDragLeave);
+    uploadArea.addEventListener('drop', handleDrop);
+
+    function handleFiles(e) {
+        const files = Array.from(e.target.files);
+        files.forEach(file => createPreview(file));
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    }
+
+    function handleDragLeave(e) {
+        uploadArea.classList.remove('dragover');
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const files = Array.from(e.dataTransfer.files);
+        files.forEach(file => createPreview(file));
+    }
+
+    function createPreview(file) {
+        const previewDiv = document.createElement('div');
+        previewDiv.className = 'preview-item';
+        
+        const fileName = document.createElement('h4');
+        fileName.textContent = file.name;
+        fileName.style.margin = '0 0 10px 0';
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'close-btn';
+        closeBtn.innerHTML = '×';
+        closeBtn.onclick = () => previewDiv.remove();
+        
+        previewDiv.appendChild(closeBtn);
+        
+        if (file.type.startsWith('image/')) {
+            const img = document.createElement('img');
+            const reader = new FileReader();
+            reader.onload = (e) => img.src = e.target.result;
+            reader.readAsDataURL(file);
+            previewDiv.appendChild(img);
+        } else {
+            const contentDiv = document.createElement('div');
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                contentDiv.textContent = e.target.result.substring(0, 500) + '...';
+            };
+            reader.readAsText(file);
+            previewDiv.appendChild(contentDiv);
+        }
+        
+        previewDiv.appendChild(fileName);
+        previewContainer.appendChild(previewDiv);
+    }
+});
+</script>
 </html>
