@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicios JavaScript</title>
+</head>
+<body>
+
+    <h1>Ejercicios de JavaScript</h1>
+
+    <script>
+
+        // 1. TIPOS DE SALIDAS
+
+        // En JavaScript existen diferentes formas de mostrar información:
+        // - console.log(): muestra datos en la consola del navegador
+        // - alert(): muestra una ventana emergente
+        // - document.write(): escribe directamente en la página web
+
+        console.log("Salida por consola");
+        alert("Salida por alerta");
+        document.write("<p>Salida en la página web</p>");
+
+
+        // 2. VARIABLES
+
+        // Las variables sirven para almacenar datos.
+        // Se pueden declarar con:
+        // - var (antiguo)
+        // - let (recomendado)
+        // - t (valor constante)
+
+            // Ejemplo de variables:
+        let nombre = "Juan";
+        let edad = 20;
+        const PI = 3.1416;
+
+        document.write("<p>Nombre: " + nombre + "</p>");
+        document.write("<p>Edad: " + edad + "</p>");
+        document.write("<p>Valor de PI: " + PI + "</p>");
+
+        // 3. FUNCIONES CON PARÁMETROS Y ARGUMENTOS
+
+        // Una función es un bloque de código reutilizable.
+        // - Parámetros: variables que recibe la función
+        // - Argumentos: valores que se le pasan al llamarla
+
+        function saludar(nombre) { // "nombre" es un parámetro
+            document.write("<p>Hola " + nombre + "</p>");
+        }
+
+        // Llamada a la función con argumento:
+        saludar("Carlos");
+
+
+        // 4. FUNCIONES CON RETURN
+
+        // Las funciones pueden devolver un valor usando "return"
+
+        function sumar(a, b) {
+            return a + b;
+        }
+
+        let resultado = sumar(5, 3);
+        document.write("<p>Resultado de la suma: " + resultado + "</p>");
+
+
+        // 5. FUNCIONES AUTOINVOCADAS (IIFE)
+
+        // Son funciones que se ejecutan automáticamente al definirse
+
+        (function() {
+            document.write("<p>Función autoinvocada ejecutada</p>");
+        })();
+
+
+        // 6. FUNCIONES ANÓNIMAS
+
+        // Son funciones sin nombre, normalmente usadas en variables
+
+        let multiplicar = function(a, b) {
+            return a * b;
+        };
+
+        document.write("<p>Multiplicación: " + multiplicar(4, 2) + "</p>");
+
+
+        // 7. FUNCIONES FLECHA (ARROW FUNCTIONS)
+
+        // Forma moderna y más corta de escribir funciones
+
+        const dividir = (a, b) => a / b;
+
+        document.write("<p>División: " + dividir(10, 2) + "</p>");
+
+
+        // 8. EJEMPLO COMPLETO COMBINADO
+
+        // Función que recibe un número y devuelve su cuadrado
+
+        function cuadrado(numero) {
+            return numero * numero;
+        }
+
+        let num = 6;
+        let resultadoCuadrado = cuadrado(num);
+
+        document.write("<p>El cuadrado de " + num + " es " + resultadoCuadrado + "</p>");
+
+    </script>
+
+</body>
+</html>
