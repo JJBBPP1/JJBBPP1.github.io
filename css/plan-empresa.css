@@ -74,3 +74,121 @@
     transform: translateY(0);
 }
 
+/* Estilos para Plan Personalizado */
+.plan-custom-section{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:16px;
+    align-items:start;
+    font-size:14px;
+}
+
+.plan-form input[type="text"],
+.plan-form input[type="number"],
+.plan-form textarea, .plan-form input[type="date"],
+.plan-form select {
+    width:100%;
+    padding:8px 10px;
+    font-size:14px;
+    border-radius:10px;
+    border:none;
+    background:#f3f4f6;
+    color:#111827;
+    margin-bottom:12px;
+}
+
+.plan-form textarea{height:120px;resize:vertical}
+
+.plan-form .form-row{display:flex;gap:10px}
+.plan-form .form-row input[type="number"]{width:100%}
+
+/* Make form rows wrap and inputs flexible so the form adapts to any screen size */
+.plan-form .form-row{flex-wrap:wrap}
+.plan-form .form-row > input,
+.plan-form .form-row > select,
+.plan-form .form-row > label{
+    flex:1 1 120px;
+    min-width:120px;
+}
+
+/* On small screens stack the inputs vertically for better usability */
+@media (max-width:700px){
+    .plan-form .form-row{flex-direction:column}
+    .plan-form .form-row > input,
+    .plan-form .form-row > select,
+    .plan-form .form-row > label{min-width:0;width:100%}
+    /* Make primary actions full width on mobile */
+    .plan-form button.btn-primary{width:100%;display:block}
+    .plan-toolbar{flex-direction:column;align-items:flex-start}
+}
+.plan-form label{color:#e5e7eb}
+.plan-form select{appearance:none}
+
+.plan-form label,
+.plan-custom-section .section-subtitle,
+.plan-custom-section p {
+    font-size:12px;
+}
+
+.plan-list{min-height:120px;padding:10px}
+
+ .plan-card{
+    background: #111827;
+    color: #e5e7eb;
+    padding:8px;
+    border-radius:10px;
+    margin-bottom:12px;
+    border:1px solid #1f2937;
+}
+
+.plan-card h3{margin:0 0 8px 0;color:#3b82f6}
+.plan-card h3{font-size:15px}
+.plan-meta{color:#9ca3af;margin-bottom:8px}
+.plan-meta,
+.plan-card ul li,
+.plan-card p {
+    font-size:12px;
+}
+.plan-tareas{margin:8px 0 0 18px}
+
+ .plan-card p,
+ .plan-card ul{
+    font-size:12px;
+}
+
+ .plan-list{min-height:120px;padding:8px}
+
+.plan-toolbar{gap:6px;margin-bottom:10px}
+
+.plan-form button.btn-primary,
+.plan-toolbar .btn{
+    font-size:13px;
+    padding:7px 12px;
+}
+
+.plan-actions{float:right}
+
+.btn{padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+.btn-primary{background:#2563eb;color:white}
+.btn-secondary{background:transparent;color:#ffffff;border:1px solid #2563eb;padding:6px 10px}
+.btn-danger{background:#ef4444;color:white}
+
+@media(max-width:900px){
+    .plan-custom-section{grid-template-columns:1fr}
+}
+
+/* Toolbar */
+.plan-toolbar{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+
+/* Modal */
+.pp-modal{display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center}
+.pp-modal[aria-hidden="false"]{display:flex}
+.pp-modal-backdrop{position:absolute;inset:0;background:rgba(2,6,23,0.6);backdrop-filter:blur(4px)}
+.pp-modal-panel{position:relative;background:#071025;color:#e6eef8;border-radius:12px;max-width:720px;width:90%;z-index:2;padding:18px;border:1px solid #10243a}
+.pp-modal-header h3{margin:0 0 8px 0;color:#60a5fa}
+.pp-modal-body{max-height:60vh;overflow:auto;color:#cbd5e1}
+.pp-modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:14px}
+
+.pp-provision-log{background:#031025;color:#9ee0ff;padding:12px;border-radius:8px;font-family:monospace;font-size:13px;max-height:240px;overflow:auto}
+
