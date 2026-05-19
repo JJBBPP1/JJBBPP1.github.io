@@ -19,7 +19,9 @@
         <textarea id="mensaje" name="mensaje" rows="4" cols="50"></textarea><br><br>
 
         <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required><br><br>
+        <input type="password" id="password" name="password" required>
+        <input type="checkbox" id="mostrarPassword" name="mostrarPassword">
+        <label for="mostrarPassword" class="inline">Mostrar contraseña</label><br><br>
 
         <label for="telefono">Teléfono:</label>
         <input type="tel" id="telefono" name="telefono" placeholder="Ej: +34 600 123 456">
@@ -66,6 +68,16 @@
     </form>
 
     <script>
+        // Mostrar/ocultar contraseña
+        document.getElementById('mostrarPassword').addEventListener('change', function() {
+            const passwordInput = document.getElementById('password');
+            if (this.checked) {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+
         document.getElementById('formulario').addEventListener('submit', function(event) {
             event.preventDefault();
 
