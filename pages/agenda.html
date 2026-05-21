@@ -204,7 +204,9 @@ async function storageGet(key) {
       const snapshot = await window.firebaseGetDoc(window.firebaseTasksDoc);
       if (snapshot.exists()) {
         const data = snapshot.data();
-        return { value: JSON.stringify(data.tasks || []) };
+        // Si data.tasks existe, lo convertimos a un String JSON limpio para tu app
+        const tasksArray = Array.isArray(data.tasks) ? data.tasks : Object.values(data.tasks || {});
+        return { value: JSON.stringify(tasksArray) };
       }
     } catch (e) {
       console.warn('Firebase read failed:', e);
@@ -220,9 +222,11 @@ async function storageGet(key) {
 async function storageSet(key, value) {
   if (FIREBASE_ENABLED && window.firebaseTasksDoc && window.firebaseSetDoc) {
     try {
-      const items = JSON.parse(value);
+      const items = JSON.parse(value); // Convierte el string del localStorage a Array real
+      
+      // Guardamos en Firestore asegurando que 'tasks' sea un Array
       await window.firebaseSetDoc(window.firebaseTasksDoc, {
-        tasks: items,
+        tasks: Array.from(items), 
         updatedAt: new Date().toISOString()
       });
       return;
