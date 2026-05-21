@@ -112,38 +112,6 @@
 </style>
 
 <h2 class="sr-only">Aplicación de lista de tareas con base de datos persistente</h2>
-<!--firebase link-->
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
-  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDTslJvs8MrEYdrJhQD-ev19d06WSPSeTI",
-    authDomain: "agenda-51723.firebaseapp.com",
-    projectId: "agenda-51723",
-    storageBucket: "agenda-51723.firebasestorage.app",
-    messagingSenderId: "273930695051",
-    appId: "1:273930695051:web:8ab3688c7263a3e689bf8e",
-    measurementId: "G-RL47Y6PPJ8"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app);
-  const tasksDoc = doc(db, 'agenda', 'tasks');
-
-  // Make these available to the non-module script below
-  window.firebaseDb = db;
-  window.firebaseTasksDoc = tasksDoc;
-  window.firebaseGetDoc = getDoc;
-  window.firebaseSetDoc = setDoc;
-</script>
-
 <div id="app">
   <div class="header" style="display:flex; justify-content:space-between; align-items:flex-start;">
     <div>
@@ -187,246 +155,250 @@
     <span id="bulk-info"></span>
     <button onclick="clearDone()">Eliminar completadas</button>
   </div>
-</div>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-<script>
-let tasks = [];
-let filter = 'all';
-let selectedTag = '';
-let saving = false;
+  const firebaseConfig = {
+    apiKey: "AIzaSyDTslJvs8MrEYdrJhQD-ev19d06WSPSeTI",
+    authDomain: "agenda-51723.firebaseapp.com",
+    projectId: "agenda-51723",
+    storageBucket: "agenda-51723.firebasestorage.app",
+    messagingSenderId: "273930695051",
+    appId: "1:273930695051:web:8ab3688c7263a3e689bf8e",
+    measurementId: "G-RL47Y6PPJ8"
+  };
 
-const STORAGE_KEY = 'tasks_v1';
-const FIREBASE_ENABLED = true;
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+  const tasksDoc = doc(db, 'agenda', 'tasks');
 
-async function storageGet(key) {
-  if (FIREBASE_ENABLED && window.firebaseTasksDoc && window.firebaseGetDoc) {
+  let tasks = [];
+  let filter = 'all';
+  let selectedTag = '';
+  let saving = false;
+
+  const STORAGE_KEY = 'tasks_v1';
+  const FIREBASE_ENABLED = true;
+
+  async function storageGet(key) {
+    if (FIREBASE_ENABLED) {
+      try {
+        const snapshot = await getDoc(tasksDoc);
+        if (snapshot.exists()) {
+          const data = snapshot.data();
+          const tasksArray = Array.isArray(data.tasks) ? data.tasks : Object.values(data.tasks || {});
+          return { value: JSON.stringify(tasksArray) };
+        }
+      } catch (e) {
+        console.warn('Firebase read failed:', e);
+      }
+    }
+
+    return { value: localStorage.getItem(key) };
+  }
+
+  async function storageSet(key, value) {
+    if (FIREBASE_ENABLED) {
+      try {
+        const items = JSON.parse(value);
+        await setDoc(tasksDoc, {
+          tasks: Array.from(items),
+          updatedAt: new Date().toISOString()
+        });
+        return;
+      } catch (e) {
+        console.warn('Firebase save failed:', e);
+      }
+    }
+
+    localStorage.setItem(key, value);
+  }
+
+  async function loadTasks() {
     try {
-      const snapshot = await window.firebaseGetDoc(window.firebaseTasksDoc);
-      if (snapshot.exists()) {
-        const data = snapshot.data();
-        // Si data.tasks existe, lo convertimos a un String JSON limpio para tu app
-        const tasksArray = Array.isArray(data.tasks) ? data.tasks : Object.values(data.tasks || {});
-        return { value: JSON.stringify(tasksArray) };
+      const result = await storageGet(STORAGE_KEY);
+      if (result && result.value) {
+        tasks = JSON.parse(result.value);
       }
     } catch (e) {
-      console.warn('Firebase read failed:', e);
+      tasks = [];
     }
+    render();
   }
 
-  if (window.storage && typeof window.storage.get === 'function') {
-    try { return await window.storage.get(key); } catch(e) { return { value: null }; }
-  }
-  return { value: localStorage.getItem(key) };
-}
-
-async function storageSet(key, value) {
-  if (FIREBASE_ENABLED && window.firebaseTasksDoc && window.firebaseSetDoc) {
-    try {
-      const items = JSON.parse(value); // Convierte el string del localStorage a Array real
-      
-      // Guardamos en Firestore asegurando que 'tasks' sea un Array
-      await window.firebaseSetDoc(window.firebaseTasksDoc, {
-        tasks: Array.from(items), 
-        updatedAt: new Date().toISOString()
-      });
-      return;
-    } catch (e) {
-      console.warn('Firebase save failed:', e);
-    }
-  }
-
-  if (window.storage && typeof window.storage.set === 'function') {
-    try { return await window.storage.set(key, value); } catch(e) { localStorage.setItem(key, value); }
-  }
-  localStorage.setItem(key, value);
-}
-
-async function loadTasks() {
-  try {
-    const result = await storageGet(STORAGE_KEY);
-    if (result && result.value) {
-      tasks = JSON.parse(result.value);
-    }
-  } catch(e) {
-    tasks = [];
-  }
-  render();
-}
-
-async function saveTasks() {
-  if (saving) return;
-  saving = true;
-  const status = document.getElementById('db-status');
-  if (FIREBASE_ENABLED) {
+  async function saveTasks() {
+    if (saving) return;
+    saving = true;
+    const status = document.getElementById('db-status');
     status.innerHTML = '<span class="db-dot" style="background:#BA7517"></span> Guardando en Firebase…';
-  } else {
-    status.innerHTML = '<span class="db-dot" style="background:#BA7517"></span> Guardando…';
-  }
-  try {
-    await storageSet(STORAGE_KEY, JSON.stringify(tasks));
-    if (FIREBASE_ENABLED) {
+    try {
+      await storageSet(STORAGE_KEY, JSON.stringify(tasks));
       status.innerHTML = '<span class="db-dot"></span> Guardado en Firebase';
-    } else {
-      status.innerHTML = '<span class="db-dot"></span> Guardado';
+      setTimeout(() => { status.innerHTML = '<span class="db-dot"></span> Base de datos conectada'; }, 1200);
+    } catch (e) {
+      status.innerHTML = '<span class="db-dot" style="background:#E24B4A"></span> Error al guardar';
     }
-    setTimeout(() => { status.innerHTML = '<span class="db-dot"></span> Base de datos conectada'; }, 1200);
-  } catch(e) {
-    status.innerHTML = '<span class="db-dot" style="background:#E24B4A"></span> Error al guardar';
+    saving = false;
   }
-  saving = false;
-}
 
-function selectTag(t) {
-  selectedTag = t;
-  // remove selection classes, keep base class
-  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('sel-work','sel-personal','sel-urgent','sel-none'));
-  if (t) {
-    const el = document.getElementById('tag-' + t);
-    if (el) el.classList.add('sel-' + t);
-  } else {
-    const none = document.getElementById('tag-none');
-    if (none) none.classList.add('sel-none');
+  function selectTag(t) {
+    selectedTag = t;
+    document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('sel-work','sel-personal','sel-urgent','sel-none'));
+    if (t) {
+      const el = document.getElementById('tag-' + t);
+      if (el) el.classList.add('sel-' + t);
+    } else {
+      const none = document.getElementById('tag-none');
+      if (none) none.classList.add('sel-none');
+    }
   }
-}
 
-function setFilter(f) {
-  filter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('f-' + f).classList.add('active');
-  render();
-}
+  function setFilter(f) {
+    filter = f;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('f-' + f).classList.add('active');
+    render();
+  }
 
-function addTask() {
-  const input = document.getElementById('new-task');
-  const inputDate = document.getElementById('new-task-date');
-  const text = input.value.trim();
-  if (!text) { input.focus(); return; }
-  const now = new Date();
-  tasks.unshift({
-    id: Date.now(),
-    text,
-    done: false,
-    tag: selectedTag,
-    created: now.toISOString(),
-    due: inputDate && inputDate.value ? new Date(inputDate.value).toISOString() : null
-  });
-  input.value = '';
-  if (inputDate) inputDate.value = '';
-  saveTasks();
-  render();
-}
+  function addTask() {
+    const input = document.getElementById('new-task');
+    const inputDate = document.getElementById('new-task-date');
+    const text = input.value.trim();
+    if (!text) { input.focus(); return; }
+    const now = new Date();
+    tasks.unshift({
+      id: Date.now(),
+      text,
+      done: false,
+      tag: selectedTag,
+      created: now.toISOString(),
+      due: inputDate && inputDate.value ? new Date(inputDate.value).toISOString() : null
+    });
+    input.value = '';
+    if (inputDate) inputDate.value = '';
+    saveTasks();
+    render();
+  }
 
-function toggleTask(id) {
-  const t = tasks.find(t => t.id === id);
-  if (t) t.done = !t.done;
-  saveTasks();
-  render();
-}
+  function toggleTask(id) {
+    const t = tasks.find(t => t.id === id);
+    if (t) t.done = !t.done;
+    saveTasks();
+    render();
+  }
 
-function deleteTask(id) {
-  tasks = tasks.filter(t => t.id !== id);
-  saveTasks();
-  render();
-}
+  function deleteTask(id) {
+    tasks = tasks.filter(t => t.id !== id);
+    saveTasks();
+    render();
+  }
 
-function clearDone() {
-  tasks = tasks.filter(t => !t.done);
-  saveTasks();
-  render();
-}
+  function clearDone() {
+    tasks = tasks.filter(t => !t.done);
+    saveTasks();
+    render();
+  }
 
-function fmtDate(iso) {
-  const d = new Date(iso);
-  const now = new Date();
-  const diff = Math.floor((now - d) / 60000);
-  if (diff < 1) return 'ahora mismo';
-  if (diff < 60) return `hace ${diff} min`;
-  if (diff < 1440) return `hace ${Math.floor(diff/60)}h`;
-  return d.toLocaleDateString('es-ES', { day:'numeric', month:'short' });
-}
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    const now = new Date();
+    const diff = Math.floor((now - d) / 60000);
+    if (diff < 1) return 'ahora mismo';
+    if (diff < 60) return `hace ${diff} min`;
+    if (diff < 1440) return `hace ${Math.floor(diff/60)}h`;
+    return d.toLocaleDateString('es-ES', { day:'numeric', month:'short' });
+  }
 
-function fmtDateShort(iso) {
-  if (!iso) return '';
-  const d = new Date(iso);
-  return d.toLocaleDateString('es-ES', { day:'numeric', month:'short' });
-}
+  function fmtDateShort(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return d.toLocaleDateString('es-ES', { day:'numeric', month:'short' });
+  }
 
-function isOverdue(iso) {
-  if (!iso) return false;
-  const d = new Date(iso);
-  const now = new Date();
-  // consider overdue if due date is before today (end of day)
-  return d.setHours(23,59,59,999) < now.getTime();
-}
+  function isOverdue(iso) {
+    if (!iso) return false;
+    const d = new Date(iso);
+    const now = new Date();
+    return d.setHours(23,59,59,999) < now.getTime();
+  }
 
-function render() {
-  const visible = tasks.filter(t => {
-    if (filter === 'pending') return !t.done;
-    if (filter === 'done') return t.done;
-    return true;
-  });
+  function render() {
+    const visible = tasks.filter(t => {
+      if (filter === 'pending') return !t.done;
+      if (filter === 'done') return t.done;
+      return true;
+    });
 
-  const total = tasks.length;
-  const done = tasks.filter(t => t.done).length;
-  const pending = total - done;
+    const total = tasks.length;
+    const done = tasks.filter(t => t.done).length;
+    const pending = total - done;
 
-  document.getElementById('stat-total').textContent = total;
-  document.getElementById('stat-pending').textContent = pending;
-  document.getElementById('stat-done').textContent = done;
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-pending').textContent = pending;
+    document.getElementById('stat-done').textContent = done;
 
-  const list = document.getElementById('todo-list');
+    const list = document.getElementById('todo-list');
 
-  if (visible.length === 0) {
-    const msgs = { all: 'Sin tareas todavía', pending: 'No hay tareas pendientes', done: 'Nada completado aún' };
-    const icons = { all: 'ti-clipboard', pending: 'ti-circle-check', done: 'ti-trophy' };
-    list.innerHTML = `<div class="empty"><i class="ti ${icons[filter]}" aria-hidden="true"></i>${msgs[filter]}</div>`;
-  } else {
-    list.innerHTML = visible.map(t => {
-      const tagHtml = t.tag ? `<span class="tag tag-${t.tag}">${{work:'Trabajo', personal:'Personal', urgent:'Urgente'}[t.tag]}</span>` : '';
-      const dueHtml = t.due ? `<div style="font-size:11px; color:${(isOverdue(t.due) && !t.done) ? '#B91C1C' : '#475569'}; margin-left:8px">${t.done ? '' : (isOverdue(t.due) ? 'Vencida: ' : 'Para: ')}${fmtDateShort(t.due)}</div>` : '';
-      return `
-        <div class="todo-item${t.done ? ' done' : ''}">
-          <div class="todo-check${t.done ? ' checked' : ''}" onclick="toggleTask(${t.id})" role="checkbox" aria-checked="${t.done}" tabindex="0"></div>
-          <div style="display:flex; flex-direction:column; flex:1">
-            <span class="todo-text${t.done ? ' done' : ''}">${escHtml(t.text)} ${tagHtml}</span>
-            <div style="display:flex; gap:8px; align-items:center; margin-top:6px;">
-              <span class="todo-meta">${fmtDate(t.created)}</span>
-              ${dueHtml}
+    if (visible.length === 0) {
+      const msgs = { all: 'Sin tareas todavía', pending: 'No hay tareas pendientes', done: 'Nada completado aún' };
+      const icons = { all: 'ti-clipboard', pending: 'ti-circle-check', done: 'ti-trophy' };
+      list.innerHTML = `<div class="empty"><i class="ti ${icons[filter]}" aria-hidden="true"></i>${msgs[filter]}</div>`;
+    } else {
+      list.innerHTML = visible.map(t => {
+        const tagHtml = t.tag ? `<span class="tag tag-${t.tag}">${{work:'Trabajo', personal:'Personal', urgent:'Urgente'}[t.tag]}</span>` : '';
+        const dueHtml = t.due ? `<div style="font-size:11px; color:${(isOverdue(t.due) && !t.done) ? '#B91C1C' : '#475569'}; margin-left:8px">${t.done ? '' : (isOverdue(t.due) ? 'Vencida: ' : 'Para: ')}${fmtDateShort(t.due)}</div>` : '';
+        return `
+          <div class="todo-item${t.done ? ' done' : ''}">
+            <div class="todo-check${t.done ? ' checked' : ''}" onclick="toggleTask(${t.id})" role="checkbox" aria-checked="${t.done}" tabindex="0"></div>
+            <div style="display:flex; flex-direction:column; flex:1">
+              <span class="todo-text${t.done ? ' done' : ''}">${escHtml(t.text)} ${tagHtml}</span>
+              <div style="display:flex; gap:8px; align-items:center; margin-top:6px;">
+                <span class="todo-meta">${fmtDate(t.created)}</span>
+                ${dueHtml}
+              </div>
             </div>
-          </div>
-          <button type="button" class="todo-del" onclick="deleteTask(${t.id})" aria-label="Eliminar tarea"><i class="ti ti-trash" aria-hidden="true" style="font-size:15px;"></i></button>
-        </div>`;
-    }).join('');
+            <button type="button" class="todo-del" onclick="deleteTask(${t.id})" aria-label="Eliminar tarea"><i class="ti ti-trash" aria-hidden="true" style="font-size:15px;"></i></button>
+          </div>`;
+      }).join('');
+    }
+
+    const bulk = document.getElementById('bulk-bar');
+    if (done > 0) {
+      bulk.style.display = 'flex';
+      document.getElementById('bulk-info').textContent = `${done} tarea${done > 1 ? 's' : ''} completada${done > 1 ? 's' : ''}`;
+    } else {
+      bulk.style.display = 'none';
+    }
   }
 
-  const bulk = document.getElementById('bulk-bar');
-  if (done > 0) {
-    bulk.style.display = 'flex';
-    document.getElementById('bulk-info').textContent = `${done} tarea${done > 1 ? 's' : ''} completada${done > 1 ? 's' : ''}`;
-  } else {
-    bulk.style.display = 'none';
+  function escHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
-}
 
-function escHtml(s) {
-  if (!s) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+  window.addTask = addTask;
+  window.toggleTask = toggleTask;
+  window.deleteTask = deleteTask;
+  window.clearDone = clearDone;
+  window.setFilter = setFilter;
+  window.selectTag = selectTag;
 
-document.getElementById('new-task').addEventListener('keydown', e => {
-  if (e.key === 'Enter') addTask();
-});
+  document.getElementById('new-task').addEventListener('keydown', e => {
+    if (e.key === 'Enter') addTask();
+  });
 
-// keyboard support: toggle tasks when focused and user presses Enter or Space
-document.addEventListener('keydown', (e) => {
-  const el = document.activeElement;
-  if (!el) return;
-  if (el.classList && el.classList.contains('todo-check') && (e.key === 'Enter' || e.key === ' ')) {
-    e.preventDefault();
-    el.click();
-  }
-});
+  document.addEventListener('keydown', (e) => {
+    const el = document.activeElement;
+    if (!el) return;
+    if (el.classList && el.classList.contains('todo-check') && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      el.click();
+    }
+  });
 
-selectTag('');
-loadTasks();
+  selectTag('');
+  loadTasks();
 </script>
