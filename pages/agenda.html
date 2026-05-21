@@ -112,6 +112,37 @@
 </style>
 
 <h2 class="sr-only">Aplicación de lista de tareas con base de datos persistente</h2>
+<!--firebase link-->
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDTslJvs8MrEYdrJhQD-ev19d06WSPSeTI",
+    authDomain: "agenda-51723.firebaseapp.com",
+    projectId: "agenda-51723",
+    storageBucket: "agenda-51723.firebasestorage.app",
+    messagingSenderId: "273930695051",
+    appId: "1:273930695051:web:8ab3688c7263a3e689bf8e",
+    measurementId: "G-RL47Y6PPJ8"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+  const tasksDoc = doc(db, 'agenda', 'tasks');
+
+  // Make these available to the non-module script below
+  window.firebaseDb = db;
+  window.firebaseTasksDoc = tasksDoc;
+  window.firebaseGetDoc = getDoc;
+  window.firebaseSetDoc = setDoc;
+</script>
 
 <div id="app">
   <div class="header" style="display:flex; justify-content:space-between; align-items:flex-start;">
@@ -165,25 +196,21 @@ let selectedTag = '';
 let saving = false;
 
 const STORAGE_KEY = 'tasks_v1';
-// Optional external API URL. Set to your endpoint (e.g. 'https://mi-api.example.com') to use an external DB.
-// development default: if estás ejecutando el backend de ejemplo localmente
-const EXTERNAL_API_URL = 'http://localhost:3000';
+const FIREBASE_ENABLED = true;
 
-// Storage wrapper: prefer external API when configured, otherwise local platform storage / localStorage
 async function storageGet(key) {
-  // try external API first if configured
-  if (EXTERNAL_API_URL) {
+  if (FIREBASE_ENABLED && window.firebaseTasksDoc && window.firebaseGetDoc) {
     try {
-      const res = await fetch(EXTERNAL_API_URL.replace(/\/$/, '') + '/tasks', { method: 'GET', headers: { 'Accept': 'application/json' } });
-      if (res.ok) {
-        const body = await res.json();
-        return { value: JSON.stringify(body) };
+      const snapshot = await window.firebaseGetDoc(window.firebaseTasksDoc);
+      if (snapshot.exists()) {
+        const data = snapshot.data();
+        return { value: JSON.stringify(data.tasks || []) };
       }
-    } catch(e) {
-      // fallthrough to platform storage
-      console.warn('External DB get failed:', e);
+    } catch (e) {
+      console.warn('Firebase read failed:', e);
     }
   }
+
   if (window.storage && typeof window.storage.get === 'function') {
     try { return await window.storage.get(key); } catch(e) { return { value: null }; }
   }
@@ -191,20 +218,19 @@ async function storageGet(key) {
 }
 
 async function storageSet(key, value) {
-  if (EXTERNAL_API_URL) {
+  if (FIREBASE_ENABLED && window.firebaseTasksDoc && window.firebaseSetDoc) {
     try {
-      const res = await fetch(EXTERNAL_API_URL.replace(/\/$/, '') + '/tasks', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: value
+      const items = JSON.parse(value);
+      await window.firebaseSetDoc(window.firebaseTasksDoc, {
+        tasks: items,
+        updatedAt: new Date().toISOString()
       });
-      if (res.ok) return;
-      console.warn('External DB save responded with', res.status);
-    } catch(e) {
-      console.warn('External DB save failed:', e);
+      return;
+    } catch (e) {
+      console.warn('Firebase save failed:', e);
     }
-    // fall back to local storage if external fails
   }
+
   if (window.storage && typeof window.storage.set === 'function') {
     try { return await window.storage.set(key, value); } catch(e) { localStorage.setItem(key, value); }
   }
@@ -227,15 +253,15 @@ async function saveTasks() {
   if (saving) return;
   saving = true;
   const status = document.getElementById('db-status');
-  if (EXTERNAL_API_URL) {
-    status.innerHTML = `<span class="db-dot" style="background:#BA7517"></span> Sincronizando con ${EXTERNAL_API_URL}`;
+  if (FIREBASE_ENABLED) {
+    status.innerHTML = '<span class="db-dot" style="background:#BA7517"></span> Guardando en Firebase…';
   } else {
     status.innerHTML = '<span class="db-dot" style="background:#BA7517"></span> Guardando…';
   }
   try {
     await storageSet(STORAGE_KEY, JSON.stringify(tasks));
-    if (EXTERNAL_API_URL) {
-      status.innerHTML = '<span class="db-dot"></span> Sincronizado con base externa';
+    if (FIREBASE_ENABLED) {
+      status.innerHTML = '<span class="db-dot"></span> Guardado en Firebase';
     } else {
       status.innerHTML = '<span class="db-dot"></span> Guardado';
     }
