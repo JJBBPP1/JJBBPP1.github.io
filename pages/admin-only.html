@@ -86,6 +86,7 @@
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
     import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
+    const ADMIN_EMAILS = ['javierbravopintado06@gmail.com'];
     const statusMessage = document.getElementById('admin-status-message');
     const signOutBtn = document.getElementById('sign-out-btn');
 
@@ -99,15 +100,28 @@
         return;
       }
 
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      const isAdmin = userDoc.exists() && userDoc.data()?.role === 'admin';
-
-      if (!isAdmin) {
-        window.location.href = './plan-empresa.html';
+      // Verificar si el email está en la lista de admins
+      if (ADMIN_EMAILS.includes(user.email)) {
+        statusMessage.textContent = `Bienvenido, ${user.email}. Tu acceso admin está confirmado.`;
         return;
       }
 
-      statusMessage.textContent = `Bienvenido, ${user.email}. Tu acceso admin está confirmado.`;
+      // Verificar el rol en Firestore como respaldo
+      try {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        const isAdmin = userDoc.exists() && userDoc.data()?.role === 'admin';
+
+        if (!isAdmin) {
+          alert('Acceso denegado. Solo administradores pueden acceder a esta página.');
+          window.location.href = './plan-empresa.html';
+          return;
+        }
+
+        statusMessage.textContent = `Bienvenido, ${user.email}. Tu acceso admin está confirmado.`;
+      } catch (error) {
+        console.error('Error verifying admin:', error);
+        window.location.href = './plan-empresa.html';
+      }
     }
 
     onAuthStateChanged(auth, (user) => {

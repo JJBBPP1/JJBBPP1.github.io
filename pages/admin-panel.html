@@ -156,15 +156,28 @@
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
     import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
+    const ADMIN_EMAILS = ['javierbravopintado06@gmail.com'];
     const adminOnlyLink = document.getElementById('admin-only-link');
 
     /**
-     * Comprueba si el usuario autenticado tiene rol admin en Firestore.
+     * Comprueba si el usuario autenticado tiene acceso de admin.
      */
     async function isAdminUser(user) {
       if (!user) return false;
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      return userDoc.exists() && userDoc.data()?.role === 'admin';
+      
+      // Verificar si el email está en la lista de admins
+      if (ADMIN_EMAILS.includes(user.email)) {
+        return true;
+      }
+      
+      // Verificar el rol en Firestore como respaldo
+      try {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        return userDoc.exists() && userDoc.data()?.role === 'admin';
+      } catch (error) {
+        console.warn('Error checking admin role:', error);
+        return false;
+      }
     }
 
     onAuthStateChanged(auth, async (user) => {
@@ -174,9 +187,18 @@
       }
 
       const isAdmin = await isAdminUser(user);
-      if (isAdmin) {
+      if (!isAdmin) {
+        alert('Acceso denegado. Solo administradores pueden acceder a este panel.');
+        window.location.href = './plan-empresa.html';
+        return;
+      }
+
+      // Mostrar enlaces de admin si el usuario es admin
+      if (adminOnlyLink) {
         adminOnlyLink.classList.remove('hidden');
       }
+      
+      console.log(`Admin access granted for ${user.email}`);
     });
 
     document.querySelectorAll('a[href^="#"]').forEach(link => {

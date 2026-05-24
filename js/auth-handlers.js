@@ -2,6 +2,8 @@ import { auth, db } from "./firebase-init.js";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 import { doc, setDoc, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
+const ADMIN_EMAILS = ['javierbravopintado06@gmail.com'];
+
 const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
 const loginMessage = document.getElementById('login-message');
@@ -46,6 +48,12 @@ function showLoggedOutState() {
   if (loginForm) loginForm.style.display = 'grid';
   if (registerForm) registerForm.style.display = 'grid';
   if (authEmail) authEmail.textContent = '';
+  
+  // Ocultar botones de admin
+  const adminButtons = document.getElementById('admin-buttons');
+  const adminNavBtn = document.getElementById('admin-nav-btn');
+  if (adminButtons) adminButtons.classList.add('hidden');
+  if (adminNavBtn) adminNavBtn.classList.add('hidden');
 }
 
 async function showLoggedInState(user) {
@@ -53,6 +61,21 @@ async function showLoggedInState(user) {
   if (authEmail) authEmail.textContent = user.email;
   if (loginForm) loginForm.style.display = 'none';
   if (registerForm) registerForm.style.display = 'none';
+  
+  // Verificar si es admin
+  const isAdmin = ADMIN_EMAILS.includes(user.email);
+  const adminButtons = document.getElementById('admin-buttons');
+  const adminNavBtn = document.getElementById('admin-nav-btn');
+  
+  if (isAdmin) {
+    if (adminButtons) adminButtons.classList.remove('hidden');
+    if (adminNavBtn) adminNavBtn.classList.remove('hidden');
+    console.log('Admin buttons shown for', user.email);
+  } else {
+    if (adminButtons) adminButtons.classList.add('hidden');
+    if (adminNavBtn) adminNavBtn.classList.add('hidden');
+  }
+  
   try {
     const userDoc = await getDoc(doc(db, 'users', user.uid));
     if (userDoc.exists()) {
@@ -91,9 +114,12 @@ if (loginForm) {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      showMessage(loginMessage, '✓ Sesión iniciada correctamente. Redirigiendo al panel...');
+      showMessage(loginMessage, '✓ Sesión iniciada correctamente. Redirigiendo...');
+      
+      // Redirigir a admin-panel si es admin
+      const redirectUrl = ADMIN_EMAILS.includes(email) ? './admin-panel.html' : './admin-panel.html';
       setTimeout(() => {
-        window.location.href = './admin-panel.html';
+        window.location.href = redirectUrl;
       }, 1500);
     } catch (error) {
       console.error(error);
@@ -122,10 +148,14 @@ if (registerForm) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+      
+      // Asignar rol admin si el email está en la lista de admins
+      const role = ADMIN_EMAILS.includes(email) ? 'admin' : 'user';
+      
       await setDoc(doc(db, 'users', user.uid), {
         email: user.email,
         createdAt: serverTimestamp(),
-        role: 'user'
+        role: role
       });
       showMessage(registerMessage, '✓ Usuario registrado y guardado en la base de datos. Ya puedes iniciar sesión.');
       registerForm.reset();

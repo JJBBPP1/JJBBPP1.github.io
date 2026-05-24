@@ -21,6 +21,7 @@
         <li><a href="#planes">Planes</a></li>
         <li><a href="./admin-panel.html">Panel</a></li>
         <li><a href="./configuracion-servidor.html">Configuración</a></li>
+        <li id="admin-nav-btn" class="hidden"><a href="./admin-panel.html" class="admin-link">👨‍💼 Administrador</a></li>
         <li><a href="#login">Mi cuenta</a></li>
       </ul>
     </div>
@@ -224,17 +225,55 @@
                 <label>Características adicionales</label>
                 <div class="checkbox-group">
                   <label class="checkbox-label">
-                    <input type="checkbox" name="ddos-protection" value="ddos">
-                    Protección DDoS avanzada
+                    <input type="checkbox" name="ddos-protection" value="ddos" data-price="5">
+                    Protección DDoS avanzada (+€5/mes)
                   </label>
                   <label class="checkbox-label">
-                    <input type="checkbox" name="backups" value="backups">
-                    Backups horarios
+                    <input type="checkbox" name="backups" value="backups" data-price="3">
+                    Backups horarios (+€3/mes)
                   </label>
                   <label class="checkbox-label">
-                    <input type="checkbox" name="cdn" value="cdn">
-                    CDN incluido
+                    <input type="checkbox" name="cdn" value="cdn" data-price="7">
+                    CDN incluido (+€7/mes)
                   </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full-width">
+                <label>Servicios Empresariales</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="consulting" value="consulting" data-price="50">
+                    Consultoría empresarial (+€50/mes)
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="migration" value="migration" data-price="100">
+                    Migración de datos asistida (+€100 único)
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="dedicated-support" value="dedicated-support" data-price="75">
+                    Equipo dedicado 24/7 (+€75/mes)
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="advanced-monitoring" value="advanced-monitoring" data-price="20">
+                    Monitoreo avanzado y alertas (+€20/mes)
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="sla-custom" value="sla-custom" data-price="200">
+                    SLA personalizado 99.99% (+€200/mes)
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full-width price-display">
+                <label>Precio estimado:</label>
+                <div class="price-box">
+                  <span class="price-amount">€<span id="estimated-price">9.99</span>/mes</span>
+                  <p class="price-breakdown" id="price-breakdown"></p>
                 </div>
               </div>
             </div>
@@ -317,6 +356,10 @@
           <p>Gestiona tu servidor desde tu cuenta personalizada</p>
           <div id="auth-state" class="auth-state hidden">
             <p>Conectado como <strong id="auth-email"></strong></p>
+            <div id="admin-buttons" class="hidden" style="margin-bottom: 1rem;">
+              <a href="./admin-panel.html" class="btn-primary btn-block" style="display: block; text-align: center; padding: 0.9rem; margin-bottom: 0.5rem;">👨‍💼 Panel de Administrador</a>
+              <a href="./admin-only.html" class="btn-secondary btn-block" style="display: block; text-align: center; padding: 0.9rem; margin-bottom: 0.5rem;">🔐 Zona Exclusiva</a>
+            </div>
             <button id="sign-out-btn" type="button" class="btn-secondary btn-block">Cerrar sesión</button>
           </div>
           <form id="login-form" class="login-form">
@@ -405,6 +448,93 @@
   <script type="module">
     import { saveSelectedPlan } from '../js/auth-handlers.js';
 
+    // Precios base por plan
+    const planPrices = {
+      starter: 4.99,
+      professional: 9.99,
+      enterprise: 24.99,
+      personalizado: 0
+    };
+
+    // Función para calcular precio dinámico
+    function calculateDynamicPrice() {
+      const ram = parseInt(document.getElementById('server-ram').value) || 4;
+      const storage = parseInt(document.getElementById('server-storage').value) || 50;
+      const players = parseInt(document.getElementById('server-players').value) || 50;
+      const supportLevel = document.getElementById('server-support').value;
+
+      // Precio base según RAM y storage
+      let basePrice = 4.99;
+      basePrice += (ram - 2) * 0.5; // €0.50 por GB de RAM adicional
+      basePrice += (storage - 20) * 0.08; // €0.08 por GB de storage adicional
+
+      // Incremento por soporte
+      const supportAddons = {
+        'standard': 0,
+        'premium': 3,
+        '24-7': 10
+      };
+      basePrice += supportAddons[supportLevel] || 0;
+
+      // Características adicionales
+      let addonsPrice = 0;
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      const selectedServices = [];
+
+      checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+          const price = parseFloat(checkbox.getAttribute('data-price')) || 0;
+          addonsPrice += price;
+          selectedServices.push({
+            name: checkbox.parentElement.textContent.trim(),
+            price: price
+          });
+        }
+      });
+
+      const totalPrice = basePrice + addonsPrice;
+
+      // Actualizar displays
+      document.getElementById('estimated-price').textContent = totalPrice.toFixed(2);
+
+      // Generar desglose
+      let breakdown = `<strong>Desglose:</strong><br>`;
+      breakdown += `Base (RAM + Storage): €${basePrice.toFixed(2)}<br>`;
+      if (addonsPrice > 0) {
+        breakdown += `Servicios: €${addonsPrice.toFixed(2)}<br>`;
+        selectedServices.forEach(service => {
+          breakdown += `&nbsp;&nbsp;• ${service.name.split('(')[0].trim()}: €${service.price.toFixed(2)}<br>`;
+        });
+      }
+      breakdown += `<strong>Total: €${totalPrice.toFixed(2)}/mes</strong>`;
+
+      document.getElementById('price-breakdown').innerHTML = breakdown;
+    }
+
+    // Event listeners para actualizar precio
+    const priceInputs = [
+      'server-ram',
+      'server-storage',
+      'server-players',
+      'server-support'
+    ];
+
+    priceInputs.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.addEventListener('change', calculateDynamicPrice);
+        element.addEventListener('input', calculateDynamicPrice);
+      }
+    });
+
+    // Event listeners para checkboxes
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+      checkbox.addEventListener('change', calculateDynamicPrice);
+    });
+
+    // Calcular precio inicial
+    calculateDynamicPrice();
+
     // Smooth scroll navigation with history
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', (e) => {
@@ -427,6 +557,7 @@
         if (plan === 'personalizado') {
           document.getElementById('custom-server-form').classList.add('visible');
           document.getElementById('custom-server-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          calculateDynamicPrice();
         } else {
           document.getElementById('custom-server-form').classList.remove('visible');
           saveSelectedPlan(plan);
@@ -458,6 +589,7 @@
       msg.innerHTML = '✓ Solicitud enviada correctamente. Nuestro equipo te contactará en 24 horas.';
       msg.classList.add('visible');
       e.target.reset();
+      calculateDynamicPrice();
 
       setTimeout(() => {
         msg.classList.remove('visible');

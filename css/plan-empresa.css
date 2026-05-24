@@ -865,6 +865,48 @@ img {
   font-size: 0.85rem;
 }
 
+/* ===== PRECIO DINÁMICO ===== */
+.price-display {
+  background: rgba(0,196,180,0.08);
+  border: 2px solid rgba(0,196,180,0.3);
+  border-radius: var(--radius);
+  padding: 1.5rem !important;
+  margin-top: 2rem;
+}
+
+.price-box {
+  background: rgba(0,196,180,0.12);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  margin-top: 1rem;
+  border: 1px solid rgba(0,196,180,0.2);
+}
+
+.price-amount {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.price-breakdown {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.6;
+  text-align: left;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.price-breakdown strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
 /* ===== FOOTER ===== */
 .footer {
   background: rgba(0,0,0,0.3);
