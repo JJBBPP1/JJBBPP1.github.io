@@ -114,13 +114,18 @@ if (loginForm) {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      showMessage(loginMessage, '✓ Sesión iniciada correctamente. Redirigiendo...');
-      
-      // Redirigir a admin-panel si es admin
-      const redirectUrl = ADMIN_EMAILS.includes(email) ? './admin-panel.html' : './admin-panel.html';
-      setTimeout(() => {
-        window.location.href = redirectUrl;
-      }, 1500);
+      showMessage(loginMessage, '✓ Sesión iniciada correctamente.');
+      // Actualizar estado local inmediatamente para mostrar botones de admin
+      if (auth.currentUser) {
+        try {
+          // llamar a la función que actualiza el estado mostrada en la sesión
+          const user = auth.currentUser;
+          // si existe, invocar el manejador para UI
+          if (typeof showLoggedInState === 'function') showLoggedInState(user);
+        } catch (err) {
+          console.warn('No se pudo actualizar el estado inmediatamente:', err);
+        }
+      }
     } catch (error) {
       console.error(error);
       showMessage(loginMessage, 'Error de inicio de sesión. Comprueba tus credenciales.', false);
