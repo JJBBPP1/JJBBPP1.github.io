@@ -178,11 +178,11 @@
                 <label for="server-game">Juego principal</label>
                 <select id="server-game" required>
                   <option value="">Selecciona un juego</option>
-                  <option value="minecraft">Minecraft</option>
-                  <option value="cs2">Counter-Strike 2</option>
-                  <option value="rust">Rust</option>
-                  <option value="ark">ARK: Survival Evolved</option>
-                  <option value="otro">Otro</option>
+                  <option style="color: black;" value="minecraft">Minecraft</option>
+                  <option style="color: black;" value="cs2">Counter-Strike 2</option>
+                  <option style="color: black;" value="rust">Rust</option>
+                  <option style="color: black;" value="ark">ARK: Survival Evolved</option>
+                  <option style="color: black;" value="otro">Otro</option>
                 </select>
               </div>
             </div>
@@ -191,7 +191,7 @@
               <div class="form-group">
                 <label for="server-ram">RAM (GB)</label>
                 <div class="slider-container">
-                  <input id="server-ram" type="range" min="2" max="16" value="4" step="2">
+                  <input id="server-ram" type="range" min="2" max="64" value="4" step="2">
                   <span id="ram-value" class="slider-value">4 GB</span>
                 </div>
               </div>
@@ -331,7 +331,7 @@
             <button type="submit" class="btn-primary btn-block">Iniciar sesión</button>
             <p id="login-message" class="form-message">Acceso de demostración. En producción, se gestiona de forma segura.</p>
           </form>
-          <p class="login-footer">¿No tienes cuenta? Crea una cuenta con Firebase.</p>
+          <p class="login-footer">¿No tienes cuenta? Crea una ahora.</p>
           <form id="register-form" class="login-form">
             <div class="form-group">
               <label for="register-email">Correo electrónico</label>
