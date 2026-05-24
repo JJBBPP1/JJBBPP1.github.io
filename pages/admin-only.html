@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS Gaming & Servers | Admin exclusivo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/plan-empresa.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-brand">
+        <span class="brand-icon">N</span>
+        <span class="brand-name">NEXUS</span>
+      </div>
+      <ul class="navbar-menu">
+        <li><a href="./plan-empresa.html">Inicio</a></li>
+        <li><a href="./admin-panel.html">Panel</a></li>
+        <li><a href="./configuracion-servidor.html">Configuración</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="hero-header">
+      <div class="hero-content">
+        <span class="eyebrow">Acceso exclusivo • Administrador</span>
+        <h1>Zona de administración exclusiva</h1>
+        <p>Esta página solo puede verla un usuario con rol <strong>admin</strong>. Si no eres administrador, serás redirigido.</p>
+        <div class="hero-cta">
+          <a href="./admin-panel.html" class="btn-secondary">Volver al panel</a>
+          <button id="sign-out-btn" class="btn-primary">Cerrar sesión</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="feature-section">
+      <h2>Controles exclusivos de administrador</h2>
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Gestión de usuarios</h3>
+          <p>Accede a funciones sensibles como revisión de roles y control de permisos globales.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>Monitoreo avanzado</h3>
+          <p>Visualiza estadísticas de uso y seguridad que solo admins pueden revisar.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">⚙️</div>
+          <h3>Configuración del sistema</h3>
+          <p>Esta página reserva las operaciones críticas a administradores autorizados.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="pricing-section">
+      <div class="pricing-header">
+        <h2>Acceso admin confirmado</h2>
+        <p id="admin-status-message">Verificando tu permiso de administrador…</p>
+      </div>
+      <div class="custom-form-container">
+        <p>Solo usuarios con rol <strong>admin</strong> pueden permanecer en esta pantalla.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div>
+        <strong>NEXUS Gaming & Servers</strong>
+        <p>Sección restringida para administración avanzada.</p>
+      </div>
+      <div>
+        <p><strong>Email:</strong> javierbravopintado06@gmail.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { auth, db } from '../js/firebase-init.js';
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+    const statusMessage = document.getElementById('admin-status-message');
+    const signOutBtn = document.getElementById('sign-out-btn');
+
+    /**
+     * Redirige al usuario si no tiene rol admin.
+     * Este es el control principal para que solo los administradores accedan a esta página.
+     */
+    async function verifyAdmin(user) {
+      if (!user) {
+        window.location.href = './plan-empresa.html';
+        return;
+      }
+
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      const isAdmin = userDoc.exists() && userDoc.data()?.role === 'admin';
+
+      if (!isAdmin) {
+        window.location.href = './plan-empresa.html';
+        return;
+      }
+
+      statusMessage.textContent = `Bienvenido, ${user.email}. Tu acceso admin está confirmado.`;
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      verifyAdmin(user);
+    });
+
+    signOutBtn.addEventListener('click', async () => {
+      await signOut(auth);
+      window.location.href = './plan-empresa.html';
+    });
+  </script>
+</body>
+</html>

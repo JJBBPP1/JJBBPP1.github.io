@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS Gaming & Servers | Configuración de servidor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/plan-empresa.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-brand">
+        <span class="brand-icon">N</span>
+        <span class="brand-name">NEXUS</span>
+      </div>
+      <ul class="navbar-menu">
+        <li><a href="./plan-empresa.html">Inicio</a></li>
+        <li><a href="./admin-panel.html">Panel</a></li>
+        <li><a href="./configuracion-servidor.html">Configuración</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="hero-header">
+      <div class="hero-content">
+        <span class="eyebrow">Configuración • Seguridad • Usuario</span>
+        <h1>Configuración de servidor para cada usuario</h1>
+        <p>Administra recursos, mods y reglas de acceso desde un centro de control pensado para servidores multijugador.</p>
+        <div class="hero-cta">
+          <a href="./admin-panel.html" class="btn-secondary">Ir al panel</a>
+          <a href="./plan-empresa.html" class="btn-primary">Volver a NEXUS</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="feature-section">
+      <h2>Ajustes de servidor</h2>
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon">📦</div>
+          <h3>Recursos dinámicos</h3>
+          <p>Mantén RAM, CPU y almacenamiento ajustados según la demanda de cada servidor y jugador.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🧩</div>
+          <h3>Plugins y mods</h3>
+          <p>Instala y activa complementos de forma segura con un solo clic, sin necesidad de acceso profundo al servidor.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Seguridad personalizada</h3>
+          <p>Define reglas de firewall, whitelist y control de permisos para mantener el servidor protegido.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="settings-section">
+      <div class="section-header">
+        <h2>Configuración rápida</h2>
+        <p>Selecciona los parámetros principales y guarda la configuración para todos los usuarios vinculados a este servidor.</p>
+      </div>
+      <div class="custom-form-container">
+        <form class="form-fields">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="select-server">Servidor</label>
+              <select id="select-server">
+                <option>NeonCraft - Minecraft</option>
+                <option>StrikeHub - CS2</option>
+                <option>RustForge - Rust</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="server-phase">Modo</label>
+              <select id="server-phase">
+                <option>Producción</option>
+                <option>Pruebas</option>
+                <option>Mantenimiento</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cpu-allocation">CPU (%)</label>
+              <input id="cpu-allocation" type="number" min="10" max="100" value="60">
+            </div>
+            <div class="form-group">
+              <label for="ram-allocation">RAM (GB)</label>
+              <input id="ram-allocation" type="number" min="2" max="32" value="8">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label>Activar opciones de servidor</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" checked>
+                  Plugins habilitados
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" checked>
+                  Backups automáticos
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox">
+                  Modo solo lectura para usuarios invitados
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn-primary btn-large">Guardar cambios</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="benefits-section">
+      <h2>Protección y recuperación</h2>
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>DDoS protection</h3>
+          <p>Activa la protección avanzada para mantener el servidor estable frente a ataques y picos de tráfico inesperados.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">💾</div>
+          <h3>Restauración rápida</h3>
+          <p>Restaura puntos de recuperación en segundos y vuelve a la configuración estable en cualquier momento.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🌐</div>
+          <h3>Acceso remoto</h3>
+          <p>Permite conexiones seguras desde dispositivos autorizados para gestionar configuraciones sin salir del panel.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div>
+        <strong>NEXUS Gaming & Servers</strong>
+        <p>Centro de configuración para servidores y usuarios con opciones avanzadas de seguridad.</p>
+      </div>
+      <div>
+        <p><strong>Servicios:</strong> Configuración, seguridad, backups, plugins, gestión de permisos</p>
+      </div>
+      <div>
+        <p><strong>Ubicación:</strong> Miajadas, Cáceres | <strong>Email:</strong> javierbravopintado06@gmail.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { auth } from '../js/firebase-init.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = './plan-empresa.html';
+      }
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            history.pushState(null, null, href);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
