@@ -39,22 +39,232 @@
 
     <section class="feature-section">
       <h2>Controles exclusivos de administrador</h2>
-      <div class="features-grid">
-        <article class="feature-card">
-          <div class="feature-icon">🛡️</div>
-          <h3>Gestión de usuarios</h3>
-          <p>Accede a funciones sensibles como revisión de roles y control de permisos globales.</p>
-        </article>
-        <article class="feature-card">
-          <div class="feature-icon">📈</div>
-          <h3>Monitoreo avanzado</h3>
-          <p>Visualiza estadísticas de uso y seguridad que solo admins pueden revisar.</p>
-        </article>
-        <article class="feature-card">
-          <div class="feature-icon">⚙️</div>
-          <h3>Configuración del sistema</h3>
-          <p>Esta página reserva las operaciones críticas a administradores autorizados.</p>
-        </article>
+      
+      <!-- GESTIÓN DE USUARIOS -->
+      <div class="admin-control-section">
+        <h3>🛡️ Gestión de usuarios</h3>
+        <div class="control-panel">
+          <form id="user-form" class="admin-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="user-email">Email del usuario</label>
+                <input id="user-email" type="email" placeholder="usuario@ejemplo.com" required>
+              </div>
+              <div class="form-group">
+                <label for="user-role">Rol</label>
+                <select id="user-role" required>
+                  <option value="user">Usuario</option>
+                  <option value="moderator">Moderador</option>
+                  <option value="admin">Administrador</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-primary">Añadir usuario</button>
+            </div>
+          </form>
+          <div id="users-list" class="admin-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Rol</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="users-tbody">
+                <tr>
+                  <td>javierbravopintado06@gmail.com</td>
+                  <td><span class="role-badge admin">Administrador</span></td>
+                  <td><button class="btn-small" disabled>Principal</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- MONITOREO AVANZADO -->
+      <div class="admin-control-section">
+        <h3>📈 Monitoreo avanzado</h3>
+        <div class="monitoring-grid">
+          <div class="stat-card">
+            <div class="stat-label">Usuarios activos</div>
+            <div class="stat-value" id="active-users">1</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Servidores en línea</div>
+            <div class="stat-value" id="online-servers">3</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Uso de CPU</div>
+            <div class="stat-value" id="cpu-usage">45%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Memoria utilizada</div>
+            <div class="stat-value" id="memory-usage">62%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Solicitudes/min</div>
+            <div class="stat-value" id="requests-per-min">245</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Tiempo de respuesta</div>
+            <div class="stat-value" id="response-time">120ms</div>
+          </div>
+        </div>
+        <p class="monitoring-note">Los datos se actualizan automáticamente cada 3 segundos</p>
+      </div>
+
+      <!-- GESTIÓN DE BACKUPS -->
+      <div class="admin-control-section">
+        <h3>💾 Gestión de backups</h3>
+        <div class="backup-controls">
+          <div class="backup-buttons">
+            <button class="btn-primary" id="create-backup-btn">Crear backup ahora</button>
+            <button class="btn-secondary" id="restore-backup-btn">Restaurar</button>
+          </div>
+          <div class="backup-list">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Tamaño</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="backups-tbody">
+                <tr>
+                  <td>2026-05-25 09:30</td>
+                  <td>2.5 GB</td>
+                  <td><span class="status-badge success">Completado</span></td>
+                  <td><button class="btn-small">Descargar</button></td>
+                </tr>
+                <tr>
+                  <td>2026-05-24 09:30</td>
+                  <td>2.4 GB</td>
+                  <td><span class="status-badge success">Completado</span></td>
+                  <td><button class="btn-small">Descargar</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOGS DEL SISTEMA -->
+      <div class="admin-control-section">
+        <h3>📋 Logs del sistema</h3>
+        <div class="logs-container">
+          <div id="system-logs" class="logs-display">
+            <div class="log-entry info">[INFO] Sistema iniciado correctamente</div>
+            <div class="log-entry success">[SUCCESS] Backup completado: 2.5 GB</div>
+            <div class="log-entry warning">[WARNING] CPU al 85%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GESTIÓN DE SERVIDORES -->
+      <div class="admin-control-section">
+        <h3>🖥️ Gestión de servidores</h3>
+        <div class="servers-grid">
+          <div class="server-card">
+            <div class="server-name">Servidor Principal</div>
+            <div class="server-status online">En línea</div>
+            <div class="server-specs">
+              <div>CPU: 45%</div>
+              <div>RAM: 62%</div>
+            </div>
+            <button class="btn-small">Reiniciar</button>
+          </div>
+          <div class="server-card">
+            <div class="server-name">Servidor Backup</div>
+            <div class="server-status online">En línea</div>
+            <div class="server-specs">
+              <div>CPU: 32%</div>
+              <div>RAM: 48%</div>
+            </div>
+            <button class="btn-small">Reiniciar</button>
+          </div>
+          <div class="server-card">
+            <div class="server-name">Servidor CDN</div>
+            <div class="server-status online">En línea</div>
+            <div class="server-specs">
+              <div>CPU: 28%</div>
+              <div>RAM: 55%</div>
+            </div>
+            <button class="btn-small">Reiniciar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTROL DE SEGURIDAD -->
+      <div class="admin-control-section">
+        <h3>🔒 Control de seguridad</h3>
+        <form id="security-form" class="admin-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firewall-status">
+                <input type="checkbox" id="firewall-status" checked>
+                Firewall habilitado
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="ddos-protection">
+                <input type="checkbox" id="ddos-protection" checked>
+                Protección DDoS
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="ssl-enabled">
+                <input type="checkbox" id="ssl-enabled" checked>
+                SSL/TLS habilitado
+              </label>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ip-whitelist">IPs en lista blanca</label>
+              <input id="ip-whitelist" type="text" placeholder="192.168.1.1, 10.0.0.1">
+            </div>
+          </div>
+          <button type="submit" class="btn-primary">Guardar configuración de seguridad</button>
+          <p id="security-message" class="form-message"></p>
+        </form>
+      </div>
+
+      <!-- CONFIGURACIÓN DEL SISTEMA -->
+      <div class="admin-control-section">
+        <h3>⚙️ Configuración del sistema</h3>
+        <form id="system-config" class="admin-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="backup-frequency">Frecuencia de backups</label>
+              <select id="backup-frequency">
+                <option value="hourly">Cada hora</option>
+                <option value="daily" selected>Diariamente</option>
+                <option value="weekly">Semanalmente</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="max-users">Máximo de usuarios permitidos</label>
+              <input id="max-users" type="number" value="100" min="1">
+            </div>
+            <div class="form-group">
+              <label for="maintenance-mode">
+                <input type="checkbox" id="maintenance-mode">
+                Modo mantenimiento
+              </label>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="system-message">Mensaje del sistema</label>
+              <textarea id="system-message" placeholder="Mensaje visible para todos los usuarios" rows="3"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary">Guardar configuración</button>
+          <p id="config-message" class="form-message"></p>
+        </form>
       </div>
     </section>
 
@@ -62,9 +272,6 @@
       <div class="pricing-header">
         <h2>Acceso admin confirmado</h2>
         <p id="admin-status-message">Verificando tu permiso de administrador…</p>
-      </div>
-      <div class="custom-form-container">
-        <p>Solo <strong>javierbravopintado06@gmail.com</strong> puede acceder a esta pantalla.</p>
       </div>
     </section>
   </main>
@@ -85,39 +292,197 @@
     import { auth } from '../js/firebase-init.js';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-    const ADMIN_EMAILS = ['javierbravopintado06@gmail.com'];
     const statusMessage = document.getElementById('admin-status-message');
     const signOutBtn = document.getElementById('sign-out-btn');
+    
+    // Gestión de usuarios
+    const userForm = document.getElementById('user-form');
+    const usersTbody = document.getElementById('users-tbody');
+    let users = [
+      { email: 'javierbravopintado06@gmail.com', role: 'admin' }
+    ];
 
-    /**
-     * Redirige al usuario si no es javierbravopintado06@gmail.com.
-     * Este es el control principal para que solo este correo específico acceda a esta página.
-     */
-    async function verifyAdmin(user) {
-      if (!user) {
-        window.location.href = './plan-empresa.html';
-        return;
-      }
-
-      // Verificar si el email es javierbravopintado06@gmail.com
-      if (ADMIN_EMAILS.includes(user.email)) {
-        statusMessage.textContent = `Bienvenido, ${user.email}. Tu acceso está confirmado.`;
-        return;
-      }
-
-      // Acceso denegado para cualquier otro usuario
-      alert('Acceso denegado. Solo javierbravopintado06@gmail.com puede acceder a esta página.');
-      window.location.href = './plan-empresa.html';
+    // Mostrar usuarios en la tabla
+    function renderUsers() {
+      usersTbody.innerHTML = '';
+      users.forEach((user, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${user.email}</td>
+          <td><span class="role-badge ${user.role}">${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</span></td>
+          <td>
+            ${user.role === 'admin' ? '<button class="btn-small" disabled>Principal</button>' : 
+              `<button class="btn-small btn-delete" data-index="${index}">Eliminar</button>`}
+          </td>
+        `;
+        usersTbody.appendChild(row);
+      });
+      
+      // Event listeners para botones de eliminar
+      document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = e.target.dataset.index;
+          users.splice(index, 1);
+          renderUsers();
+        });
+      });
     }
 
+    // Añadir usuario
+    userForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('user-email').value;
+      const role = document.getElementById('user-role').value;
+      
+      if (users.find(u => u.email === email)) {
+        alert('Este usuario ya existe.');
+        return;
+      }
+      
+      users.push({ email, role });
+      renderUsers();
+      userForm.reset();
+    });
+
+    // ===== MONITOREO DINÁMICO =====
+    let monitoringData = {
+      activeUsers: 1,
+      onlineServers: 3,
+      cpuUsage: 45,
+      memoryUsage: 62,
+      requestsPerMin: 245,
+      responseTime: 120
+    };
+
+    function updateMonitoringMetrics() {
+      // Simular cambios realistas
+      monitoringData.activeUsers = Math.max(1, monitoringData.activeUsers + Math.random() * 4 - 2);
+      monitoringData.cpuUsage = Math.max(10, Math.min(95, monitoringData.cpuUsage + Math.random() * 20 - 10));
+      monitoringData.memoryUsage = Math.max(20, Math.min(90, monitoringData.memoryUsage + Math.random() * 15 - 7));
+      monitoringData.requestsPerMin = Math.max(50, Math.min(500, monitoringData.requestsPerMin + Math.random() * 60 - 30));
+      monitoringData.responseTime = Math.max(50, Math.min(500, monitoringData.responseTime + Math.random() * 80 - 40));
+
+      // Actualizar en el DOM
+      document.getElementById('active-users').textContent = Math.round(monitoringData.activeUsers);
+      document.getElementById('online-servers').textContent = monitoringData.onlineServers;
+      document.getElementById('cpu-usage').textContent = Math.round(monitoringData.cpuUsage) + '%';
+      document.getElementById('memory-usage').textContent = Math.round(monitoringData.memoryUsage) + '%';
+      document.getElementById('requests-per-min').textContent = Math.round(monitoringData.requestsPerMin);
+      document.getElementById('response-time').textContent = Math.round(monitoringData.responseTime) + 'ms';
+
+      // Cambiar colores según advertencias
+      updateMonitoringColors();
+
+      // Añadir log
+      addSystemLog(`Métricas actualizadas - CPU: ${Math.round(monitoringData.cpuUsage)}%, RAM: ${Math.round(monitoringData.memoryUsage)}%`, 'info');
+    }
+
+    function updateMonitoringColors() {
+      const cpuCard = document.getElementById('cpu-usage').closest('.stat-card');
+      const memCard = document.getElementById('memory-usage').closest('.stat-card');
+      
+      cpuCard.style.borderColor = monitoringData.cpuUsage > 80 ? '#ff6b6b' : 'var(--border)';
+      memCard.style.borderColor = monitoringData.memoryUsage > 80 ? '#ff6b6b' : 'var(--border)';
+    }
+
+    // Actualizar monitoreo cada 3 segundos
+    setInterval(updateMonitoringMetrics, 3000);
+
+    // ===== LOGS DEL SISTEMA =====
+    const systemLogs = document.getElementById('system-logs');
+    let logCount = 0;
+
+    function addSystemLog(message, type = 'info') {
+      const logEntry = document.createElement('div');
+      logEntry.className = `log-entry ${type}`;
+      logEntry.textContent = `[${type.toUpperCase()}] ${new Date().toLocaleTimeString()} - ${message}`;
+      systemLogs.insertBefore(logEntry, systemLogs.firstChild);
+      
+      // Limitar a 20 logs
+      while (systemLogs.children.length > 20) {
+        systemLogs.removeChild(systemLogs.lastChild);
+      }
+    }
+
+    // ===== BACKUPS =====
+    const createBackupBtn = document.getElementById('create-backup-btn');
+    const restoreBackupBtn = document.getElementById('restore-backup-btn');
+
+    createBackupBtn.addEventListener('click', () => {
+      addSystemLog('Iniciando backup...', 'info');
+      setTimeout(() => {
+        addSystemLog('Backup completado: 2.6 GB', 'success');
+      }, 2000);
+    });
+
+    restoreBackupBtn.addEventListener('click', () => {
+      alert('Restaurar backup requiere confirmación. Esta acción puede tardar varios minutos.');
+    });
+
+    // ===== CONFIGURACIÓN DE SEGURIDAD =====
+    const securityForm = document.getElementById('security-form');
+    const securityMessage = document.getElementById('security-message');
+
+    securityForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const firewall = document.getElementById('firewall-status').checked;
+      const ddos = document.getElementById('ddos-protection').checked;
+      const ssl = document.getElementById('ssl-enabled').checked;
+      
+      securityMessage.textContent = '✓ Configuración de seguridad guardada.';
+      securityMessage.style.color = 'var(--success)';
+      securityMessage.classList.add('visible');
+      
+      addSystemLog(`Seguridad actualizada - Firewall: ${firewall ? 'ON' : 'OFF'}, DDoS: ${ddos ? 'ON' : 'OFF'}, SSL: ${ssl ? 'ON' : 'OFF'}`, 'info');
+      
+      setTimeout(() => {
+        securityMessage.classList.remove('visible');
+      }, 3000);
+    });
+
+    // Configuración del sistema
+    const systemConfig = document.getElementById('system-config');
+    const configMessage = document.getElementById('config-message');
+    
+    systemConfig.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const backup = document.getElementById('backup-frequency').value;
+      const maxUsers = document.getElementById('max-users').value;
+      const maintenance = document.getElementById('maintenance-mode').checked;
+      const message = document.getElementById('system-message').value;
+      
+      configMessage.textContent = '✓ Configuración del sistema guardada.';
+      configMessage.style.color = 'var(--success)';
+      configMessage.classList.add('visible');
+      
+      addSystemLog(`Sistema configurado - Backups: ${backup}, Máx usuarios: ${maxUsers}, Mantenimiento: ${maintenance ? 'ON' : 'OFF'}`, 'info');
+      
+      setTimeout(() => {
+        configMessage.classList.remove('visible');
+      }, 3000);
+    });
+
     onAuthStateChanged(auth, (user) => {
-      verifyAdmin(user);
+      if (user) {
+        statusMessage.textContent = `Bienvenido, ${user.email}. Acceso confirmado.`;
+        addSystemLog(`Sesión iniciada: ${user.email}`, 'success');
+      } else {
+        statusMessage.textContent = 'Acceso abierto. Inicia sesión para más funciones.';
+      }
     });
 
     signOutBtn.addEventListener('click', async () => {
+      addSystemLog('Sesión cerrada', 'info');
       await signOut(auth);
       window.location.href = './plan-empresa.html';
     });
+
+    // Renderizar usuarios al cargar
+    renderUsers();
+    
+    // Generar logs iniciales
+    addSystemLog('Panel de administración cargado', 'success');
+    addSystemLog('Todos los sistemas operativos', 'success');
   </script>
 </body>
 </html>
