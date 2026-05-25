@@ -575,6 +575,21 @@ img {
   padding-right: 2.5rem;
 }
 
+/* Forzar color de texto negro en todos los desplegables (select y opciones) */
+.form-group select,
+.admin-form select,
+select {
+  color: #000 !important;
+}
+
+/* Asegurar que las opciones también se muestren en negro sobre fondo claro */
+select option,
+.form-group select option,
+.admin-form select option {
+  color: #000 !important;
+  background: #ffffff !important;
+}
+
 .slider-container {
   display: flex;
   align-items: center;
