@@ -29,7 +29,7 @@
       <div class="hero-content">
         <span class="eyebrow">Acceso exclusivo • Administrador</span>
         <h1>Zona de administración exclusiva</h1>
-        <p>Esta página solo puede verla un usuario con rol <strong>admin</strong>. Si no eres administrador, serás redirigido.</p>
+        <p>Esta página solo puede verla <strong>javierbravopintado06@gmail.com</strong>. Si no eres este usuario, serás redirigido.</p>
         <div class="hero-cta">
           <a href="./admin-panel.html" class="btn-secondary">Volver al panel</a>
           <button id="sign-out-btn" class="btn-primary">Cerrar sesión</button>
@@ -64,7 +64,7 @@
         <p id="admin-status-message">Verificando tu permiso de administrador…</p>
       </div>
       <div class="custom-form-container">
-        <p>Solo usuarios con rol <strong>admin</strong> pueden permanecer en esta pantalla.</p>
+        <p>Solo <strong>javierbravopintado06@gmail.com</strong> puede acceder a esta pantalla.</p>
       </div>
     </section>
   </main>
@@ -82,17 +82,16 @@
   </footer>
 
   <script type="module">
-    import { auth, db } from '../js/firebase-init.js';
+    import { auth } from '../js/firebase-init.js';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
     const ADMIN_EMAILS = ['javierbravopintado06@gmail.com'];
     const statusMessage = document.getElementById('admin-status-message');
     const signOutBtn = document.getElementById('sign-out-btn');
 
     /**
-     * Redirige al usuario si no tiene rol admin.
-     * Este es el control principal para que solo los administradores accedan a esta página.
+     * Redirige al usuario si no es javierbravopintado06@gmail.com.
+     * Este es el control principal para que solo este correo específico acceda a esta página.
      */
     async function verifyAdmin(user) {
       if (!user) {
@@ -100,28 +99,15 @@
         return;
       }
 
-      // Verificar si el email está en la lista de admins
+      // Verificar si el email es javierbravopintado06@gmail.com
       if (ADMIN_EMAILS.includes(user.email)) {
-        statusMessage.textContent = `Bienvenido, ${user.email}. Tu acceso admin está confirmado.`;
+        statusMessage.textContent = `Bienvenido, ${user.email}. Tu acceso está confirmado.`;
         return;
       }
 
-      // Verificar el rol en Firestore como respaldo
-      try {
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        const isAdmin = userDoc.exists() && userDoc.data()?.role === 'admin';
-
-        if (!isAdmin) {
-          alert('Acceso denegado. Solo administradores pueden acceder a esta página.');
-          window.location.href = './plan-empresa.html';
-          return;
-        }
-
-        statusMessage.textContent = `Bienvenido, ${user.email}. Tu acceso admin está confirmado.`;
-      } catch (error) {
-        console.error('Error verifying admin:', error);
-        window.location.href = './plan-empresa.html';
-      }
+      // Acceso denegado para cualquier otro usuario
+      alert('Acceso denegado. Solo javierbravopintado06@gmail.com puede acceder a esta página.');
+      window.location.href = './plan-empresa.html';
     }
 
     onAuthStateChanged(auth, (user) => {
