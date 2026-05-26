@@ -45,11 +45,19 @@
         <h3>🛡️ Gestión de usuarios</h3>
         <p class="monitoring-note">Todos los usuarios registrados se cargan directamente desde la base de datos.</p>
         <div class="control-panel">
+          <div class="user-controls" style="margin-bottom:12px;">
+            <button id="test-conn-btn" class="btn-secondary">Probar conexión a Firebase</button>
+            <span id="conn-status" style="margin-left:12px;color:var(--text);font-size:.95rem"></span>
+          </div>
           <form id="user-form" class="admin-form">
             <div class="form-row">
               <div class="form-group">
                 <label for="user-email">Email del usuario</label>
                 <input id="user-email" type="email" placeholder="usuario@ejemplo.com" required>
+              </div>
+              <div class="form-group">
+                <label for="user-password">Contraseña temporal</label>
+                <input id="user-password" type="password" placeholder="Contraseña temporal (mín. 6 chars)" required>
               </div>
               <div class="form-group">
                 <label for="user-role">Rol</label>
@@ -59,7 +67,7 @@
                   <option value="admin">Administrador</option>
                 </select>
               </div>
-              <button type="submit" class="btn-primary">Añadir usuario</button>
+              <button type="submit" class="btn-primary">Crear cuenta (Auth)</button>
             </div>
           </form>
           <div id="users-list" class="admin-table">
@@ -363,38 +371,66 @@
       }
     }
 
+    // Botón de prueba de conexión a Firestore
+    const testConnBtn = document.getElementById('test-conn-btn');
+    const connStatus = document.getElementById('conn-status');
+    if (testConnBtn) {
+      testConnBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        connStatus.textContent = 'Probando...';
+        try {
+          // Intentar leer la colección 'users'
+          await getDocs(collection(db, 'users'));
+          connStatus.textContent = 'Conexión OK';
+          addSystemLog('Conexión exitosa a Firestore (lectura de users).', 'success');
+        } catch (err) {
+          console.error('Prueba conexión Firestore:', err);
+          connStatus.textContent = 'Error (ver logs)';
+          addSystemLog('Error al conectar a Firestore: ' + (err.message || err.code || err), 'error');
+          alert('Error al conectar a Firestore. Revisa la consola o los logs del panel.');
+        }
+        setTimeout(() => connStatus.textContent = '', 5000);
+      });
+    }
+
     userForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('user-email').value.trim();
+      const password = document.getElementById('user-password').value;
       const role = document.getElementById('user-role').value;
 
-      if (!email) {
-        alert('Ingresa un email válido para el usuario.');
+      if (!email || !password || password.length < 6) {
+        alert('Ingresa un email y una contraseña válida (mín. 6 caracteres).');
         return;
       }
 
       try {
-        const existingQuery = query(collection(db, 'users'), where('email', '==', email));
-        const existingSnapshot = await getDocs(existingQuery);
-        if (!existingSnapshot.empty) {
-          alert('Este usuario ya existe en la base de datos.');
+        // Obtener ID token del usuario actual para autorizar la petición al backend
+        const idToken = await auth.currentUser.getIdToken();
+
+        const resp = await fetch('/admin/create-user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + idToken
+          },
+          body: JSON.stringify({ email, password, role })
+        });
+
+        const data = await resp.json();
+        if (!resp.ok) {
+          console.error('Create user error', data);
+          alert('Error al crear usuario: ' + (data.error || JSON.stringify(data)));
+          addSystemLog('Error al crear usuario en backend: ' + (data.error || JSON.stringify(data)), 'error');
           return;
         }
 
-        const newUserRef = doc(collection(db, 'users'));
-        await setDoc(newUserRef, {
-          email,
-          role,
-          createdAt: serverTimestamp(),
-          createdBy: auth.currentUser?.email || 'admin-panel'
-        });
-
-        addSystemLog(`Usuario creado: ${email}`, 'success');
+        addSystemLog(`Usuario Auth creado: ${email} (uid: ${data.uid})`, 'success');
         await fetchUsersFromFirestore();
         userForm.reset();
       } catch (error) {
-        console.error('Error guardando usuario en Firestore:', error);
-        alert('No se pudo crear el usuario en la base de datos. Revisa la consola.');
+        console.error('Error creando usuario en backend:', error);
+        alert('No se pudo crear el usuario. Revisa la consola.');
       }
     });
 
