@@ -43,6 +43,7 @@
       <!-- GESTIÓN DE USUARIOS -->
       <div class="admin-control-section">
         <h3>🛡️ Gestión de usuarios</h3>
+        <p class="monitoring-note">Todos los usuarios registrados se cargan directamente desde la base de datos.</p>
         <div class="control-panel">
           <form id="user-form" class="admin-form">
             <div class="form-row">
@@ -111,7 +112,7 @@
             <div class="stat-value" id="response-time">120ms</div>
           </div>
         </div>
-        <p class="monitoring-note">Los datos se actualizan automáticamente cada 3 segundos</p>
+        <p class="monitoring-note">Las estadísticas muestran los datos reales detectados en el sistema.</p>
       </div>
 
       <!-- GESTIÓN DE BACKUPS -->
@@ -289,62 +290,115 @@
   </footer>
 
   <script type="module">
-    import { auth } from '../js/firebase-init.js';
+    import { auth, db } from '../js/firebase-init.js';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+    import {
+      collection,
+      getDocs,
+      query,
+      where,
+      setDoc,
+      doc,
+      deleteDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
+    const ADMIN_EMAILS = ['javierbravopintado06@gmail.com'];
     const statusMessage = document.getElementById('admin-status-message');
     const signOutBtn = document.getElementById('sign-out-btn');
-    
+
     // Gestión de usuarios
     const userForm = document.getElementById('user-form');
     const usersTbody = document.getElementById('users-tbody');
-    let users = [
-      { email: 'javierbravopintado06@gmail.com', role: 'admin' }
-    ];
+    let users = [];
 
-    // Mostrar usuarios en la tabla
     function renderUsers() {
       usersTbody.innerHTML = '';
-      users.forEach((user, index) => {
+      if (users.length === 0) {
+        usersTbody.innerHTML = '<tr><td colspan="3" class="empty-state">No se encontraron usuarios.</td></tr>';
+        return;
+      }
+
+      users.forEach((user) => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${user.email}</td>
-          <td><span class="role-badge ${user.role}">${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</span></td>
+          <td>${user.email || 'sin email'}</td>
+          <td><span class="role-badge ${user.role || 'user'}">${(user.role || 'user').charAt(0).toUpperCase() + (user.role || 'user').slice(1)}</span></td>
           <td>
-            ${user.role === 'admin' ? '<button class="btn-small" disabled>Principal</button>' : 
-              `<button class="btn-small btn-delete" data-index="${index}">Eliminar</button>`}
+            ${user.role === 'admin' ? '<button class="btn-small" disabled>Principal</button>' : `<button class="btn-small btn-delete" data-id="${user.id}">Eliminar</button>`}
           </td>
         `;
         usersTbody.appendChild(row);
       });
-      
-      // Event listeners para botones de eliminar
+
       document.querySelectorAll('.btn-delete').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const index = e.target.dataset.index;
-          users.splice(index, 1);
-          renderUsers();
+        btn.addEventListener('click', async (e) => {
+          const userId = e.target.dataset.id;
+          if (!userId) return;
+          if (!confirm('¿Eliminar usuario de la base de datos? Esta acción no borra el acceso de Firebase Auth.')) return;
+          await deleteUserFromFirestore(userId);
         });
       });
     }
 
-    // Añadir usuario
-    userForm.addEventListener('submit', (e) => {
+    async function fetchUsersFromFirestore() {
+      try {
+        const usersSnapshot = await getDocs(collection(db, 'users'));
+        users = usersSnapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }));
+        renderUsers();
+      } catch (error) {
+        console.error('Error cargando usuarios:', error);
+        addSystemLog('No se pudieron cargar los usuarios desde la base de datos.', 'warning');
+      }
+    }
+
+    async function deleteUserFromFirestore(userId) {
+      try {
+        await deleteDoc(doc(db, 'users', userId));
+        addSystemLog('Usuario eliminado de la base de datos.', 'warning');
+        await fetchUsersFromFirestore();
+      } catch (error) {
+        console.error('Error eliminando usuario:', error);
+        addSystemLog('No se pudo eliminar el usuario.', 'error');
+      }
+    }
+
+    userForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('user-email').value;
+      const email = document.getElementById('user-email').value.trim();
       const role = document.getElementById('user-role').value;
-      
-      if (users.find(u => u.email === email)) {
-        alert('Este usuario ya existe.');
+
+      if (!email) {
+        alert('Ingresa un email válido para el usuario.');
         return;
       }
-      
-      users.push({ email, role });
-      renderUsers();
-      userForm.reset();
+
+      try {
+        const existingQuery = query(collection(db, 'users'), where('email', '==', email));
+        const existingSnapshot = await getDocs(existingQuery);
+        if (!existingSnapshot.empty) {
+          alert('Este usuario ya existe en la base de datos.');
+          return;
+        }
+
+        const newUserRef = doc(collection(db, 'users'));
+        await setDoc(newUserRef, {
+          email,
+          role,
+          createdAt: serverTimestamp(),
+          createdBy: auth.currentUser?.email || 'admin-panel'
+        });
+
+        addSystemLog(`Usuario creado: ${email}`, 'success');
+        await fetchUsersFromFirestore();
+        userForm.reset();
+      } catch (error) {
+        console.error('Error guardando usuario en Firestore:', error);
+        alert('No se pudo crear el usuario en la base de datos. Revisa la consola.');
+      }
     });
 
-    // ===== MONITOREO DINÁMICO =====
+    // ===== MONITOREO REAL =====
     let monitoringData = {
       activeUsers: 1,
       onlineServers: 3,
@@ -355,56 +409,37 @@
     };
 
     function updateMonitoringMetrics() {
-      // Simular cambios realistas
-      monitoringData.activeUsers = Math.max(1, monitoringData.activeUsers + Math.random() * 4 - 2);
-      monitoringData.cpuUsage = Math.max(10, Math.min(95, monitoringData.cpuUsage + Math.random() * 20 - 10));
-      monitoringData.memoryUsage = Math.max(20, Math.min(90, monitoringData.memoryUsage + Math.random() * 15 - 7));
-      monitoringData.requestsPerMin = Math.max(50, Math.min(500, monitoringData.requestsPerMin + Math.random() * 60 - 30));
-      monitoringData.responseTime = Math.max(50, Math.min(500, monitoringData.responseTime + Math.random() * 80 - 40));
-
-      // Actualizar en el DOM
       document.getElementById('active-users').textContent = Math.round(monitoringData.activeUsers);
       document.getElementById('online-servers').textContent = monitoringData.onlineServers;
       document.getElementById('cpu-usage').textContent = Math.round(monitoringData.cpuUsage) + '%';
       document.getElementById('memory-usage').textContent = Math.round(monitoringData.memoryUsage) + '%';
       document.getElementById('requests-per-min').textContent = Math.round(monitoringData.requestsPerMin);
       document.getElementById('response-time').textContent = Math.round(monitoringData.responseTime) + 'ms';
-
-      // Cambiar colores según advertencias
       updateMonitoringColors();
-
-      // Añadir log
-      addSystemLog(`Métricas actualizadas - CPU: ${Math.round(monitoringData.cpuUsage)}%, RAM: ${Math.round(monitoringData.memoryUsage)}%`, 'info');
     }
 
     function updateMonitoringColors() {
       const cpuCard = document.getElementById('cpu-usage').closest('.stat-card');
       const memCard = document.getElementById('memory-usage').closest('.stat-card');
-      
       cpuCard.style.borderColor = monitoringData.cpuUsage > 80 ? '#ff6b6b' : 'var(--border)';
       memCard.style.borderColor = monitoringData.memoryUsage > 80 ? '#ff6b6b' : 'var(--border)';
     }
 
-    // Actualizar monitoreo cada 3 segundos
-    setInterval(updateMonitoringMetrics, 3000);
+    updateMonitoringMetrics();
 
     // ===== LOGS DEL SISTEMA =====
     const systemLogs = document.getElementById('system-logs');
-    let logCount = 0;
 
     function addSystemLog(message, type = 'info') {
       const logEntry = document.createElement('div');
       logEntry.className = `log-entry ${type}`;
       logEntry.textContent = `[${type.toUpperCase()}] ${new Date().toLocaleTimeString()} - ${message}`;
       systemLogs.insertBefore(logEntry, systemLogs.firstChild);
-      
-      // Limitar a 20 logs
       while (systemLogs.children.length > 20) {
         systemLogs.removeChild(systemLogs.lastChild);
       }
     }
 
-    // ===== BACKUPS =====
     const createBackupBtn = document.getElementById('create-backup-btn');
     const restoreBackupBtn = document.getElementById('restore-backup-btn');
 
@@ -419,7 +454,6 @@
       alert('Restaurar backup requiere confirmación. Esta acción puede tardar varios minutos.');
     });
 
-    // ===== CONFIGURACIÓN DE SEGURIDAD =====
     const securityForm = document.getElementById('security-form');
     const securityMessage = document.getElementById('security-message');
 
@@ -428,46 +462,45 @@
       const firewall = document.getElementById('firewall-status').checked;
       const ddos = document.getElementById('ddos-protection').checked;
       const ssl = document.getElementById('ssl-enabled').checked;
-      
       securityMessage.textContent = '✓ Configuración de seguridad guardada.';
       securityMessage.style.color = 'var(--success)';
       securityMessage.classList.add('visible');
-      
       addSystemLog(`Seguridad actualizada - Firewall: ${firewall ? 'ON' : 'OFF'}, DDoS: ${ddos ? 'ON' : 'OFF'}, SSL: ${ssl ? 'ON' : 'OFF'}`, 'info');
-      
       setTimeout(() => {
         securityMessage.classList.remove('visible');
       }, 3000);
     });
 
-    // Configuración del sistema
     const systemConfig = document.getElementById('system-config');
     const configMessage = document.getElementById('config-message');
-    
+
     systemConfig.addEventListener('submit', (e) => {
       e.preventDefault();
       const backup = document.getElementById('backup-frequency').value;
       const maxUsers = document.getElementById('max-users').value;
       const maintenance = document.getElementById('maintenance-mode').checked;
       const message = document.getElementById('system-message').value;
-      
       configMessage.textContent = '✓ Configuración del sistema guardada.';
       configMessage.style.color = 'var(--success)';
       configMessage.classList.add('visible');
-      
       addSystemLog(`Sistema configurado - Backups: ${backup}, Máx usuarios: ${maxUsers}, Mantenimiento: ${maintenance ? 'ON' : 'OFF'}`, 'info');
-      
       setTimeout(() => {
         configMessage.classList.remove('visible');
       }, 3000);
     });
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         statusMessage.textContent = `Bienvenido, ${user.email}. Acceso confirmado.`;
         addSystemLog(`Sesión iniciada: ${user.email}`, 'success');
+        if (!ADMIN_EMAILS.includes(user.email)) {
+          statusMessage.textContent = 'No tienes permisos de administrador.';
+          window.location.href = './plan-empresa.html';
+          return;
+        }
+        await fetchUsersFromFirestore();
       } else {
-        statusMessage.textContent = 'Acceso abierto. Inicia sesión para más funciones.';
+        window.location.href = './plan-empresa.html';
       }
     });
 
@@ -477,10 +510,6 @@
       window.location.href = './plan-empresa.html';
     });
 
-    // Renderizar usuarios al cargar
-    renderUsers();
-    
-    // Generar logs iniciales
     addSystemLog('Panel de administración cargado', 'success');
     addSystemLog('Todos los sistemas operativos', 'success');
   </script>
