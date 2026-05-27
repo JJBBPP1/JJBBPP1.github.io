@@ -1,9 +1,24 @@
-<!DOCTYPE html>
-<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEXUS Gaming & Servers | Configuración de servidor</title>
+  <meta name="description" content="Proyecto de HTML, CSS y JavaScript sobre NEXUS Gaming & Servers | Configuración de servidor. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta name="keywords" content="NEXUS, Gaming, Servers, Configuración, servidor, HTML, CSS, JavaScript, FP SMR">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jjbbpp1.github.io/pages/configuracion-servidor.html">
+    <meta property="og:title" content="NEXUS Gaming &amp; Servers | Configuración de servidor">
+    <meta property="og:description" content="Proyecto de HTML, CSS y JavaScript sobre NEXUS Gaming &amp; Servers | Configuración de servidor. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta property="og:url" content="https://jjbbpp1.github.io/pages/configuracion-servidor.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
+    <meta property="og:site_name" content="JJBBPP1 GitHub Pages">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NEXUS Gaming &amp; Servers | Configuración de servidor">
+    <meta name="twitter:description" content="Proyecto de HTML, CSS y JavaScript sobre NEXUS Gaming &amp; Servers | Configuración de servidor. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta name="twitter:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="author" content="Javier Bravo">
+    <title>NEXUS Gaming & Servers | Configuración de servidor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -157,29 +172,6 @@
     </div>
   </footer>
 
-  <script type="module">
-    import { auth } from '../js/firebase-init.js';
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = './plan-empresa.html';
-      }
-    });
-
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href !== '#') {
-          e.preventDefault();
-          const target = document.querySelector(href);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            history.pushState(null, null, href);
-          }
-        }
-      });
-    });
-  </script>
+  <script type="module" src="../js/configuracion-servidor.js"></script>
 </body>
 </html>

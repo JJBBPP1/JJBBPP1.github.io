@@ -1,19 +1,25 @@
-<!DOCTYPE html>
-<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guía de HTML: Cómo Empezar en HTML</title>
+  <meta name="robots" content="index, follow">
+    <meta property="og:site_name" content="JJBBPP1 GitHub Pages">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Guía de HTML: Cómo Empezar en HTML">
+    <meta name="twitter:description" content="Guía completa y práctica para aprender HTML desde cero. Aprende la estructura básica, etiquetas, formularios, multimedia y más con ejemplos interactivos.">
+    <meta name="twitter:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <title>Guía de HTML: Cómo Empezar en HTML</title>
   <meta name="description" content="Guía completa y práctica para aprender HTML desde cero. Aprende la estructura básica, etiquetas, formularios, multimedia y más con ejemplos interactivos.">
   <meta name="keywords" content="HTML, tutorial HTML, guía HTML, aprender HTML, etiquetas HTML, estructura web, desarrollo web">
   <meta name="author" content="javier bravo">
   <meta property="og:title" content="Guía de HTML: Cómo Empezar en HTML">
-  <meta property="og:description" content="Aprende HTML con esta guía paso a paso, desde lo básico hasta conceptos avanzados.">
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="https://tu-sitio.com/guia-html/guiahtml.html">
-  <meta property="og:image" content="https://tu-sitio.com/icono.png">
+  <meta property="og:description" content="Guía completa y práctica para aprender HTML desde cero. Aprende la estructura básica, etiquetas, formularios, multimedia y más con ejemplos interactivos.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jjbbpp1.github.io/pages/guiahtml.html">
+  <meta property="og:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
   <link rel="icon" type="image/png" href="../multimedia/icono.png">
-  <link rel="canonical" href="https://tu-sitio.com/guia-html/guiahtml.html">
+  <link rel="canonical" href="https://jjbbpp1.github.io/pages/guiahtml.html">
   <link rel="stylesheet" href="../css/guia_html.css">
 </head>
 <body>
@@ -27,9 +33,7 @@
     <a href="../pages/cssguia.html">Guía CSS</a>
     </div>
 
-    <script>
-      /* Removed JS that manages sidebar collapsing - sidebar is now non collapsible */
-    </script>
+    
     <style>
       /* Estilos para las previsualizaciones de código */
       .example-toggle { background: #10b981; color:#fff; border:none; padding:0.35rem 0.7rem; border-radius:6px; cursor:pointer; font-size:0.9rem; margin-bottom:0.5rem }
@@ -37,114 +41,7 @@
       .example-wrapper { margin: 0.6rem 0 1rem; }
     </style>
 
-    <script>
-      (function(){
-        if (window.__codePreviewInit) return; window.__codePreviewInit = true;
-
-        function detectType(text){
-          if(/<\/?[a-z][\s\S]*>/i.test(text)) return 'html';
-          if(/^[\s\r\n]*[.#a-zA-Z\-][^{]*\{[\s\S]*:[^}]+}/m.test(text) || /:\s*[^;\n]+;/.test(text)) return 'css';
-          return 'js';
-        }
-
-        function escapeScript(s){
-          return s.replace(/<\\/g, '<\\/');
-        }
-
-        function wrapForCSS(css){
-          // Plantilla neutra para mostrar efectos de CSS sin contenido adicional innecesario
-          return '<!doctype html><html><head><meta charset="utf-8"><style>' + css + '</style></head><body><div class="preview-root" style="padding:0.5rem;">Elemento</div></body></html><!doctype html><html><head><meta charset="utf-8"></head><body><script>' + safe + '<\\/script></body></html>';
-        }
-
-        function makePreview(codeText){
-          var type = detectType(codeText);
-          var srcdoc = '';
-          var sandbox = '';
-          if(type === 'html'){
-            srcdoc = codeText;
-            // permitir scripts solo si detectamos <script>
-            sandbox = /<script[\s>]/i.test(codeText) ? 'allow-scripts' : '';
-          } else if(type === 'css'){
-            srcdoc = wrapForCSS(codeText);
-          } else { // js
-            srcdoc = wrapForJS(codeText);
-            sandbox = 'allow-scripts';
-          }
-          return { srcdoc: srcdoc, sandbox: sandbox };
-        }
-
-        document.addEventListener('DOMContentLoaded', function(){
-          var pres = document.querySelectorAll('pre');
-          pres.forEach(function(pre){
-            var code = pre.querySelector('code');
-            if(!code) return;
-            var text = code.innerText || code.textContent || '';
-
-            // Determinar lugar de inserción: si existe un botón "Copiar código" justo después del <pre>, insertar junto a él
-            var insertAfter = null;
-            var next = pre.nextElementSibling;
-            if(next && next.tagName === 'BUTTON' && /copiar/i.test(next.textContent || '')){
-              insertAfter = next;
-            } else {
-              insertAfter = pre;
-            }
-
-            // Evitar duplicar previews: comprobar si ya hay un .example-wrapper después del insertAfter
-            var maybe = insertAfter.nextElementSibling;
-            if(maybe && maybe.classList && maybe.classList.contains('example-wrapper')) return;
-
-            var wrap = document.createElement('div');
-            wrap.className = 'example-wrapper';
-            wrap.style.display = 'inline-block';
-            wrap.style.marginLeft = '0.6rem';
-
-            var toggle = document.createElement('button');
-            toggle.type = 'button';
-            toggle.className = 'example-toggle';
-            toggle.textContent = 'Mostrar ejemplo';
-
-            var iframe = document.createElement('iframe');
-            iframe.className = 'example-frame';
-            iframe.setAttribute('aria-hidden','true');
-            iframe.style.display = 'none';
-
-            var preview = makePreview(text);
-            iframe.srcdoc = preview.srcdoc;
-            if(preview.sandbox) iframe.setAttribute('sandbox', preview.sandbox);
-
-            toggle.addEventListener('click', function(){
-              if(iframe.style.display === 'none'){
-                iframe.style.display = 'block';
-                iframe.setAttribute('aria-hidden','false');
-                toggle.textContent = 'Ocultar ejemplo';
-              } else {
-                iframe.style.display = 'none';
-                iframe.setAttribute('aria-hidden','true');
-                toggle.textContent = 'Mostrar ejemplo';
-              }
-            });
-
-            // Si insertAfter es el botón de copiar, insertamos el toggle (inline) después de ese botón, y la iframe después en bloque
-            if(insertAfter !== pre){
-              // insertar el toggle junto al botón copiar
-              insertAfter.parentNode.insertBefore(wrap, insertAfter.nextSibling);
-              wrap.appendChild(toggle);
-              // crear un wrapper en bloque para el iframe y colocarlo después del toggle wrapper
-              var blockWrap = document.createElement('div');
-              blockWrap.className = 'example-wrapper-block';
-              blockWrap.style.marginTop = '0.5rem';
-              blockWrap.appendChild(iframe);
-              insertAfter.parentNode.insertBefore(blockWrap, wrap.nextSibling);
-            } else {
-              // no hay botón copiar, insertar ambos después del <pre>
-              wrap.appendChild(toggle);
-              wrap.appendChild(iframe);
-              pre.parentNode.insertBefore(wrap, pre.nextSibling);
-            }
-          });
-        });
-      })();
-    </script>
+    
     <div style="max-width:900px;margin:0 auto;">
   <p>
     HTML (<strong>HyperText Markup Language</strong>) es el lenguaje que usamos para
@@ -617,157 +514,4 @@
   <button>Copiar código</button>
 </section>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      function detectType(text){
-        if(/<\/?[a-z][\s\S]*>/i.test(text)) return 'html';
-        if(/^[\s\r\n]*[.#a-zA-Z\-][^{]*\{[\s\S]*:[^}]+}/m.test(text) || /:\s*[^;\n]+;/.test(text)) return 'css';
-        return 'js';
-      }
-
-      function makeSrcdoc(type, code){
-        if(type === 'html'){
-          return code;
-        }
-        if(type === 'css'){
-          return '<!doctype html><html><head><meta charset="utf-8"><style>' + code + '</style></head><body><div class="preview-root" style="padding:0.5rem;font-family:system-ui;">Elemento de prueba</div></body></html>';
-        }
-        // js
-        return '<!doctype html><html><head><meta charset="utf-8"></head><body><script>' + code.replace(/<\\/g,'<\\/') + '<\/script></body></html>';
-      }
-
-      function attachCopyHandler(button, pre){
-        if(!button || !pre) return;
-        if(button.dataset.copyAttached) return;
-        button.addEventListener('click', function(){
-          var code = pre.querySelector('code');
-          if(code){
-            var text = code.innerText.replace(/\u00a0/g, ' ');
-            if(navigator.clipboard && navigator.clipboard.writeText){
-              navigator.clipboard.writeText(text);
-            } else {
-              var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} ta.remove();
-            }
-            var old = button.textContent;
-            button.textContent = '¡Copiado!';
-            setTimeout(function(){ button.textContent = old; }, 1200);
-          }
-        });
-        button.dataset.copyAttached = '1';
-      }
-
-      // Procesar cada bloque pre en #como-empezar
-      var pres = document.querySelectorAll('#como-empezar pre');
-      var processedPreElements = new Set();
-      pres.forEach(function(pre){
-        if(processedPreElements.has(pre)) return;
-        processedPreElements.add(pre);
-
-        var next = pre.nextElementSibling;
-        var hasExample = false;
-        if(next){
-          if(next.classList && next.classList.contains('example-wrapper')) hasExample = true;
-          if(next.nextElementSibling && next.nextElementSibling.classList && next.nextElementSibling.classList.contains('example-wrapper-block')) hasExample = true;
-        }
-
-        // localizar botón copiar existente (inmediato o en los próximos hermanos)
-        var copyBtn = null;
-        if(next && next.tagName === 'BUTTON' && /copiar/i.test(next.textContent || '')){
-          copyBtn = next;
-        } else {
-          var sib = pre.nextElementSibling;
-          for(var i=0;i<4 && sib;i++){
-            if(sib.tagName === 'BUTTON' && /copiar/i.test(sib.textContent || '')){ copyBtn = sib; break; }
-            sib = sib.nextElementSibling;
-          }
-        }
-
-        if(!copyBtn){
-          copyBtn = document.createElement('button');
-          copyBtn.type = 'button';
-          copyBtn.textContent = 'Copiar código';
-          copyBtn.style.marginTop = '8px';
-          copyBtn.style.background = '#2563eb';
-          copyBtn.style.color = '#fff';
-          copyBtn.style.border = 'none';
-          copyBtn.style.padding = '0.4rem 1rem';
-          copyBtn.style.borderRadius = '6px';
-          copyBtn.style.cursor = 'pointer';
-          copyBtn.style.fontSize = '0.95rem';
-          pre.parentNode.insertBefore(copyBtn, pre.nextSibling);
-        }
-        // asegurar que cualquier botón copy tenga el manejador
-        attachCopyHandler(copyBtn, pre);
-
-        // crear la previsualización si no existe
-        if(!hasExample){
-          var codeEl = pre.querySelector('code');
-          if(!codeEl) return;
-          var text = codeEl.innerText || codeEl.textContent || '';
-          var type = detectType(text);
-
-          var wrap = document.createElement('div');
-          wrap.className = 'example-wrapper';
-          wrap.style.display = 'inline-block';
-          wrap.style.marginLeft = '0.6rem';
-
-          var toggle = document.createElement('button');
-          toggle.type = 'button';
-          toggle.className = 'example-toggle';
-          toggle.textContent = 'Mostrar ejemplo';
-
-          var iframe = document.createElement('iframe');
-          iframe.className = 'example-frame';
-          iframe.setAttribute('aria-hidden','true');
-          iframe.style.display = 'none';
-
-          var srcdoc = makeSrcdoc(type, text);
-          iframe.srcdoc = srcdoc;
-          if(type === 'js' || /<script[\s>]/i.test(text)) iframe.setAttribute('sandbox','allow-scripts');
-
-          toggle.addEventListener('click', function(){
-            if(iframe.style.display === 'none'){
-              iframe.style.display = 'block';
-              iframe.setAttribute('aria-hidden','false');
-              toggle.textContent = 'Ocultar ejemplo';
-            } else {
-              iframe.style.display = 'none';
-              iframe.setAttribute('aria-hidden','true');
-              toggle.textContent = 'Mostrar ejemplo';
-            }
-          });
-
-          var insertAfter = copyBtn || pre;
-          insertAfter.parentNode.insertBefore(wrap, insertAfter.nextSibling);
-          wrap.appendChild(toggle);
-
-          var blockWrap = document.createElement('div');
-          blockWrap.className = 'example-wrapper-block';
-          blockWrap.style.marginTop = '0.5rem';
-          blockWrap.appendChild(iframe);
-          wrap.parentNode.insertBefore(blockWrap, wrap.nextSibling);
-        }
-      });
-
-      // Eliminar botones duplicados contiguos con mismo texto dentro de #como-empezar
-      (function removeDuplicateButtons(){
-        var container = document.getElementById('como-empezar');
-        if(!container) return;
-        var btns = Array.prototype.slice.call(container.querySelectorAll('button'));
-        for(var i=0;i<btns.length-1;i++){
-          var a = btns[i];
-          var b = btns[i+1];
-          if(!a.parentNode) continue;
-          if(b && a.nextElementSibling === b && a.tagName === 'BUTTON' && b.tagName === 'BUTTON'){
-            var ta = a.textContent ? a.textContent.trim() : '';
-            var tb = b.textContent ? b.textContent.trim() : '';
-            if(ta && ta === tb){
-              b.parentNode.removeChild(b);
-              btns.splice(i+1,1);
-              i--;
-            }
-          }
-        }
-      })();
-    });
-</script>
+<script src="../js/guiahtml.js"></script>

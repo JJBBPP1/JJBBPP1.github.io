@@ -1,8 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Proyecto de HTML, CSS y JavaScript sobre Introducción a JavaScript. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta name="keywords" content="Introducción, JavaScript, HTML, CSS, JavaScript, FP SMR">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jjbbpp1.github.io/pages/javascript.html">
+    <meta property="og:title" content="Introducción a JavaScript">
+    <meta property="og:description" content="Proyecto de HTML, CSS y JavaScript sobre Introducción a JavaScript. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta property="og:url" content="https://jjbbpp1.github.io/pages/javascript.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
+    <meta property="og:site_name" content="JJBBPP1 GitHub Pages">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Introducción a JavaScript">
+    <meta name="twitter:description" content="Proyecto de HTML, CSS y JavaScript sobre Introducción a JavaScript. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta name="twitter:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="author" content="Javier Bravo">
     <title>Introducción a JavaScript</title>
     <link rel="icon" type="image/png" href="../multimedia/icono.png">
     
@@ -143,20 +158,7 @@ document.getElementsByTagName('p')[1].classList.add ('clase-coleccion');
 
 <button onclick="cambiarEstilosGlobales()">Cambia el aspecto de todos los párrafos</button>
 
-<script>
-function cambiarEstilosGlobales() {
-// Selecciona TODOS los elementos <p> y los guarda en una lista (NodeList)
-const parrafos = document.querySelectorAll('p');
-
-// Itera sobre cada elemento individualmente para aplicar los estilos
-parrafos.forEach(parrafo => {
-parrafo.style.color = 'blue';
-parrafo.style.fontSize = '15px';
-parrafo.style.fontWeight = 'bold';
-parrafo.style.fontStyle = 'italic';
-});
-}
-</script>
+<script src="../js/javascript-page.js"></script>
 
     <!-- Ejercicio: 3 números - mayor y ordenados -->
     <h2>Ejercicio: Mayor, Menor y Ordenar 3 números</h2>
@@ -171,67 +173,7 @@ parrafo.style.fontStyle = 'italic';
     <button class="buttons-1" onclick="mostrarMenor()">Menor</button>
     <div id="resultado" style="margin-top: 20px; font-weight: bold; font-size: 18px;"></div>
 
-    <script>
-    function mostrarMayor() {
-        const num1 = parseFloat(document.getElementById('num1').value);
-        const num2 = parseFloat(document.getElementById('num2').value);
-        const num3 = parseFloat(document.getElementById('num3').value);
-        
-        if (isNaN(num1) || isNaN(num2) || isNaN(num3)) {
-            document.getElementById('resultado').innerHTML = 'Por favor, introduce 3 números válidos.';
-            return;
-        }
-        
-        const mayor = Math.max(num1, num2, num3);
-        const mayorDisplay = Number.isInteger(mayor) ? mayor : mayor.toFixed(2);
-        document.getElementById('resultado').innerHTML = `El mayor es ${mayorDisplay}.`;
-    }
-
-    function ordenarDesc() {
-        const num1 = parseFloat(document.getElementById('num1').value);
-        const num2 = parseFloat(document.getElementById('num2').value);
-        const num3 = parseFloat(document.getElementById('num3').value);
-        
-        if (isNaN(num1) || isNaN(num2) || isNaN(num3)) {
-            document.getElementById('resultado').innerHTML = 'Por favor, introduce 3 números válidos.';
-            return;
-        }
-        
-        const numeros = [num1, num2, num3].sort((a, b) => b - a);
-        const ordenados = numeros.map(n => Number.isInteger(n) ? n : n.toFixed(2)).join(', ');
-        document.getElementById('resultado').innerHTML = `Ordenados (mayor a menor): ${ordenados}`;
-    }
-
-    function ordenarAsc() {
-        const num1 = parseFloat(document.getElementById('num1').value);
-        const num2 = parseFloat(document.getElementById('num2').value);
-        const num3 = parseFloat(document.getElementById('num3').value);
-        
-        if (isNaN(num1) || isNaN(num2) || isNaN(num3)) {
-            document.getElementById('resultado').innerHTML = 'Por favor, introduce 3 números válidos.';
-            return;
-        }
-        
-        const numeros = [num1, num2, num3].sort((a, b) => a - b);
-        const ordenados = numeros.map(n => Number.isInteger(n) ? n : n.toFixed(2)).join(', ');
-        document.getElementById('resultado').innerHTML = `Ordenados (menor a mayor): ${ordenados}`;
-    }
-
-    function mostrarMenor() {
-        const num1 = parseFloat(document.getElementById('num1').value);
-        const num2 = parseFloat(document.getElementById('num2').value);
-        const num3 = parseFloat(document.getElementById('num3').value);
-        
-        if (isNaN(num1) || isNaN(num2) || isNaN(num3)) {
-            document.getElementById('resultado').innerHTML = 'Por favor, introduce 3 números válidos.';
-            return;
-        }
-        
-        const menor = Math.min(num1, num2, num3);
-        const menorDisplay = Number.isInteger(menor) ? menor : menor.toFixed(2);
-        document.getElementById('resultado').innerHTML = `El menor es ${menorDisplay}.`;
-    }
-    </script>
+    <!-- funciones en js/javascript-page.js -->
 
 </body>
 </html>

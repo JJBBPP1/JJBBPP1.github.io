@@ -1,9 +1,24 @@
-<!DOCTYPE html>
-<html lang="es">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="../multimedia/icono.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Proyecto de HTML, CSS y JavaScript sobre Calculadora Científica. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta name="keywords" content="Calculadora, Científica, HTML, CSS, JavaScript, FP SMR">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jjbbpp1.github.io/pages/calculadora.html">
+    <meta property="og:title" content="Calculadora Científica">
+    <meta property="og:description" content="Proyecto de HTML, CSS y JavaScript sobre Calculadora Científica. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta property="og:url" content="https://jjbbpp1.github.io/pages/calculadora.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
+    <meta property="og:site_name" content="JJBBPP1 GitHub Pages">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Calculadora Científica">
+    <meta name="twitter:description" content="Proyecto de HTML, CSS y JavaScript sobre Calculadora Científica. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta name="twitter:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="author" content="Javier Bravo">
     <title>Calculadora Científica</title>
     <link rel="stylesheet" href="../css/calculadora.css">
 </head>
@@ -46,61 +61,6 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
-    <script>
-        let display = document.getElementById('display');
-        let operation = document.getElementById('operation');
-        let currentInput = '';
-        let operationString = '';
-
-        function appendToDisplay(value) {
-            if (value === 'pi') {
-                operationString += 'π';
-            } else if (value === 'e') {
-                operationString += 'e';
-            } else {
-                operationString += value;
-            }
-            operation.textContent = operationString;
-            updateDisplay();
-        }
-
-        function updateDisplay() {
-            try {
-                let result = math.evaluate(operationString.replace('π', Math.PI.toString()).replace('e', Math.E.toString()));
-                display.textContent = result;
-            } catch (e) {
-                display.textContent = '0';
-            }
-        }
-
-        function calculateFunction(func) {
-            operationString += func + '(';
-            operation.textContent = operationString;
-        }
-
-        function clearDisplay() {
-            display.textContent = '0';
-            operation.textContent = '';
-            operationString = '';
-        }
-
-        function backspace() {
-            operationString = operationString.slice(0, -1);
-            operation.textContent = operationString;
-            updateDisplay();
-        }
-
-        function calculate() {
-            try {
-                let result = math.evaluate(operationString.replace('π', Math.PI.toString()).replace('e', Math.E.toString()));
-                operationString += ' = ' + result;
-                operation.textContent = operationString;
-                display.textContent = result;
-            } catch (e) {
-                display.textContent = 'Error';
-                operation.textContent = operationString + ' = Error';
-            }
-        }
-    </script>
+    <script src="../js/calculadora.js"></script>
 </body>
 </html>

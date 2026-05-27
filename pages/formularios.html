@@ -1,8 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Proyecto de HTML, CSS y JavaScript sobre Formularios. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta name="keywords" content="Formularios, HTML, CSS, JavaScript, FP SMR">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jjbbpp1.github.io/pages/formularios.html">
+    <meta property="og:title" content="Formularios">
+    <meta property="og:description" content="Proyecto de HTML, CSS y JavaScript sobre Formularios. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta property="og:url" content="https://jjbbpp1.github.io/pages/formularios.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
+    <meta property="og:site_name" content="JJBBPP1 GitHub Pages">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Formularios">
+    <meta name="twitter:description" content="Proyecto de HTML, CSS y JavaScript sobre Formularios. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta name="twitter:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="author" content="Javier Bravo">
     <title>Formularios</title>
     <link rel="stylesheet" href="../css/form.css">
     <link rel="icon" href="../multimedia/chema.jpeg" type="image/jpeg">
@@ -67,55 +82,6 @@
         <input type="submit" value="Enviar">
     </form>
 
-    <script>
-        // Mostrar/ocultar contraseña
-        document.getElementById('mostrarPassword').addEventListener('change', function() {
-            const passwordInput = document.getElementById('password');
-            if (this.checked) {
-                passwordInput.type = 'text';
-            } else {
-                passwordInput.type = 'password';
-            }
-        });
-
-        document.getElementById('formulario').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const form = event.target;
-            const nombre = form.nombre.value.trim() || 'No especificado';
-            const email = form.email.value.trim() || 'No especificado';
-            const mensaje = form.mensaje.value.trim() || 'No especificado';
-            const password = form.password.value ? '*****' : 'No especificado';
-            const telefono = form.telefono.value.trim() || 'No especificado';
-            const edad = form.edad.value || 'No especificado';
-            const fechaNacimiento = form.fecha_nacimiento.value || 'No especificado';
-            const fechaHora = form.fecha_hora.value || 'No especificado';
-            const direccion = form.direccion.value.trim() || 'No especificado';
-            const ciudad = form.ciudad.value.trim() || 'No especificado';
-            const pais = form.pais.value || 'No especificado';
-            const number = form.number.value || 'No especificado';
-            const genero = form.querySelector('input[name="genero"]:checked')?.value || 'No especificado';
-            const terminos = form.terminos.checked ? 'Sí' : 'No';
-
-            const mensajeAlerta =
-                `Datos del formulario:\n` +
-                `Nombre: ${nombre}\n` +
-                `Correo Electrónico: ${email}\n` +
-                `Mensaje: ${mensaje}\n` +
-                `Contraseña: ${password}\n` +
-                `Teléfono: ${telefono}\n` +
-                `Edad: ${edad}\n` +
-                `Fecha de Nacimiento: ${fechaNacimiento}\n` +
-                `Fecha y Hora: ${fechaHora}\n` +
-                `Dirección: ${direccion}\n` +
-                `Ciudad: ${ciudad}\n` +
-                `País: ${pais}\n` +
-                `Número: ${number}\n` +
-                `Género: ${genero}\n` +
-                `Acepta términos: ${terminos}`;
-
-            alert(mensajeAlerta);
-        });
-    </script>
+    <script src="../js/formularios.js"></script>
 </body>
 </html>

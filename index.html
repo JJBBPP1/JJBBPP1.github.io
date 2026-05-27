@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jjbbpp1.github.io/index.html">
+    <meta property="og:site_name" content="JJBBPP1 GitHub Pages">
     <title>IES Donoso Cortés - Etiquetas Semánticas</title>
 
 
@@ -11,35 +11,29 @@
     <link rel="manifest" href="./manifest.json">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="Author" content="Javier Bravo">
-    <meta name="Description" content="Pagina web de tarea de apw">
-    <meta name="Keywords" content="HTML, Tarea, FP, SMR">
+    <meta name="author" content="Javier Bravo">
+    <meta name="description" content="Proyecto de HTML, CSS y JavaScript sobre IES Donoso Cortés - Etiquetas Semánticas. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta name="keywords" content="HTML, Tarea, FP, SMR">
 
-    <meta property="og:title" content="IES Donoso Cortés - Página Web">
-    <meta property="og:description"
-        content="Información sobre el IES Donoso Cortés, Educarex y Formación Profesional en Extremadura.">
+    <meta property="og:title" content="IES Donoso Cortés - Etiquetas Semánticas">
+    <meta property="og:description" content="Proyecto de HTML, CSS y JavaScript sobre IES Donoso Cortés - Etiquetas Semánticas. Ejemplo práctico y guía para aprender desarrollo web.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://iesdonosocortes.educarex.es/">
-    <meta property="og:image" content="./multimedia/icono.png">
+    <meta property="og:url" content="https://jjbbpp1.github.io/index.html">
+    <meta property="og:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
     <meta property="og:locale" content="es_ES">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="IES Donoso Cortés - Página Web">
-    <meta name="twitter:description"
-        content="Información sobre el IES Donoso Cortés, Educarex y Formación Profesional en Extremadura.">
-    <meta name="twitter:image" content="./multimedia/icono.png">
+    <meta name="twitter:title" content="IES Donoso Cortés - Etiquetas Semánticas">
+    <meta name="twitter:description" content="Proyecto de HTML, CSS y JavaScript sobre IES Donoso Cortés - Etiquetas Semánticas. Ejemplo práctico y guía para aprender desarrollo web.">
+    <meta name="twitter:image" content="https://jjbbpp1.github.io/multimedia/icono.png">
     <meta name="twitter:locale" content="es_ES">
     <meta name="twitter:image:width" content="1200">
     <meta name="twitter:image:height" content="630">
 
 
-    <script>
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({ pageLanguage: 'es' }, 'google_translate_element');
-        }
-    </script>
+    <script src="./js/google-translate-init.js"></script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <link rel="stylesheet" href="./css/main.css">
 </head>
@@ -236,22 +230,7 @@
             </main>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const detailsElements = document.querySelectorAll('main.acordeon details');
-            detailsElements.forEach((detail) => {
-                detail.addEventListener('toggle', () => {
-                    if (detail.open) {
-                        detailsElements.forEach((otherDetail) => {
-                            if (otherDetail !== detail && otherDetail.open) {
-                                otherDetail.open = false;
-                            }
-                        });
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="./js/index-acordeon.js"></script>
     <!--cuadro del footer-->
     <div class="footer">
         <footer>
