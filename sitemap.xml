@@ -6,16 +6,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://jjbbpp1.github.io/pages/admin-only.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://jjbbpp1.github.io/pages/admin-panel.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://jjbbpp1.github.io/pages/agenda.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
