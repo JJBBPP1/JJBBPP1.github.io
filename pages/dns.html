@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/icono.png">
+
+    <title>Introducción al Servicio DNS</title>
+
+    <link rel="stylesheet" href="../css/dns.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#020617;
+            color:white;
+            line-height:1.7;
+        }
+
+        header{
+            height:70vh;
+
+            background:
+            linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)),
+            url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600&auto=format&fit=crop');
+
+            background-size:cover;
+            background-position:center;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+
+            padding:20px;
+        }
+
+        .hero{
+            max-width:1000px;
+        }
+
+        header h1{
+            font-size:4rem;
+            color:#38bdf8;
+            margin-bottom:20px;
+        }
+
+        header p{
+            font-size:1.3rem;
+            color:#e2e8f0;
+        }
+
+        main{
+            width:90%;
+            max-width:1250px;
+            margin:auto;
+            padding:70px 0;
+        }
+
+        .card{
+            background:#0f172a;
+            margin-bottom:35px;
+            padding:35px;
+            border-radius:18px;
+            border:1px solid #1e293b;
+            box-shadow:0 10px 25px rgba(0,0,0,.35);
+            transition:.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-8px);
+        }
+
+        h2{
+            color:#38bdf8;
+            margin-bottom:20px;
+            font-size:2rem;
+        }
+
+        h3{
+            color:#7dd3fc;
+            margin-top:25px;
+            margin-bottom:15px;
+        }
+
+        p{
+            margin-bottom:15px;
+            color:#e2e8f0;
+        }
+
+        ul{
+            margin-left:25px;
+            margin-top:15px;
+        }
+
+        li{
+            margin-bottom:12px;
+            color:#e2e8f0;
+        }
+
+        .info-box{
+            background:#111827;
+            border-left:5px solid #38bdf8;
+            padding:20px;
+            margin-top:20px;
+            border-radius:12px;
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            gap:20px;
+            margin-top:30px;
+        }
+
+        .mini-card{
+            background:#111827;
+            padding:20px;
+            border-radius:15px;
+            border:1px solid #334155;
+        }
+
+        .mini-card h4{
+            color:#38bdf8;
+            margin-bottom:10px;
+        }
+
+        .code-box{
+            background:#111827;
+            padding:20px;
+            border-radius:12px;
+            margin-top:20px;
+            overflow:auto;
+        }
+
+        code{
+            color:#38bdf8;
+            font-size:1rem;
+            font-weight:bold;
+        }
+
+        .steps{
+            margin-top:25px;
+        }
+
+        .steps li{
+            margin-bottom:18px;
+        }
+
+        footer{
+            background:#000814;
+            text-align:center;
+            padding:40px;
+            border-top:1px solid #1e293b;
+            color:#94a3b8;
+        }
+
+        @media(max-width:768px){
+
+            header h1{
+                font-size:2.6rem;
+            }
+
+            header p{
+                font-size:1rem;
+            }
+
+            .card{
+                padding:25px;
+            }
+
+            h2{
+                font-size:1.6rem;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="hero">
+
+            <h1>Introducción al Servicio DNS</h1>
+
+            <p>
+                Aprende cómo funciona el Sistema de Nombres de Dominio,
+                la resolución de nombres y la arquitectura DNS en Internet.
+            </p>
+
+        </div>
+
+    </header>
+
+    <main>
+
+        <section class="card">
+
+            <h2>¿Qué es el Servicio DNS?</h2>
+
+            <p>
+                DNS (Domain Name System) es el sistema encargado de
+                traducir nombres de dominio en direcciones IP dentro
+                de una red TCP/IP.
+            </p>
+
+            <p>
+                Gracias al DNS, las personas pueden acceder a sitios
+                web utilizando nombres fáciles de recordar en lugar
+                de direcciones IP numéricas.
+            </p>
+
+            <div class="info-box">
+
+                <strong>Ejemplo:</strong><br><br>
+
+                <code>www.google.com</code>
+                →
+                <code>142.250.184.196</code>
+
+            </div>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Espacio de Nombres de Dominio</h2>
+
+            <p>
+                El DNS utiliza una base de datos distribuida organizada
+                como un árbol jerárquico invertido.
+            </p>
+
+            <p>
+                Cada dominio representa una rama dentro de esa estructura.
+            </p>
+
+            <div class="grid">
+
+                <div class="mini-card">
+
+                    <h4>Raíz</h4>
+
+                    <p>
+                        Nivel superior del árbol DNS.
+                    </p>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <h4>TLD</h4>
+
+                    <p>
+                        Dominios de nivel superior como:
+                        .com, .org, .es o .net
+                    </p>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <h4>Subdominios</h4>
+
+                    <p>
+                        Especializaciones dentro de un dominio.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="code-box">
+
+                <code>
+                    blog.empresa.com
+                </code>
+
+            </div>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Uso del DNS</h2>
+
+            <ul>
+
+                <li>
+                    Resolución de nombres:
+                    traducir nombres de dominio a direcciones IP.
+                </li>
+
+                <li>
+                    Resolución inversa:
+                    obtener el nombre asociado a una IP.
+                </li>
+
+                <li>
+                    Resolución de servidores de correo mediante registros MX.
+                </li>
+
+                <li>
+                    Validación y seguridad mediante SPF y claves de cifrado.
+                </li>
+
+            </ul>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Terminología Básica</h2>
+
+            <div class="grid">
+
+                <div class="mini-card">
+
+                    <h4>Host Name</h4>
+
+                    <p>
+                        Nombre individual de un host.
+                    </p>
+
+                    <code>www</code>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <h4>FQHN</h4>
+
+                    <p>
+                        Nombre completo del host.
+                    </p>
+
+                    <code>www.google.com</code>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <h4>Domain Name</h4>
+
+                    <p>
+                        Nombre de dominio completo.
+                    </p>
+
+                    <code>google.com</code>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <h4>TLD</h4>
+
+                    <p>
+                        Dominio de nivel superior.
+                    </p>
+
+                    <code>.com</code>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Arquitectura DNS</h2>
+
+            <p>
+                El sistema DNS funciona principalmente utilizando
+                el protocolo UDP y el puerto 53.
+            </p>
+
+            <div class="info-box">
+
+                <strong>Puerto DNS:</strong>
+                <code>UDP 53</code>
+
+            </div>
+
+            <p>
+                El sistema se organiza mediante servidores distribuidos
+                que tienen autoridad sobre diferentes dominios y subdominios.
+            </p>
+
+            <h3>Root Servers</h3>
+
+            <p>
+                Los servidores raíz son los encargados de dirigir
+                las consultas hacia los dominios correctos.
+            </p>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Proceso de Resolución de Nombres</h2>
+
+            <ol class="steps">
+
+                <li>
+                    El cliente solicita resolver un dominio.
+                </li>
+
+                <li>
+                    El servidor DNS consulta a un root server.
+                </li>
+
+                <li>
+                    El root server indica qué servidor tiene autoridad.
+                </li>
+
+                <li>
+                    La consulta continúa hasta encontrar el dominio correcto.
+                </li>
+
+                <li>
+                    El servidor devuelve la dirección IP al cliente.
+                </li>
+
+            </ol>
+
+            <div class="code-box">
+
+                <code>
+                    blog.empresa.com → 192.168.1.20
+                </code>
+
+            </div>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Mecanismos de Caché</h2>
+
+            <p>
+                Los servidores DNS almacenan temporalmente las respuestas
+                para acelerar futuras consultas.
+            </p>
+
+            <p>
+                Cada respuesta tiene un tiempo de vida llamado:
+            </p>
+
+            <div class="info-box">
+
+                <code>TTL - Time To Live</code>
+
+            </div>
+
+            <p>
+                Debido a este sistema de caché, los cambios DNS pueden
+                tardar minutos o incluso días en propagarse completamente.
+            </p>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Correo Electrónico y DNS</h2>
+
+            <p>
+                El DNS también participa en el envío de correos electrónicos
+                utilizando registros MX.
+            </p>
+
+            <div class="grid">
+
+                <div class="mini-card">
+
+                    <h4>MX</h4>
+
+                    <p>
+                        Define el servidor encargado de recibir correos.
+                    </p>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <h4>SMTP</h4>
+
+                    <p>
+                        Protocolo utilizado para enviar mensajes.
+                    </p>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <h4>Puerto 25</h4>
+
+                    <p>
+                        Puerto utilizado por SMTP.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Tipos de Registros DNS</h2>
+
+            <div class="grid">
+
+                <div class="mini-card">
+                    <h4>A</h4>
+                    <p>Asocia nombres con direcciones IP.</p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>CNAME</h4>
+                    <p>Crea alias para hosts.</p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>NS</h4>
+                    <p>Define servidores de nombres.</p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>MX</h4>
+                    <p>Servidor de correo electrónico.</p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>PTR</h4>
+                    <p>Resolución inversa de IPs.</p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>TXT</h4>
+                    <p>Información adicional del dominio.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="card">
+
+            <h2>BIND - Servidor de Nombres</h2>
+
+            <p>
+                BIND (Berkeley Internet Name Domain) es el software
+                más utilizado para implementar servidores DNS.
+            </p>
+
+            <p>
+                Se utiliza ampliamente en sistemas Unix y Linux.
+            </p>
+
+        </section>
+
+        <section class="card">
+
+            <h2>DNS en Redes Locales</h2>
+
+            <ul>
+
+                <li>
+                    Mejora la velocidad de acceso mediante caché local.
+                </li>
+
+                <li>
+                    Reduce tráfico hacia Internet.
+                </li>
+
+                <li>
+                    Simplifica la administración de equipos.
+                </li>
+
+                <li>
+                    Permite usar nombres fáciles de recordar.
+                </li>
+
+            </ul>
+
+            <div class="code-box">
+
+                <code>
+                    impresora.oficina.local
+                </code>
+
+            </div>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Problemas del DNS</h2>
+
+            <ul>
+
+                <li>
+                    Al utilizar UDP, algunos paquetes pueden perderse.
+                </li>
+
+                <li>
+                    La propagación de cambios puede ser lenta.
+                </li>
+
+                <li>
+                    Algunos servidores DNS de ISP están mal configurados.
+                </li>
+
+            </ul>
+
+            <div class="info-box">
+
+                Una solución común es utilizar un servidor DNS local
+                conectado directamente con los root servers.
+                
+            </div>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Herramientas DNS</h2>
+
+            <p>
+                Existen herramientas para analizar y solucionar problemas DNS.
+            </p>
+
+            <div class="grid">
+
+                <div class="mini-card">
+
+                    <h4>dig</h4>
+
+                    <p>
+                        Herramienta Unix para consultas DNS.
+                    </p>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <h4>nslookup</h4>
+
+                    <p>
+                        Herramienta disponible en Windows y Linux.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <div>
+            Página basada en el documento:
+            <strong>“Introducción al Servicio DNS”</strong>
+        </div>
+
+        <div style="margin-top:10px;">
+            Diseñada en HTML y CSS para formación técnica y educativa.
+        </div>
+
+    </footer>
+
+</body>
+</html>

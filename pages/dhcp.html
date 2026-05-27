@@ -3,91 +3,445 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href=/icono.png>
-    <title>DHCP: El Protocolo para la Asignación Automática de Direcciones IP</title>
+    <link rel="icon" type="image/png" href="/icono.png">
+
+    <title>Introducción al Servicio DHCP</title>
+
     <link rel="stylesheet" href="../css/dhcp.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#0f172a;
+            color:white;
+            line-height:1.7;
+        }
+
+        header{
+            height:65vh;
+            background:
+            linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)),
+            url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1600&auto=format&fit=crop');
+            background-size:cover;
+            background-position:center;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            padding:20px;
+        }
+
+        header h1{
+            font-size:4rem;
+            max-width:1000px;
+            color:#38bdf8;
+            text-shadow:0 0 20px rgba(0,0,0,.6);
+        }
+
+        main{
+            width:90%;
+            max-width:1200px;
+            margin:auto;
+            padding:60px 0;
+        }
+
+        .card{
+            background:#1e293b;
+            margin-bottom:35px;
+            padding:35px;
+            border-radius:18px;
+            border:1px solid #334155;
+            transition:.3s;
+            box-shadow:0 10px 20px rgba(0,0,0,.25);
+        }
+
+        .card:hover{
+            transform:translateY(-8px);
+        }
+
+        h2{
+            color:#38bdf8;
+            margin-bottom:20px;
+            font-size:2rem;
+        }
+
+        h3{
+            color:#7dd3fc;
+            margin-top:25px;
+            margin-bottom:15px;
+        }
+
+        p{
+            margin-bottom:15px;
+            color:#e2e8f0;
+        }
+
+        ul, ol{
+            margin-left:25px;
+            margin-top:15px;
+        }
+
+        li{
+            margin-bottom:12px;
+            color:#e2e8f0;
+        }
+
+        .info-box{
+            background:#0f172a;
+            border-left:5px solid #38bdf8;
+            padding:20px;
+            border-radius:10px;
+            margin-top:20px;
+        }
+
+        .message-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            gap:20px;
+            margin-top:30px;
+        }
+
+        .message-card{
+            background:#0f172a;
+            padding:20px;
+            border-radius:12px;
+            border:1px solid #334155;
+        }
+
+        .message-card h4{
+            color:#38bdf8;
+            margin-bottom:10px;
+        }
+
+        .ports{
+            margin-top:25px;
+            background:#0f172a;
+            padding:20px;
+            border-radius:12px;
+        }
+
+        code{
+            color:#38bdf8;
+            font-size:1rem;
+            font-weight:bold;
+        }
+
+        footer{
+            background:#020617;
+            padding:40px;
+            text-align:center;
+            color:#94a3b8;
+            border-top:1px solid #1e293b;
+        }
+
+        .hero-text{
+            max-width:900px;
+        }
+
+        .hero-text p{
+            margin-top:20px;
+            font-size:1.2rem;
+            color:#e2e8f0;
+        }
+
+        @media(max-width:768px){
+
+            header h1{
+                font-size:2.5rem;
+            }
+
+            .card{
+                padding:25px;
+            }
+
+            h2{
+                font-size:1.7rem;
+            }
+        }
+
+    </style>
 </head>
+
 <body>
+
     <header>
-        <h1>DHCP: El Protocolo para la Asignación Automática de Direcciones IP</h1>
+
+        <div class="hero-text">
+
+            <h1>Introducción al Servicio DHCP</h1>
+
+            <p>
+                Aprende cómo funciona DHCP, la asignación automática
+                de direcciones IP y la administración centralizada de redes.
+            </p>
+
+        </div>
+
     </header>
 
     <main>
+
         <section class="card">
-            <h2>Introducción y Definición</h2>
+
+            <h2>Introducción</h2>
+
             <p>
-                DHCP (Protocolo de Configuración Dinámica de Host) es un protocolo estándar TCP/IP que automatiza la asignación de direcciones IP y otros parámetros de red a los dispositivos al conectarse.
-                Su implementación resuelve el problema de la configuración manual de direcciones IP, evitando errores humanos y simplificando la administración de redes.
+                DHCP (Dynamic Host Configuration Protocol) es un protocolo
+                estándar TCP/IP que automatiza la configuración IP de los dispositivos
+                conectados a una red.
             </p>
+
             <p>
-                Un servidor DHCP proporciona, como mínimo, la dirección IP y la máscara de subred. Opcionalmente, también puede asignar la puerta de enlace (*gateway*) y los servidores DNS.
+                Gracias a DHCP, los equipos reciben automáticamente:
             </p>
+
+            <ul>
+                <li>Dirección IP</li>
+                <li>Máscara de subred</li>
+                <li>Puerta de enlace</li>
+                <li>Servidor DNS</li>
+            </ul>
+
+            <div class="info-box">
+                Esto permite administrar toda la red desde un único servidor,
+                evitando configuraciones manuales en cada ordenador.
+            </div>
+
         </section>
 
         <section class="card">
-            <h2>Funcionamiento Detallado: El Ciclo DORA</h2>
+
+            <h2>Servidor DHCP</h2>
+
             <p>
-                DHCP opera bajo un modelo cliente/servidor y sigue un ciclo de cuatro pasos conocido como DORA:
+                El servidor DHCP escucha las solicitudes de los clientes y
+                responde proporcionando automáticamente los parámetros
+                de configuración de red.
             </p>
+
+            <p>
+                Los clientes deben estar configurados con la opción:
+            </p>
+
+            <div class="ports">
+                <code>Obtener dirección IP automáticamente</code>
+            </div>
+
+            <h3>Parámetros proporcionados</h3>
+
             <ul>
+                <li>Dirección IP</li>
+                <li>Máscara de subred</li>
+                <li>Puerta de enlace</li>
+                <li>Servidores DNS</li>
+                <li>Otros parámetros adicionales</li>
+            </ul>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Ventajas de usar DHCP</h2>
+
+            <ul>
+                <li>Evita conflictos de direcciones IP repetidas.</li>
+
                 <li>
-                    <strong>Discover (DHCPDISCOVER):</strong> El cliente localiza un servidor enviando un mensaje de difusión (*broadcast*).
+                    Facilita la integración automática de nuevos equipos
+                    en la red.
                 </li>
+
                 <li>
-                    <strong>Offer (DHCPOFFER):</strong> El servidor responde con una oferta de una dirección IP disponible y otros parámetros de red.
+                    Mantiene una administración centralizada.
                 </li>
+
                 <li>
-                    <strong>Request (DHCPREQUEST):</strong> El cliente acepta la oferta enviada por el servidor.
+                    Reduce errores humanos en la configuración.
                 </li>
+
                 <li>
-                    <strong>Acknowledge (DHCPACK):</strong> El servidor confirma la asignación y reserva la dirección IP para el cliente.
+                    Permite cambios rápidos desde el servidor.
                 </li>
             </ul>
-            <p>
-                Los puertos utilizados son: <strong>UDP 67</strong> en el servidor y <strong>UDP 68</strong> en el cliente. Es importante notar que si un cliente no logra encontrar un servidor DHCP, no podrá conectarse a la red.
-            </p>
+
         </section>
 
         <section class="card">
-            <h2>Gestión de Concesiones (Alquiler)</h2>
+
+            <h2>Funcionamiento del Servicio DHCP</h2>
+
             <p>
-                La <strong>concesión o alquiler de direcciones</strong> es el período durante el cual un cliente puede utilizar la dirección IP asignada por el servidor DHCP.
+                El servidor DHCP asigna direcciones IP dentro de un rango
+                previamente configurado.
             </p>
+
             <p>
-                El proceso de renovación ocurre cuando el cliente alcanza el 50% del período de la concesión. Si la concesión sigue vigente, el cliente puede mantener la misma IP; de lo contrario, debe solicitar una nueva dirección IP.
+                Si una IP ya está siendo utilizada, el cliente solicitará otra
+                dirección disponible.
             </p>
+
+            <div class="info-box">
+                Cuando el cliente alcanza el 50% del tiempo de concesión,
+                intentará renovar automáticamente su dirección IP.
+            </div>
+
         </section>
 
         <section class="card">
-            <h2>Ventajas Clave de Implementar DHCP</h2>
-            <ul>
-                <li>Configuración <strong>rápida y automática</strong> (*Plug and play*).</li>
-                <li>Evita conflictos de direcciones repetidas (conflictos de IP).</li>
-                <li>Simplifica la administración de la red mediante administración centralizada.</li>
-                <li>Permite realizar cambios de configuración IP desde el servidor sin intervención física en cada equipo.</li>
-            </ul>
+
+            <h2>Tipos de Mensajes DHCP</h2>
+
+            <div class="message-grid">
+
+                <div class="message-card">
+                    <h4>DHCPDISCOVER</h4>
+                    <p>
+                        El cliente busca servidores DHCP disponibles.
+                    </p>
+                </div>
+
+                <div class="message-card">
+                    <h4>DHCPOFFER</h4>
+                    <p>
+                        El servidor ofrece una configuración IP.
+                    </p>
+                </div>
+
+                <div class="message-card">
+                    <h4>DHCPREQUEST</h4>
+                    <p>
+                        El cliente acepta la oferta del servidor.
+                    </p>
+                </div>
+
+                <div class="message-card">
+                    <h4>DHCPACK</h4>
+                    <p>
+                        Confirmación final de la asignación IP.
+                    </p>
+                </div>
+
+                <div class="message-card">
+                    <h4>DHCPDECLINE</h4>
+                    <p>
+                        El cliente informa que la IP está en uso.
+                    </p>
+                </div>
+
+                <div class="message-card">
+                    <h4>DHCPNACK</h4>
+                    <p>
+                        El servidor indica que la IP no es válida.
+                    </p>
+                </div>
+
+                <div class="message-card">
+                    <h4>DHCPRELEASE</h4>
+                    <p>
+                        El cliente libera la dirección IP asignada.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="ports">
+                <p><strong>Puerto servidor:</strong> <code>UDP 67</code></p>
+                <p><strong>Puerto cliente:</strong> <code>UDP 68</code></p>
+            </div>
+
         </section>
 
         <section class="card">
-            <h2>Administración Avanzada y Métodos de Asignación</h2>
-            <h3>Métodos de Asignación</h3>
-            <ol>
-                <li><strong>Manual:</strong> El administrador configura la IP manualmente en el servidor, usando DHCP solo para entregar el valor.</li>
-                <li><strong>Automática:</strong> El servidor asigna una IP permanente en el primer contacto.</li>
-                <li><strong>Dinámica:</strong> Asigna la IP por un tiempo determinado (concesión); la dirección se revoca al expirar y el cliente debe solicitarla de nuevo.</li>
-            </ol>
-            <h3>Conceptos Clave de Administración</h3>
-            <ul>
-                <li><strong>Ámbito (*Scope*):</strong> Agrupamiento administrativo de clientes de una subred.</li>
-                <li><strong>Rango (*Range*):</strong> Conjunto de direcciones IP que el servidor puede conceder.</li>
-                <li><strong>Exclusiones:</strong> IP que pertenecen al rango, pero que no serán asignadas.</li>
-                <li><strong>Reserva de direcciones IP:</strong> Mecanismo para asignar siempre la misma IP a un equipo específico (asociando MAC a IP).</li>
-            </ul>
+
+            <h2>Conceptos DHCP</h2>
+
+            <h3>Ámbito DHCP</h3>
+
+            <p>
+                Agrupación administrativa de clientes de una subred
+                que utilizan el servicio DHCP.
+            </p>
+
+            <h3>Rango DHCP</h3>
+
+            <p>
+                Conjunto de direcciones IP que el servidor puede asignar.
+            </p>
+
+            <div class="ports">
+                <code>Ejemplo: 192.168.0.1 - 192.168.0.254</code>
+            </div>
+
+            <h3>Concesión o Alquiler</h3>
+
+            <p>
+                Tiempo durante el cual un cliente puede utilizar
+                una dirección IP.
+            </p>
+
+            <h3>Reserva de Direcciones</h3>
+
+            <p>
+                Permite asignar siempre la misma IP a un equipo
+                utilizando la dirección MAC.
+            </p>
+
+            <h3>Exclusiones</h3>
+
+            <p>
+                Direcciones IP del rango que nunca serán asignadas.
+            </p>
+
         </section>
+
+        <section class="card">
+
+            <h2>Administración de Direcciones con DHCP</h2>
+
+            <h3>Asignación Manual</h3>
+
+            <p>
+                El administrador configura manualmente la IP
+                del cliente desde el servidor DHCP.
+            </p>
+
+            <h3>Asignación Automática</h3>
+
+            <p>
+                El servidor asigna una IP permanente en el primer contacto.
+            </p>
+
+            <h3>Asignación Dinámica</h3>
+
+            <p>
+                La dirección IP se asigna por un tiempo determinado.
+                Una vez expirada, el cliente deberá solicitar una nueva.
+            </p>
+
+        </section>
+
     </main>
 
     <footer>
-        <div>Diseñado para uso técnico — puedes exportar este documento como .html y usarlo como página de referencia.</div>
+
+        <div>
+            Página web basada en el documento:
+            <strong>“Introducción al Servicio DHCP”</strong>
+        </div>
+
+        <div style="margin-top:10px;">
+            Diseñado en HTML y CSS para uso educativo y técnico.
+        </div>
+
     </footer>
+
 </body>
 </html>

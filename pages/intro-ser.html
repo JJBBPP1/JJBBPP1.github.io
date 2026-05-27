@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Introducción a los Servicios de Red</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#0f172a;
+      color:white;
+      line-height:1.6;
+    }
+
+    header{
+      height:100vh;
+      background:linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)),
+      url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop');
+      background-size:cover;
+      background-position:center;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:20px;
+    }
+
+    .hero{
+      max-width:900px;
+    }
+
+    .hero h1{
+      font-size:4rem;
+      margin-bottom:20px;
+      color:#38bdf8;
+    }
+
+    .hero p{
+      font-size:1.3rem;
+      color:#e2e8f0;
+    }
+
+    nav{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:#111827;
+      padding:15px;
+      box-shadow:0 2px 10px rgba(0,0,0,.4);
+    }
+
+    nav ul{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      list-style:none;
+      gap:20px;
+    }
+
+    nav a{
+      color:white;
+      text-decoration:none;
+      font-weight:bold;
+      transition:.3s;
+    }
+
+    nav a:hover{
+      color:#38bdf8;
+    }
+
+    section{
+      padding:80px 10%;
+    }
+
+    .section-title{
+      font-size:2.5rem;
+      margin-bottom:40px;
+      color:#38bdf8;
+      text-align:center;
+    }
+
+    .card-container{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+      gap:25px;
+    }
+
+    .card{
+      background:#1e293b;
+      padding:25px;
+      border-radius:15px;
+      transition:.3s;
+      border:1px solid #334155;
+    }
+
+    .card:hover{
+      transform:translateY(-10px);
+      box-shadow:0 10px 20px rgba(0,0,0,.5);
+    }
+
+    .card h3{
+      margin-bottom:15px;
+      color:#38bdf8;
+    }
+
+    .info{
+      background:#111827;
+      border-left:5px solid #38bdf8;
+      padding:20px;
+      margin-top:20px;
+      border-radius:10px;
+    }
+
+    .ip-box{
+      background:#1e293b;
+      padding:20px;
+      border-radius:10px;
+      margin-top:20px;
+    }
+
+    .ip-box code{
+      color:#38bdf8;
+      font-size:1.1rem;
+    }
+
+    footer{
+      background:#020617;
+      padding:40px;
+      text-align:center;
+      color:#94a3b8;
+    }
+
+    .btn{
+      display:inline-block;
+      margin-top:30px;
+      padding:15px 30px;
+      background:#38bdf8;
+      color:black;
+      text-decoration:none;
+      border-radius:10px;
+      font-weight:bold;
+      transition:.3s;
+    }
+
+    .btn:hover{
+      background:white;
+    }
+
+    @media(max-width:768px){
+
+      .hero h1{
+        font-size:2.5rem;
+      }
+
+      .hero p{
+        font-size:1rem;
+      }
+
+      section{
+        padding:60px 6%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="hero">
+      <h1>Introducción a los Servicios de Red</h1>
+      <p>
+        Aprende los fundamentos de redes informáticas, 
+        configuración TCP/IP, NAT, direcciones IP y servicios de red.
+      </p>
+
+      <a href="#contenido" class="btn">Comenzar</a>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#redes">Redes</a></li>
+      <li><a href="#tcpip">TCP/IP</a></li>
+      <li><a href="#ip">Direcciones IP</a></li>
+      <li><a href="#nat">NAT</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#servidores">Servidores</a></li>
+    </ul>
+  </nav>
+
+  <section id="contenido">
+    <h2 class="section-title">¿Qué es una Red Informática?</h2>
+
+    <div class="card-container">
+
+      <div class="card">
+        <h3>Comunicación</h3>
+        <p>
+          Una red informática conecta ordenadores y dispositivos
+          para compartir información y recursos.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Compartición</h3>
+        <p>
+          Los usuarios pueden compartir archivos, impresoras,
+          aplicaciones y acceso a Internet.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Ventajas</h3>
+        <p>
+          Reduce costes, mejora la administración
+          y aumenta la seguridad de los datos.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="tcpip">
+    <h2 class="section-title">Configuración TCP/IP</h2>
+
+    <div class="info">
+      Para que los dispositivos se comuniquen en una red,
+      necesitan una dirección IP y una máscara de subred.
+    </div>
+
+    <div class="card-container">
+
+      <div class="card">
+        <h3>Dirección IP</h3>
+        <p>
+          Identifica de forma única a cada equipo dentro de la red.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Máscara de Subred</h3>
+        <p>
+          Define el tamaño de la red y qué equipos pertenecen a ella.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Puerta de Enlace</h3>
+        <p>
+          Permite que los dispositivos puedan acceder a Internet.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>DNS</h3>
+        <p>
+          Traduce nombres de dominio en direcciones IP.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="ip-box">
+      <h3>Ejemplo de configuración:</h3>
+
+      <p><code>IP:</code> 192.168.0.10</p>
+      <p><code>Máscara:</code> 255.255.255.0</p>
+      <p><code>Gateway:</code> 192.168.0.1</p>
+      <p><code>DNS:</code> 8.8.8.8</p>
+    </div>
+  </section>
+
+  <section id="ip">
+    <h2 class="section-title">Direcciones IP Públicas y Privadas</h2>
+
+    <div class="card-container">
+
+      <div class="card">
+        <h3>IP Privada</h3>
+        <p>
+          Se utiliza dentro de redes locales y no es accesible
+          directamente desde Internet.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>IP Pública</h3>
+        <p>
+          Es la dirección visible en Internet y normalmente
+          pertenece al router.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Rangos Privados</h3>
+        <p>
+          192.168.X.X<br>
+          172.16.X.X<br>
+          10.X.X.X
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="nat">
+    <h2 class="section-title">NAT - Traducción de Direcciones</h2>
+
+    <div class="info">
+      NAT permite que múltiples dispositivos de una red local
+      compartan una única dirección IP pública.
+    </div>
+
+    <div class="card-container">
+
+      <div class="card">
+        <h3>SNAT</h3>
+        <p>
+          Cambia la IP privada por una IP pública para acceder a Internet.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Seguridad</h3>
+        <p>
+          Oculta las IPs internas de la red local.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Ahorro de IPs</h3>
+        <p>
+          Permite que muchos equipos usen una sola IP pública.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="servicios">
+    <h2 class="section-title">Servicios de Red</h2>
+
+    <div class="card-container">
+
+      <div class="card">
+        <h3>DHCP / DNS</h3>
+        <p>
+          Automatizan la configuración de red y resolución de nombres.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>SSH</h3>
+        <p>
+          Permite acceso remoto seguro a servidores.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>FTP</h3>
+        <p>
+          Facilita la transferencia de archivos en la red.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>WEB</h3>
+        <p>
+          Proporciona páginas y aplicaciones accesibles desde navegadores.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>EMAIL</h3>
+        <p>
+          Servicio de comunicación mediante correo electrónico.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Impresión</h3>
+        <p>
+          Permite compartir impresoras entre varios equipos.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="servidores">
+    <h2 class="section-title">Servidores y Hardware</h2>
+
+    <div class="card-container">
+
+      <div class="card">
+        <h3>Servidor</h3>
+        <p>
+          Equipo encargado de ofrecer servicios y recursos
+          a otros dispositivos de la red.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>RAM y CPU</h3>
+        <p>
+          Los servidores requieren mucha memoria RAM
+          y procesadores potentes.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Almacenamiento</h3>
+        <p>
+          Utilizan discos de alta capacidad y velocidad.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Refrigeración</h3>
+        <p>
+          Necesitan sistemas avanzados de ventilación
+          para funcionar 24/7.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      Página web basada en el documento:
+      "Introducción a los Servicios de Red"
+    </p>
+
+    <p style="margin-top:10px;">
+      Diseñado con HTML y CSS
+    </p>
+  </footer>
+
+</body>
+</html>
