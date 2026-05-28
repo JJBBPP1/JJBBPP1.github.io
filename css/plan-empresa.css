@@ -1363,7 +1363,7 @@ select option,
   color: var(--accent);
 }
 
-/* ===== ADMIN CONTROLS ===== */
+/* ===== ADMIN CONTROLS (sin gestión de usuarios) ===== */
 .admin-control-section {
   margin: 2.5rem 0;
   padding: 2rem;
@@ -1434,117 +1434,6 @@ select option,
   background: rgba(255, 255, 255, 0.08);
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(0, 196, 180, 0.1);
-}
-
-.admin-table {
-  overflow-x: auto;
-}
-
-.admin-table table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
-}
-
-.admin-table thead {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.admin-table th {
-  padding: 1rem;
-  text-align: left;
-  color: var(--accent);
-  font-weight: 600;
-  border-bottom: 1px solid var(--border);
-}
-
-.admin-table td {
-  padding: 1rem;
-  border-bottom: 1px solid var(--border);
-  color: var(--text);
-}
-
-.admin-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.role-badge {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.role-badge.admin {
-  background: rgba(81, 207, 102, 0.2);
-  color: #51cf66;
-}
-
-.role-badge.moderator {
-  background: rgba(63, 179, 255, 0.2);
-  color: #3fb3ff;
-}
-
-.role-badge.user {
-  background: rgba(146, 160, 192, 0.2);
-  color: #92a0c0;
-}
-
-.status-badge {
-  display: inline-block;
-  padding: 0.3rem 0.8rem;
-  border-radius: 16px;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.status-badge.success {
-  background: rgba(81, 207, 102, 0.2);
-  color: #51cf66;
-}
-
-.status-badge.warning {
-  background: rgba(255, 179, 71, 0.2);
-  color: #ffb347;
-}
-
-.status-badge.error {
-  background: rgba(255, 107, 107, 0.2);
-  color: #ff6b6b;
-}
-
-.btn-small {
-  padding: 0.5rem 1rem;
-  background: rgba(63, 179, 255, 0.15);
-  border: 1px solid rgba(63, 179, 255, 0.3);
-  border-radius: 8px;
-  color: #3fb3ff;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: var(--transition);
-}
-
-.btn-small:hover:not(:disabled) {
-  background: rgba(63, 179, 255, 0.25);
-  border-color: rgba(63, 179, 255, 0.5);
-}
-
-.btn-small:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-small.btn-delete {
-  background: rgba(255, 107, 107, 0.15);
-  border-color: rgba(255, 107, 107, 0.3);
-  color: #ff6b6b;
-}
-
-.btn-small.btn-delete:hover {
-  background: rgba(255, 107, 107, 0.25);
-  border-color: rgba(255, 107, 107, 0.5);
 }
 
 .monitoring-grid {
@@ -1746,6 +1635,7 @@ select option,
     grid-template-columns: 1fr;
   }
 }
+
 
 /* ===== EXTRA MOBILE TWEAKS ===== */
 @media (max-width: 480px) {

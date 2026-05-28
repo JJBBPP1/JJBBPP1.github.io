@@ -385,4 +385,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (showRegisterLink) showRegisterLink.addEventListener('click', openRegister);
   if (showLoginLink) showLoginLink.addEventListener('click', openLogin);
+
+  const loginShowPassword = document.getElementById('login-show-password');
+  const registerShowPassword = document.getElementById('register-show-password');
+
+  loginShowPassword?.addEventListener('change', () => {
+    const passwordInput = document.getElementById('password');
+    if (passwordInput) passwordInput.type = loginShowPassword.checked ? 'text' : 'password';
+  });
+
+  registerShowPassword?.addEventListener('change', () => {
+    const registerPassword = document.getElementById('register-password');
+    const confirmPassword = document.getElementById('register-password-confirm');
+    const type = registerShowPassword.checked ? 'text' : 'password';
+    if (registerPassword) registerPassword.type = type;
+    if (confirmPassword) confirmPassword.type = type;
+  });
 });

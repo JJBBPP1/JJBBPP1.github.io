@@ -56,56 +56,7 @@
     <section class="feature-section">
       <h2>Controles exclusivos de administrador</h2>
       
-      <!-- GESTIÓN DE USUARIOS -->
-      <div class="admin-control-section">
-        <h3>🛡️ Gestión de usuarios</h3>
-        <p class="monitoring-note">Todos los usuarios registrados se cargan directamente desde la base de datos.</p>
-        <div class="control-panel">
-          <div class="user-controls" style="margin-bottom:12px;">
-            <button id="test-conn-btn" class="btn-secondary">Probar conexión a Firebase</button>
-            <span id="conn-status" style="margin-left:12px;color:var(--text);font-size:.95rem"></span>
-          </div>
-          <form id="user-form" class="admin-form">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="user-email">Email del usuario</label>
-                <input id="user-email" type="email" placeholder="usuario@ejemplo.com" required>
-              </div>
-              <div class="form-group">
-                <label for="user-password">Contraseña temporal</label>
-                <input id="user-password" type="password" placeholder="Contraseña temporal (mín. 6 chars)" required>
-              </div>
-              <div class="form-group">
-                <label for="user-role">Rol</label>
-                <select id="user-role" required>
-                  <option value="user">Usuario</option>
-                  <option value="moderator">Moderador</option>
-                  <option value="admin">Administrador</option>
-                </select>
-              </div>
-              <button type="submit" class="btn-primary">Crear cuenta (Auth)</button>
-            </div>
-          </form>
-          <div id="users-list" class="admin-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>Rol</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="users-tbody">
-                <tr>
-                  <td>javierbravopintado06@gmail.com</td>
-                  <td><span class="role-badge admin">Administrador</span></td>
-                  <td><button class="btn-small" disabled>Principal</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+
 
       <!-- MONITOREO AVANZADO -->
       <div class="admin-control-section">
