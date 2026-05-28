@@ -28,16 +28,17 @@
   <nav class="navbar">
     <div class="navbar-inner">
       <div class="navbar-brand">
-        <!-- <span class="brand-icon">N</span> -->
         <img src="../multimedia/logo-plan-empresa-negro.png" alt="NEXUS" class="brand-icon">
         <span class="brand-name">NEXUS</span>
       </div>
+      <button class="navbar-toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+        <span class="navbar-toggle-icon"></span>
+      </button>
       <ul class="navbar-menu">
         <li><a href="#servidores">Servidores</a></li>
         <li><a href="#planes">Planes</a></li>
-        <li><a href="./admin-panel.html">Panel</a></li>
         <li><a href="./configuracion-servidor.html">Configuración</a></li>
-        <li id="admin-nav-btn" class="hidden"><a href="./admin-panel.html" class="admin-link">👨‍💼 Administrador</a></li>
+        <li><a href="./admin-only.html">Administrador</a></li>
         <li><a href="#login">Mi cuenta</a></li>
       </ul>
     </div>
@@ -100,13 +101,14 @@
       </div>
 
       <div class="plans-container">
+        <!-- Estas clases son capturadas por auth-handlers.js para guardar planes en Firestore -->
         <article class="pricing-card" data-plan="starter">
           <div class="plan-badge">Inicio</div>
           <h3>Plan Starter</h3>
           <p class="plan-desc">Para comunidades pequeñas y pruebas iniciales</p>
           <div class="plan-price">
             <span class="currency">€</span>
-            <span class="amount">4.99</span>
+            <span class="amount">14.99</span>
             <span class="period">/mes</span>
           </div>
           <ul class="plan-features">
@@ -116,7 +118,7 @@
             <li>Soporte técnico por email</li>
             <li>1 backup automático semanal</li>
           </ul>
-          <button class="btn-plan-select" data-plan="starter">Seleccionar</button>
+          <button class="btn-plan-select auth-plan-select" data-plan="starter" data-price="14.99">Seleccionar</button>
         </article>
 
         <article class="pricing-card featured" data-plan="professional">
@@ -125,7 +127,7 @@
           <p class="plan-desc">Para equipos y comunidades activas</p>
           <div class="plan-price">
             <span class="currency">€</span>
-            <span class="amount">9.99</span>
+            <span class="amount">49.99</span>
             <span class="period">/mes</span>
           </div>
           <ul class="plan-features">
@@ -136,7 +138,7 @@
             <li>Backups diarios automáticos</li>
             <li>DDoS protection básica</li>
           </ul>
-          <button class="btn-plan-select" data-plan="professional">Seleccionar</button>
+          <button class="btn-plan-select auth-plan-select" data-plan="professional" data-price="49.99">Seleccionar</button>
         </article>
 
         <article class="pricing-card" data-plan="enterprise">
@@ -145,7 +147,7 @@
           <p class="plan-desc">Para organizaciones con altas exigencias</p>
           <div class="plan-price">
             <span class="currency">€</span>
-            <span class="amount">24.99</span>
+            <span class="amount">149.99</span>
             <span class="period">/mes</span>
           </div>
           <ul class="plan-features">
@@ -157,7 +159,7 @@
             <li>DDoS protection avanzada</li>
             <li>IP estática incluida</li>
           </ul>
-          <button class="btn-plan-select" data-plan="enterprise">Seleccionar</button>
+          <button class="btn-plan-select auth-plan-select" data-plan="enterprise" data-price="149.99">Seleccionar</button>
         </article>
 
         <article class="pricing-card" data-plan="personalizado">
@@ -177,7 +179,7 @@
             <li>Backups y protección avanzada</li>
             <li>SLA personalizado</li>
           </ul>
-          <button class="btn-plan-select" data-plan="personalizado">Personalizar</button>
+          <button class="btn-plan-select auth-plan-select" data-plan="personalizado" data-price="0.00">Personalizar</button>
         </article>
       </div>
 
@@ -185,7 +187,7 @@
         <div class="custom-form-container">
           <h3>Configura tu servidor personalizado</h3>
           <p>Define los recursos exactos que necesitas y recibe una propuesta adaptada a tu caso.</p>
-          <form id="custom-form" class="form-fields">
+          <form id="custom-form" class="form-fields auth-custom-form">
             <div class="form-row">
               <div class="form-group">
                 <label for="server-name">Nombre del servidor</label>
@@ -344,27 +346,6 @@
       </div>
     </section>
 
-    <section id="panel-config" class="panel-config-section">
-      <div class="section-header">
-        <h2>Administración y configuración avanzada</h2>
-        <p>Accede a herramientas de gestión específicas para cada usuario y optimiza el control de tus servidores en segundos.</p>
-      </div>
-      <div class="panel-links-grid">
-        <article class="feature-card">
-          <div class="feature-icon">🛠️</div>
-          <h3>Panel de administración</h3>
-          <p>Visualiza tus servidores, usuarios y estadísticas en un solo lugar. Ideal para el control diario de tu infraestructura.</p>
-          <a href="./admin-panel.html" class="btn-secondary">Ir al panel</a>
-        </article>
-        <article class="feature-card">
-          <div class="feature-icon">⚙️</div>
-          <h3>Configuración del servidor</h3>
-          <p>Gestiona recursos, plugins, backups y permisos con una interfaz dedicada para cada proyecto.</p>
-          <a href="./configuracion-servidor.html" class="btn-secondary">Ver configuración</a>
-        </article>
-      </div>
-    </section>
-
     <section id="login" class="login-section">
       <div class="login-container">
         <div class="login-panel">
@@ -372,10 +353,6 @@
           <p>Gestiona tu servidor desde tu cuenta personalizada</p>
           <div id="auth-state" class="auth-state hidden">
             <p>Conectado como <strong id="auth-email"></strong></p>
-            <div id="admin-buttons" class="hidden" style="margin-bottom: 1rem;">
-              <a href="./admin-panel.html" class="btn-primary btn-block" style="display: block; text-align: center; padding: 0.9rem; margin-bottom: 0.5rem;">👨‍💼 Panel de Administrador</a>
-              <a href="./admin-only.html" class="btn-secondary btn-block" style="display: block; text-align: center; padding: 0.9rem; margin-bottom: 0.5rem;">🔐 Zona Exclusiva</a>
-            </div>
             <button id="sign-out-btn" type="button" class="btn-secondary btn-block">Cerrar sesión</button>
           </div>
           <form id="login-form" class="login-form">
@@ -471,5 +448,6 @@
   </footer>
 
   <script type="module" src="../js/plan-empresa.js"></script>
+  <script type="module" src="../js/auth-handlers.js"></script> 
 </body>
 </html>

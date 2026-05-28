@@ -89,12 +89,17 @@ img {
   animation: fadeIn 0.4s ease-out;
 }
 
+.navbar-toggle {
+  display: none;
+}
+
 .navbar-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: min(1200px, calc(100% - 2rem));
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0;
   padding: 1rem 1rem;
 }
 
@@ -575,14 +580,14 @@ img {
   padding-right: 2.5rem;
 }
 
-/* Forzar color de texto negro en todos los desplegables (select y opciones) */
+/* Mostrar el texto seleccionado de los desplegables en blanco */
 .form-group select,
 .admin-form select,
 select {
-  color: #000 !important;
+  color: #fff !important;
 }
 
-/* Asegurar que las opciones también se muestren en negro sobre fondo claro */
+/* Las opciones desplegadas pueden seguir viendo texto oscuro sobre fondo claro */
 select option,
 .form-group select option,
 .admin-form select option {
@@ -949,8 +954,51 @@ select option,
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 980px) {
+  .navbar-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .navbar-menu {
-    gap: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .navbar-menu li {
+    width: auto;
+  }
+
+  .hero-header {
+    padding: 3rem 0 2rem;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .plans-container,
+  .features-grid,
+  .benefits-grid,
+  .contact-grid,
+  .panel-links-grid,
+  .settings-grid {
+    gap: 1rem;
+  }
+
+  .pricing-card,
+  .custom-form-container,
+  .feature-card,
+  .benefit-card,
+  .faq-item,
+  .contact-card,
+  .panel-links-grid article,
+  .login-panel,
+  .login-info,
+  .price-box,
+  .auth-state {
+    padding: 1.5rem;
   }
 
   .login-container {
@@ -958,9 +1006,169 @@ select option,
   }
 
   .login-info {
-    padding: 0;
+    padding: 1.5rem;
     border-top: 1px solid rgba(255,255,255,0.08);
     padding-top: 2rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .price-box {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .navbar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--text);
+  }
+
+  .navbar-toggle-icon {
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    display: block;
+    position: relative;
+  }
+
+  .navbar-toggle-icon::before,
+  .navbar-toggle-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+  }
+
+  .navbar-toggle-icon::before {
+    top: -7px;
+  }
+
+  .navbar-toggle-icon::after {
+    top: 7px;
+  }
+
+  .navbar-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navbar-menu {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .navbar-menu.open {
+    display: flex;
+  }
+
+  .navbar-menu li {
+    width: 100%;
+  }
+
+  .navbar-menu a {
+    width: 100%;
+    padding: 0.85rem 0;
+    display: block;
+    color: var(--text);
+  }
+
+  .navbar-menu a::after {
+    display: none;
+  }
+
+  .navbar-menu {
+    gap: 0.75rem;
+  }
+
+  .hero-header {
+    padding: 2.5rem 0 1.5rem;
+  }
+
+  .hero-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-header p,
+  .pricing-header p,
+  .contact-section > p,
+  .feature-card p,
+  .benefit-card p,
+  .faq-item p {
+    font-size: 1rem;
+  }
+
+  .plans-container,
+  .features-grid,
+  .benefits-grid,
+  .contact-grid,
+  .panel-links-grid,
+  .login-container,
+  .custom-form-container,
+  .price-box,
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-card,
+  .feature-card,
+  .benefit-card,
+  .faq-item,
+  .contact-card,
+  .custom-form-container,
+  .login-panel,
+  .login-info,
+  .auth-state,
+  .price-box {
+    width: 100%;
+    padding: 1.25rem;
+  }
+
+  .plan-price {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  .amount {
+    font-size: 2rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .admin-form input,
+  .admin-form select {
+    font-size: 0.95rem;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-plan-select {
+    width: 100%;
+  }
+
+  .hero-cta {
+    width: 100%;
   }
 }
 

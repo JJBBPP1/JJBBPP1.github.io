@@ -1,10 +1,10 @@
-import { saveSelectedPlan } from '../js/auth-handlers.js';
+import { guardarPlanPersonalizado } from '../js/auth-handlers.js';
 
 // Precios base por plan
 const planPrices = {
-  starter: 4.99,
-  professional: 9.99,
-  enterprise: 24.99,
+  starter: 14.99,
+  professional: 49.99,
+  enterprise: 149.99,
   personalizado: 0
 };
 
@@ -102,20 +102,34 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 });
 
-// Plan selection with visual feedback
-document.querySelectorAll('.btn-plan-select').forEach(button => {
-  button.addEventListener('click', function() {
-    const plan = this.dataset.plan;
-    if (plan === 'personalizado') {
-      document.getElementById('custom-server-form').classList.add('visible');
-      document.getElementById('custom-server-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+// Mostrar el formulario personalizado al pulsar el botón correspondiente.
+// El guardado de planes predefinidos se gestiona desde `auth-handlers.js`.
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest && e.target.closest('.btn-plan-select');
+  if (!btn) return;
+  const plan = btn.dataset.plan;
+  const formEl = document.getElementById('custom-server-form');
+
+  if (plan === 'personalizado') {
+    if (formEl) {
+      formEl.classList.add('visible');
+      formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       calculateDynamicPrice();
-    } else {
-      document.getElementById('custom-server-form').classList.remove('visible');
-      saveSelectedPlan(plan);
     }
-  });
+  } else {
+    if (formEl) formEl.classList.remove('visible');
+    // Nota: el evento de guardar el plan predefinido lo añade `auth-handlers.js`.
+  }
 });
+
+const navbarToggle = document.querySelector('.navbar-toggle');
+const navbarMenu = document.querySelector('.navbar-menu');
+if (navbarToggle && navbarMenu) {
+  navbarToggle.addEventListener('click', () => {
+    const isOpen = navbarMenu.classList.toggle('open');
+    navbarToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+}
 
 // Real-time slider updates
 const ramEl = document.getElementById('server-ram');
@@ -130,30 +144,7 @@ if (storageEl) storageEl.addEventListener('input', (e) => {
   if (el) el.textContent = e.target.value + ' GB';
 });
 
-// Custom form submission with validation
-const customForm = document.getElementById('custom-form');
-if (customForm) {
-  customForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const serverName = document.getElementById('server-name').value;
-    const serverGame = document.getElementById('server-game').value;
-
-    if (!serverName || !serverGame) {
-      alert('Por favor completa todos los campos requeridos.');
-      return;
-    }
-
-    const msg = document.getElementById('custom-form-message');
-    msg.innerHTML = '✓ Solicitud enviada correctamente. Nuestro equipo te contactará en 24 horas.';
-    msg.classList.add('visible');
-    e.target.reset();
-    calculateDynamicPrice();
-
-    setTimeout(() => {
-      msg.classList.remove('visible');
-    }, 5000);
-  });
-}
+// El envío del formulario personalizado se gestiona en auth-handlers.js
 
 // Intersection Observer para animaciones al scroll
 const observerOptions = {
