@@ -1793,6 +1793,50 @@ select option,
     transform: translateY(-50%);
   }
 
+  /* Ensure toggle doesn't shift layout and menu overlays below */
+  .navbar-inner {
+    padding-right: 3.25rem; /* reserve space for the toggle */
+  }
+
+  .navbar-menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    margin-top: 0.5rem;
+    z-index: 40;
+  }
+
+  .navbar-menu.open {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+    border-radius: 0 0 12px 12px;
+    background: rgba(4,8,21,0.98);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    box-shadow: var(--shadow-sm);
+    z-index: 1000;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+  }
+
+  .navbar-menu li {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-menu a {
+    display: block;
+    width: 100%;
+    color: var(--text);
+    padding: 0.35rem 0;
+  }
+
   .hero-header {
     padding: 2rem 0 1rem;
   }
