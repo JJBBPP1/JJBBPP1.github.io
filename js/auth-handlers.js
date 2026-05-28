@@ -93,8 +93,12 @@ export async function guardarPlanPersonalizado(configuracion) {
 function showLoggedOutState() {
   if (authState) authState.classList.add('hidden');
   if (loginForm) loginForm.style.display = 'grid';
-  if (registerForm) registerForm.style.display = 'grid';
+  if (registerForm) registerForm.style.display = 'none';
   if (authEmail) authEmail.textContent = '';
+  const loginFooter = document.querySelector('.login-footer');
+  const registerFooter = document.querySelector('.register-footer');
+  if (loginFooter) loginFooter.style.display = 'block';
+  if (registerFooter) registerFooter.style.display = 'none';
   
   const adminButtons = document.getElementById('admin-buttons');
   const adminNavBtn = document.getElementById('admin-nav-btn');
@@ -121,6 +125,11 @@ async function showLoggedInState(user) {
     if (adminButtons) adminButtons.classList.add('hidden');
     if (adminNavBtn) adminNavBtn.classList.add('hidden');
   }
+  // Hide footer toggles when logged in
+  const loginFooter = document.querySelector('.login-footer');
+  const registerFooter = document.querySelector('.register-footer');
+  if (loginFooter) loginFooter.style.display = 'none';
+  if (registerFooter) registerFooter.style.display = 'none';
   
   try {
     const userDoc = await getDoc(doc(db, 'users', user.uid));
@@ -343,4 +352,37 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Toggle between login and register panels
+  const showRegisterLink = document.getElementById('show-register');
+  const showLoginLink = document.getElementById('show-login');
+
+  function openRegister(e) {
+    if (e) e.preventDefault();
+    if (loginForm) loginForm.style.display = 'none';
+    if (registerForm) registerForm.style.display = 'grid';
+    const el = document.getElementById('register-email');
+    if (el) el.focus();
+    if (loginMessage) loginMessage.classList.remove('visible');
+    const loginFooter = document.querySelector('.login-footer');
+    const registerFooter = document.querySelector('.register-footer');
+    if (loginFooter) loginFooter.style.display = 'none';
+    if (registerFooter) registerFooter.style.display = 'block';
+  }
+
+  function openLogin(e) {
+    if (e) e.preventDefault();
+    if (registerForm) registerForm.style.display = 'none';
+    if (loginForm) loginForm.style.display = 'grid';
+    const el = document.getElementById('email');
+    if (el) el.focus();
+    if (registerMessage) registerMessage.classList.remove('visible');
+    const loginFooter = document.querySelector('.login-footer');
+    const registerFooter = document.querySelector('.register-footer');
+    if (loginFooter) loginFooter.style.display = 'block';
+    if (registerFooter) registerFooter.style.display = 'none';
+  }
+
+  if (showRegisterLink) showRegisterLink.addEventListener('click', openRegister);
+  if (showLoginLink) showLoginLink.addEventListener('click', openLogin);
 });

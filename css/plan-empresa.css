@@ -704,14 +704,16 @@ select option,
   margin: 1.5rem 0;
 }
 
-.login-footer {
+.login-footer,
+.register-footer {
   color: var(--muted);
   font-size: 0.95rem;
   text-align: center;
   margin: 1rem 0 0;
 }
 
-.login-footer a {
+.login-footer a,
+.register-footer a {
   color: var(--accent);
 }
 
