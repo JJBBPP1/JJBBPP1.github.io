@@ -189,6 +189,13 @@ if (registerForm) {
       return;
     }
 
+    // Verificar aceptación de política de privacidad
+    const privacyAccepted = document.getElementById('register-privacy')?.checked;
+    if (!privacyAccepted) {
+      showMessage(registerMessage, 'Debes aceptar las políticas de privacidad.', false);
+      return;
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -197,7 +204,9 @@ if (registerForm) {
       await setDoc(doc(db, 'users', user.uid), {
         email: user.email,
         createdAt: serverTimestamp(),
-        role: role
+        role: role,
+        privacyAccepted: true,
+        privacyAcceptedAt: serverTimestamp()
       });
 
       showMessage(registerMessage, '✓ Cuenta creada con éxito. Iniciando sesión...');
