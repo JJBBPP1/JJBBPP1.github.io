@@ -26,7 +26,7 @@
 <body>
     <h1>Ejercicio JavaScript</h1>
 
-    <button class="buttons-1" type="button" onclick='document.getElementById("saludo").innerHTML = "¡Hola, JavaScript!"'> java </button>
+    <button id="btnJava" class="buttons-1" type="button"> java </button>
     <p id="saludo">Hola buenos días</p>
 
     <div class="contenedor-emociones">
@@ -36,51 +36,34 @@
     </div>
 
     <!--Aquí vemos los botones que alternan entre Sonriente, Triste y Neutral-->
-    <button class="buttons-1" onclick='
-        document.getElementById("neutral").hidden = true;
-        document.getElementById("sonrie").hidden = false;
-        document.getElementById("triste").hidden = true;'> Sonreir </button> <br>
+    <button id="btnSonrie" class="buttons-1"> Sonreir </button> <br>
 
-    <button class="buttons-1" onclick='
-        document.getElementById("neutral").hidden = true;
-        document.getElementById("sonrie").hidden = true;
-        document.getElementById("triste").hidden = false;'> Triste </button> <br>
+    <button id="btnTriste" class="buttons-1"> Triste </button> <br>
 
-    <button class="buttons-1" onclick='
-        document.getElementById("neutral").hidden = false;
-        document.getElementById("sonrie").hidden = true;
-        document.getElementById("triste").hidden = true;'> Neutral </button> <br>
+    <button id="btnNeutral" class="buttons-1"> Neutral </button> <br>
 
 
 
     <!--Aquí veremos los cambios de "Tema", Oscuro y Claro-->
-    <button class="temas" onclick="
-        document.body.style.backgroundColor = 'rgb(57, 57, 57)';
-        document.body.style.color = 'white';">
+    <button id="btnTemaOscuro" class="temas">
         <img id="luna" class="tamaño-temas" src="../multimedia/luna.jpg">
     </button>
 
-    <button class="temas" onclick="
-        document.body.style.backgroundColor = 'white';
-        document.body.style.color = 'black';">
+    <button id="btnTemaClaro" class="temas">
         <img id="sol" class="tamaño-temas" src="../multimedia/sol.jpg">
     </button>
 
 
     <!--Ocultar y aparecer Árbol, generado con Gemini, info para clase-->
     <p class="parrafo1" >Cuando hagas clic al botón de abajo el árbol desaparece</p>
-    <button class="buttons-1" onclick=" /* Añadida clase buttons-1 para uniformidad */
-        const arbol = document.getElementById('arbol');
-        arbol.hidden = !arbol.hidden; /* Alterna la visibilidad (true/false) */
-        this.innerHTML = arbol.hidden ? 'Mostrar árbol' : 'Quitar árbol'; /* Cambia el texto */
-    ">Quitar árbol</button>
+    <button id="btnToggleArbol" class="buttons-1">Quitar árbol</button>
 
     <img id="arbol" class="tamaño" src="../multimedia/arbol.jpg">
 
     <!--En lugar de ocultar con hidden, quiero hacero con display-->
     <img id="arbol2" class="tamaño" src="../multimedia/arbol2.png">
-    <button class="buttons-1" onclick="document.getElementById('arbol2').style.display = 'none';"> Quitar árbol </button>
-    <button class="buttons-1" onclick="document.getElementById('arbol2').style.display = 'block';"> Mostrar árbol </button>
+    <button id="btnQuitarArbol2" class="buttons-1"> Quitar árbol </button>
+    <button id="btnMostrarArbol2" class="buttons-1"> Mostrar árbol </button>
 
     <p>
 
@@ -130,28 +113,7 @@ Este código permite modificar el contenido del &lt;h1 &gt; y añadir un nuevo &
 </p>
 
 <!--getElementsByTagName: devuelve una colección de elementos, accederé a cada elemento en función de su posición-->
-<button onclick="
-
-/* todo sin constante
-document.getElementsByTagName('p')[0].style.color='green';
-document.getElementsByTagName('p')[0].style.fontSize='20px';
-document.getElementsByTagName('p')[0].style.fontWeight='bold'; negrita, CSS: font-weight: bold;
-document.getElementsByTagName('p')[0].style.fontStyle='italic'; cursiva, CSS: font-style: italic;
-*/
-
-/*declaro la constante parrafo0*/
-const parrafo0 = document.getElementsByTagName('p')[0];
-parrafo0.style.color='green';
-parrafo0.style.fontSize='20px';
-parrafo0.style.fontWeight='bold';
-parrafo0.style.fontStyle='italic';
-
-/*aplicar estilos con una clase, aplica una clase eliminando las clases anteriores
-document.getElementsByTagName('p')[1].className='clase-coleccion';*/
-
-document.getElementsByTagName('p')[1].classList.add ('clase-coleccion');
-
-"> Cambia el primer párrafo </button>
+<button id="btnCambiarPrimerParrafo" class="buttons-1"> Cambia el primer párrafo </button>
 
 
 <p id="parrafo-a-cambiar">Este es el párrafo cuyo aspecto cambiará.</p>
@@ -167,10 +129,10 @@ document.getElementsByTagName('p')[1].classList.add ('clase-coleccion');
     <input type="number" id="num2" placeholder="Número 2">
     <input type="number" id="num3" placeholder="Número 3">
     <br><br>
-    <button class="buttons-1" onclick="mostrarMayor()">Mayor</button>
-    <button class="buttons-1" onclick="ordenarDesc()">Mayor a Menor</button>
-    <button class="buttons-1" onclick="ordenarAsc()">Menor a Mayor</button>
-    <button class="buttons-1" onclick="mostrarMenor()">Menor</button>
+    <button id="btnMayor" class="buttons-1">Mayor</button>
+    <button id="btnMayorMenor" class="buttons-1">Mayor a Menor</button>
+    <button id="btnMenorMayor" class="buttons-1">Menor a Mayor</button>
+    <button id="btnMenor" class="buttons-1">Menor</button>
     <div id="resultado" style="margin-top: 20px; font-weight: bold; font-size: 18px;"></div>
 
     <!-- funciones en js/javascript-page.js -->
