@@ -53,7 +53,7 @@
     <div id="header-dot"><span>∿</span></div>
     <div>
       <div id="header-title">Asistente IA</div>
-      <div id="header-sub">claude-sonnet-4 · claude.ai</div>
+      <div id="header-sub">ChatGPT-style · búsqueda inteligente</div>
     </div>
     <div id="header-status"><div id="status-dot"></div>en línea</div>
   </div>
@@ -68,7 +68,7 @@
 
   <div id="messages">
     <div class="msg bot">
-      <div class="bubble">¡Hola! Soy tu asistente IA. Estoy aquí para ayudarte con preguntas, ideas, código, o lo que necesites. ¿En qué puedo ayudarte hoy?</div>
+      <div class="bubble">Asistente IA listo. Proporciono respuestas claras y precisas, soporte técnico y orientación en tiempo real. Envíame tu consulta y responderé de forma inmediata.</div>
       <div class="msg-time">ahora</div>
     </div>
   </div>
@@ -131,13 +131,13 @@ async function send(text){
   input.value='';input.style.height='auto';
   showTyping();
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
+    const res=await fetch('/api/chat',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-sonnet-4-20250514',
         max_tokens:1000,
-        system:'Eres un asistente inteligente, amable y conciso. Responde siempre en español. Sé directo y útil. Usa formato claro y sin markdown excesivo.',
+        system:'Eres una inteligencia artificial avanzada. Responde como un asistente estilo ChatGPT, usando conocimientos generales, simulando búsqueda y también incorporando datos que el usuario te proporcione. Actúa siempre como asistente virtual 100% IA. Responde en español, con precisión, claridad, sin presentarte como humano, y adapta la respuesta a la información del usuario.',
         messages:history
       })
     });
@@ -163,6 +163,6 @@ input.addEventListener('input',()=>{input.style.height='auto';input.style.height
 clearBtn.addEventListener('click',()=>{
   history=[];
   messagesEl.innerHTML='';
-  addMsg('bot','Chat reiniciado. ¿En qué puedo ayudarte?');
+  addMsg('bot','Asistente IA reiniciado. Estoy listo para procesar tu próxima solicitud.');
 });
 </script>

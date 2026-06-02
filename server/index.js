@@ -65,6 +65,39 @@ app.put('/tasks', async (req, res) => {
   }
 });
 
+app.post('/api/chat', async (req, res) => {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: 'Missing ANTHROPIC_API_KEY in server environment' });
+  }
+
+  const { model, max_tokens, system, messages } = req.body;
+  if (!model || !system || !messages) {
+    return res.status(400).json({ error: 'missing required body fields' });
+  }
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({ model, max_tokens, system, messages })
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      return res.status(response.status).json(data);
+    }
+
+    res.json(data);
+  } catch (e) {
+    console.error('POST /api/chat error', e);
+    res.status(500).json({ error: e.message || String(e) });
+  }
+});
+
 // health
 app.get('/health', (req, res) => res.json({ ok: true }));
 
