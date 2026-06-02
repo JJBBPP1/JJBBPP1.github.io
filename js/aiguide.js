@@ -1,8 +1,12 @@
 // =========================================================================
 // CONFIGURACIÓN: CAMBIA ESTA URL POR LA QUE TE DÉ RENDER AL TERMINAR
-// Debe terminar en '/chat' porque ese es el endpoint que creamos en Node.js
 // =========================================================================
 const BACKEND_URL = 'https://jjbbpp1-github-io.onrender.com/chat';
+
+// Cargar dinámicamente la librería Marked para procesar Markdown a HTML
+const scriptMarked = document.createElement('script');
+scriptMarked.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+document.head.appendChild(scriptMarked);
 
 // Elementos del DOM
 const chatContainer = document.getElementById('chat-container');
@@ -15,16 +19,24 @@ let conversationHistory = [];
 
 // Mensaje de bienvenida cuando carga la página
 window.addEventListener('DOMContentLoaded', () => {
-    appendMessage('bot', '¡Hola! Bienvenido al asistente inteligente de mi web. Estoy entrenado para responderte sobre cualquiera de mis secciones:\n\n• Mis ejercicios de JavaScript y manipulación de DOM (incluyendo el acordeón interactivo).\n• Mis apuntes de Servicios en Red (DNS, DHCP, direccionamiento).\n• El funcionamiento de mi calculadora interactiva.\n• Todo sobre mi proyecto de empresa NEXUS Gaming & Servers y administración de servidores Minecraft.\n\n¿De qué te gustaría hablar hoy?');
+    // Esperamos un momento corto a que Marked se cargue en el navegador
+    setTimeout(() => {
+        appendMessage('bot', '¡Hola! Bienvenido al asistente inteligente de mi web. Estoy entrenado para responderte sobre cualquiera de mis secciones:\n\n* **Mis ejercicios de JavaScript** y manipulación de DOM (incluyendo el acordeón interactivo).\n* **Mis apuntes de Servicios en Red** (DNS, DHCP, direccionamiento).\n* **El funcionamiento de mi calculadora** interactiva.\n* **Todo sobre mi proyecto de empresa NEXUS Gaming & Servers** y administración de servidores Minecraft.\n\n¿De qué te gustaría hablar hoy?');
+    }, 500);
 });
 
-// Función para renderizar los mensajes en pantalla (Soporta saltos de línea)
+// Función para renderizar los mensajes en pantalla (¡Ahora con soporte Markdown!)
 function appendMessage(role, text) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', role);
     
-    // Convertimos los saltos de línea '\n' en etiquetas '<br>' para que se organicen bien las listas
-    messageElement.innerHTML = text.replace(/\n/g, '<br>');
+    // Si la librería Marked ya cargó, transformamos el Markdown en HTML limpio
+    if (typeof marked !== 'undefined') {
+        messageElement.innerHTML = marked.parse(text);
+    } else {
+        // Formato de respaldo por si acaso
+        messageElement.innerHTML = text.replace(/\n/g, '<br>');
+    }
     
     chatContainer.appendChild(messageElement);
     
@@ -39,7 +51,7 @@ chatForm.addEventListener('submit', async (e) => {
     const messageText = userInput.value.trim();
     if (!messageText) return;
 
-    // [CORRECCIÓN] BLOQUEO INMEDIATO: Evita dobles clics o envíos repetidos por teclado
+    // BLOQUEO INMEDIATO: Evita dobles clics o envíos repetidos por teclado
     userInput.disabled = true;
     sendBtn.disabled = true;
 
@@ -78,7 +90,7 @@ chatForm.addEventListener('submit', async (e) => {
         const indicator = document.getElementById('typing-indicator');
         if (indicator) indicator.remove();
 
-        // 5. Mostrar la respuesta de la IA en la pantalla
+        // 5. Mostrar la respuesta de la IA procesada con mejores estilos
         appendMessage('bot', data.reply);
 
         // 6. Guardar la respuesta en el historial para el contexto continuo
@@ -89,7 +101,6 @@ chatForm.addEventListener('submit', async (e) => {
         const indicator = document.getElementById('typing-indicator');
         if (indicator) indicator.remove();
         
-        // Mensaje de error amigable explicando la latencia de Render Free
         appendMessage('system-error', 'Nota del sistema: No se pudo conectar con el núcleo de IA. Si es la primera petición en un rato, el servidor gratuito de Render puede tardar unos 50 segundos en despertar. Por favor, reasienta tu duda en unos instantes.');
     } finally {
         // Reactivar el formulario de forma segura al terminar todo el flujo
