@@ -18,11 +18,14 @@ window.addEventListener('DOMContentLoaded', () => {
     appendMessage('bot', '¡Hola! Bienvenido al asistente inteligente de mi web. Estoy entrenado para responderte sobre cualquiera de mis secciones:\n\n• Mis ejercicios de JavaScript y manipulación de DOM (incluyendo el acordeón interactivo).\n• Mis apuntes de Servicios en Red (DNS, DHCP, direccionamiento).\n• El funcionamiento de mi calculadora interactiva.\n• Todo sobre mi proyecto de empresa NEXUS Gaming & Servers y administración de servidores Minecraft.\n\n¿De qué te gustaría hablar hoy?');
 });
 
-// Función para renderizar los mensajes en pantalla
+// Función para renderizar los mensajes en pantalla (Soporta saltos de línea)
 function appendMessage(role, text) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', role);
-    messageElement.textContent = text;
+    
+    // Convertimos los saltos de línea '\n' en etiquetas '<br>' para que se organicen bien las listas
+    messageElement.innerHTML = text.replace(/\n/g, '<br>');
+    
     chatContainer.appendChild(messageElement);
     
     // Auto-scroll automático hacia abajo para ver la respuesta nueva
@@ -36,6 +39,10 @@ chatForm.addEventListener('submit', async (e) => {
     const messageText = userInput.value.trim();
     if (!messageText) return;
 
+    // [CORRECCIÓN] BLOQUEO INMEDIATO: Evita dobles clics o envíos repetidos por teclado
+    userInput.disabled = true;
+    sendBtn.disabled = true;
+
     // 1. Mostrar el mensaje del usuario en la pantalla
     appendMessage('user', messageText);
     userInput.value = ''; // Limpiar la caja de texto
@@ -43,11 +50,7 @@ chatForm.addEventListener('submit', async (e) => {
     // 2. Guardar el mensaje en el historial contextual
     conversationHistory.push({ role: 'user', content: messageText });
 
-    // 3. Desactivar controles para evitar spam mientras la IA piensa
-    userInput.disabled = true;
-    sendBtn.disabled = true;
-
-    // 4. Crear indicador visual de "pensando..."
+    // 3. Crear indicador visual de "pensando..."
     const typingIndicator = document.createElement('div');
     typingIndicator.classList.add('message', 'bot');
     typingIndicator.id = 'typing-indicator';
@@ -56,7 +59,7 @@ chatForm.addEventListener('submit', async (e) => {
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
     try {
-        // 5. Hacer la petición HTTP POST a tu backend de Render
+        // 4. Hacer la petición HTTP POST a tu backend de Render
         const response = await fetch(BACKEND_URL, {
             method: 'POST',
             headers: {
@@ -71,24 +74,25 @@ chatForm.addEventListener('submit', async (e) => {
 
         const data = await response.json();
         
-        // Remover el indicador de carga
-        document.getElementById('typing-indicator').remove();
+        // Remover el indicador de carga si existe
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
 
-        // 6. Mostrar la respuesta de la IA en la pantalla
+        // 5. Mostrar la respuesta de la IA en la pantalla
         appendMessage('bot', data.reply);
 
-        // 7. Guardar la respuesta en el historial para que recuerde lo hablado en el próximo mensaje
+        // 6. Guardar la respuesta en el historial para el contexto continuo
         conversationHistory.push({ role: 'assistant', content: data.reply });
 
     } catch (error) {
         console.error('Error de conexión:', error);
-        if (document.getElementById('typing-indicator')) {
-            document.getElementById('typing-indicator').remove();
-        }
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
+        
         // Mensaje de error amigable explicando la latencia de Render Free
         appendMessage('system-error', 'Nota del sistema: No se pudo conectar con el núcleo de IA. Si es la primera petición en un rato, el servidor gratuito de Render puede tardar unos 50 segundos en despertar. Por favor, reasienta tu duda en unos instantes.');
     } finally {
-        // Reactivar el formulario
+        // Reactivar el formulario de forma segura al terminar todo el flujo
         userInput.disabled = false;
         sendBtn.disabled = false;
         userInput.focus();
