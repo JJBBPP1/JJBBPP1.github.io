@@ -29,17 +29,21 @@ window.addEventListener('DOMContentLoaded', () => {
 function appendMessage(role, text) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', role);
-    
+
+    const bubble = document.createElement('div');
+    bubble.classList.add('message-content');
+
     // Si la librería Marked ya cargó, transformamos el Markdown en HTML limpio
     if (typeof marked !== 'undefined') {
-        messageElement.innerHTML = marked.parse(text);
+        bubble.innerHTML = marked.parse(text);
     } else {
         // Formato de respaldo por si acaso
-        messageElement.innerHTML = text.replace(/\n/g, '<br>');
+        bubble.innerHTML = text.replace(/\n/g, '<br>');
     }
-    
+
+    messageElement.appendChild(bubble);
     chatContainer.appendChild(messageElement);
-    
+
     // Auto-scroll automático hacia abajo para ver la respuesta nueva
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
@@ -66,7 +70,12 @@ chatForm.addEventListener('submit', async (e) => {
     const typingIndicator = document.createElement('div');
     typingIndicator.classList.add('message', 'bot');
     typingIndicator.id = 'typing-indicator';
-    typingIndicator.textContent = 'Procesando consulta...';
+
+    const typingBubble = document.createElement('div');
+    typingBubble.classList.add('message-content');
+    typingBubble.textContent = 'Procesando consulta...';
+
+    typingIndicator.appendChild(typingBubble);
     chatContainer.appendChild(typingIndicator);
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
