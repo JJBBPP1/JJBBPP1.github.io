@@ -113,9 +113,8 @@ body {
 }
 
 .message {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    display: block;
+    width: 100%;
     animation: slideIn 0.3s ease;
 }
 
@@ -131,17 +130,18 @@ body {
 }
 
 .message.user {
-    flex-direction: row-reverse;
-    justify-content: flex-end;
+    text-align: right;
 }
 
 .message.ia {
-    justify-content: flex-start;
+    text-align: left;
 }
 
 .message-content {
+    display: inline-block;
     position: relative;
-    max-width: 70%;
+    max-width: 85%;
+    width: auto;
     padding: 16px 18px;
     border-radius: 22px;
     word-wrap: break-word;
@@ -155,6 +155,7 @@ body {
 }
 
 .message.user .message-content {
+    margin-left: auto;
     background: linear-gradient(135deg, var(--accent-alt) 0%, var(--primary) 100%);
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -162,6 +163,7 @@ body {
 }
 
 .message.ia .message-content {
+    margin-right: auto;
     background: rgba(240, 244, 252, 0.95);
     color: var(--text);
     border: 1px solid rgba(15, 52, 96, 0.14);
