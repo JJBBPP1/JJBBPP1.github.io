@@ -28,23 +28,24 @@
         </header>
 
         <main class="chat-container">
-            <div id="chat" class="chat-messages" aria-label="Área de chat"></div>
+            <div id="chat-container" class="chat-messages" aria-label="Área de chat"></div>
             
-            <div class="chat-input-area">
+            <form id="chat-form" class="chat-input-area">
                 <input 
                     type="text" 
-                    id="mensaje" 
+                    id="user-input" 
                     class="input-mensaje" 
                     placeholder="Escribe tu pregunta..."
                     aria-label="Campo de entrada de mensaje"
+                    autocomplete="off"
                 >
-                <button id="btnEnviar" class="btn-enviar" title="Enviar mensaje">
+                <button id="send-btn" class="btn-enviar" title="Enviar mensaje" type="submit">
                     <span>Enviar</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
                     </svg>
                 </button>
-            </div>
+            </form>
         </main>
 
         <footer class="footer">

@@ -1,201 +1,96 @@
-// ============================================================
-// ASISTENTE IA - Aplicaciones Web
-// Versión profesional con event listeners y manejo de DOM
-// ============================================================
+// =========================================================================
+// CONFIGURACIÓN: CAMBIA ESTA URL POR LA QUE TE DÉ RENDER AL TERMINAR
+// Debe terminar en '/chat' porque ese es el endpoint que creamos en Node.js
+// =========================================================================
+const BACKEND_URL = 'https://jjbbpp1-github-io.onrender.com/chat';
 
-class ChatAssistant {
-  constructor() {
-    this.chatEl = document.getElementById('chat');
-    this.inputEl = document.getElementById('mensaje');
-    this.btnEnviarEl = document.getElementById('btnEnviar');
-    this.messages = [];
-    this.isWaiting = false;
+// Elementos del DOM
+const chatContainer = document.getElementById('chat-container');
+const chatForm = document.getElementById('chat-form');
+const userInput = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
 
-    this.init();
-  }
+// Array en memoria para mantener el hilo/contexto de la conversación actual
+let conversationHistory = [];
 
-  init() {
-    this.setupEventListeners();
-    this.showWelcomeMessage();
-  }
+// Mensaje de bienvenida cuando carga la página
+window.addEventListener('DOMContentLoaded', () => {
+    appendMessage('bot', '¡Hola! Bienvenido al asistente inteligente de mi web. Estoy entrenado para responderte sobre cualquiera de mis secciones:\n\n• Mis ejercicios de JavaScript y manipulación de DOM (incluyendo el acordeón interactivo).\n• Mis apuntes de Servicios en Red (DNS, DHCP, direccionamiento).\n• El funcionamiento de mi calculadora interactiva.\n• Todo sobre mi proyecto de empresa NEXUS Gaming & Servers y administración de servidores Minecraft.\n\n¿De qué te gustaría hablar hoy?');
+});
 
-  setupEventListeners() {
-    // Botón Enviar
-    this.btnEnviarEl.addEventListener('click', () => this.enviarMensaje());
-
-    // Tecla Enter en input
-    this.inputEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        this.enviarMensaje();
-      }
-    });
-
-    // Limpiar estado de espera si el usuario escribe
-    this.inputEl.addEventListener('input', () => {
-      if (this.isWaiting) {
-        this.isWaiting = false;
-        this.btnEnviarEl.disabled = false;
-      }
-    });
-  }
-
-  showWelcomeMessage() {
-    this.addMessage(
-      'ia',
-      '¡Hola! Soy tu asistente IA educativo. Puedo ayudarte con preguntas sobre aplicaciones web, programación y tecnología. ¿Qué deseas saber?'
-    );
-  }
-
-  async enviarMensaje() {
-    const texto = this.inputEl.value.trim();
-
-    if (!texto || this.isWaiting) return;
-
-    // Agregar mensaje del usuario
-    this.addMessage('user', texto);
-
-    // Limpiar input
-    this.inputEl.value = '';
-    this.inputEl.focus();
-
-    // Desactivar botón mientras se procesa
-    this.isWaiting = true;
-    this.btnEnviarEl.disabled = true;
-
-    // Mostrar indicador de escritura
-    this.showTypingIndicator();
-
-    try {
-      // Hacer petición a la API de chat
-      const respuesta = await this.consultarIA(texto);
-      this.removeTypingIndicator();
-      this.addMessage('ia', respuesta);
-    } catch (error) {
-      this.removeTypingIndicator();
-      this.addMessage('ia', `Error: ${error.message}. Usando respuesta local.`);
-      const respuestaLocal = this.generarRespuesta(texto);
-      this.addMessage('ia', respuestaLocal);
-    }
-
-    // Reactivar botón
-    this.isWaiting = false;
-    this.btnEnviarEl.disabled = false;
-  }
-
-  async consultarIA(pregunta) {
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 500,
-        system: 'Eres un asistente educativo especializado en aplicaciones web, HTML, CSS, JavaScript y desarrollo web. Responde de forma clara, concisa y educativa en español.',
-        messages: this.messages.map(msg => ({
-          role: msg.role === 'user' ? 'user' : 'assistant',
-          content: msg.texto
-        }))
-      })
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || `HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.content[0].text;
-  }
-
-  showTypingIndicator() {
-    const typingEl = document.createElement('div');
-    typingEl.className = 'message ia typing-indicator';
-    typingEl.id = 'typing-indicator';
+// Función para renderizar los mensajes en pantalla
+function appendMessage(role, text) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', role);
+    messageElement.textContent = text;
+    chatContainer.appendChild(messageElement);
     
-    const dotsEl = document.createElement('div');
-    dotsEl.className = 'typing-dots';
-    dotsEl.innerHTML = '<span></span><span></span><span></span>';
-    
-    typingEl.appendChild(dotsEl);
-    this.chatEl.appendChild(typingEl);
-    this.chatEl.scrollTop = this.chatEl.scrollHeight;
-  }
-
-  removeTypingIndicator() {
-    const typingEl = document.getElementById('typing-indicator');
-    if (typingEl) {
-      typingEl.remove();
-    }
-  }
-
-  addMessage(role, texto) {
-    const messageEl = document.createElement('div');
-    messageEl.className = `message ${role}`;
-
-    const contentEl = document.createElement('div');
-    contentEl.className = 'message-content';
-    contentEl.textContent = texto;
-
-    messageEl.appendChild(contentEl);
-    this.chatEl.appendChild(messageEl);
-
-    // Scroll al final
-    this.chatEl.scrollTop = this.chatEl.scrollHeight;
-
-    // Guardar en historial
-    this.messages.push({ role, texto, timestamp: new Date() });
-  }
-
-  generarRespuesta(pregunta) {
-    const respuestas = {
-      html: 'HTML es el lenguaje de marcado estándar para crear páginas web. Define la estructura del contenido usando etiquetas como <h1>, <p>, <div>, etc.',
-      css: 'CSS es un lenguaje de hojas de estilo que te permite diseñar y dar formato a elementos HTML. Controla colores, tamaños, posiciones y efectos visuales.',
-      javascript: 'JavaScript es un lenguaje de programación que añade interactividad a las páginas web. Permite manipular el DOM, manejar eventos y crear experiencias dinámicas.',
-      'dom': 'El DOM (Document Object Model) es una representación en árbol de la estructura HTML que permite a JavaScript acceder y modificar elementos de la página.',
-      'eventos': 'Los eventos son acciones que el usuario realiza (clic, tecla, scroll). Con addEventListener puedes capturar estos eventos y ejecutar código en respuesta.',
-      'aplicacion web': 'Una aplicación web es un software que funciona en el navegador. Combina HTML (estructura), CSS (estilos) y JavaScript (lógica).',
-      'responsive': 'El diseño responsivo (responsive design) adapta la interfaz a diferentes tamaños de pantalla usando CSS media queries y layout flexible.',
-      'api': 'Una API es una interfaz que permite que dos aplicaciones se comuniquen. En web, usamos APIs REST para obtener datos de servidores.',
-      'fetch': 'Fetch es una API moderna de JavaScript para hacer peticiones HTTP a servidores. Es el método estándar para enviar/recibir datos.',
-      'json': 'JSON es un formato de texto para intercambiar datos. Es legible, ligero y ampliamente usado en aplicaciones web modernas.',
-    };
-
-    const preguntaLower = pregunta.toLowerCase();
-
-    // Buscar coincidencias
-    for (const [palabra, respuesta] of Object.entries(respuestas)) {
-      if (preguntaLower.includes(palabra)) {
-        return respuesta;
-      }
-    }
-
-    // Respuesta por defecto
-    return 'Esa es una pregunta interesante. Puedo ayudarte con temas como HTML, CSS, JavaScript, DOM, eventos, aplicaciones web, diseño responsivo, APIs, Fetch y JSON. ¿Hay algún tema específico que quieras explorar?';
-  }
-
-  // Método para limpiar el chat
-  limpiarChat() {
-    this.chatEl.innerHTML = '';
-    this.messages = [];
-    this.showWelcomeMessage();
-  }
-
-  // Método para exportar conversación
-  exportarConversacion() {
-    const texto = this.messages
-      .map((msg) => `${msg.role.toUpperCase()}: ${msg.texto}`)
-      .join('\n');
-    console.log(texto);
-    return texto;
-  }
+    // Auto-scroll automático hacia abajo para ver la respuesta nueva
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-// Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
-  const chat = new ChatAssistant();
+// Escuchador del envío del formulario (Enviar mensaje)
+chatForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const messageText = userInput.value.trim();
+    if (!messageText) return;
 
-  // Exponer globalmente para acceso desde consola (desarrollo)
-  window.chatAssistant = chat;
+    // 1. Mostrar el mensaje del usuario en la pantalla
+    appendMessage('user', messageText);
+    userInput.value = ''; // Limpiar la caja de texto
+
+    // 2. Guardar el mensaje en el historial contextual
+    conversationHistory.push({ role: 'user', content: messageText });
+
+    // 3. Desactivar controles para evitar spam mientras la IA piensa
+    userInput.disabled = true;
+    sendBtn.disabled = true;
+
+    // 4. Crear indicador visual de "pensando..."
+    const typingIndicator = document.createElement('div');
+    typingIndicator.classList.add('message', 'bot');
+    typingIndicator.id = 'typing-indicator';
+    typingIndicator.textContent = 'Procesando consulta...';
+    chatContainer.appendChild(typingIndicator);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    try {
+        // 5. Hacer la petición HTTP POST a tu backend de Render
+        const response = await fetch(BACKEND_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ messages: conversationHistory })
+        });
+
+        if (!response.ok) {
+            throw new Error('Respuesta incorrecta por parte del servidor.');
+        }
+
+        const data = await response.json();
+        
+        // Remover el indicador de carga
+        document.getElementById('typing-indicator').remove();
+
+        // 6. Mostrar la respuesta de la IA en la pantalla
+        appendMessage('bot', data.reply);
+
+        // 7. Guardar la respuesta en el historial para que recuerde lo hablado en el próximo mensaje
+        conversationHistory.push({ role: 'assistant', content: data.reply });
+
+    } catch (error) {
+        console.error('Error de conexión:', error);
+        if (document.getElementById('typing-indicator')) {
+            document.getElementById('typing-indicator').remove();
+        }
+        // Mensaje de error amigable explicando la latencia de Render Free
+        appendMessage('system-error', 'Nota del sistema: No se pudo conectar con el núcleo de IA. Si es la primera petición en un rato, el servidor gratuito de Render puede tardar unos 50 segundos en despertar. Por favor, reasienta tu duda en unos instantes.');
+    } finally {
+        // Reactivar el formulario
+        userInput.disabled = false;
+        sendBtn.disabled = false;
+        userInput.focus();
+    }
 });
