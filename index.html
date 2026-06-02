@@ -81,10 +81,9 @@
                 <li><a href="./pages/javascript.html" target="_blank">Javascript</a></li>
                 <li><a href="./pages/agenda.html" target="_blank">Agenda</a></li>
                 <li><a href="./pages/plan-empresa.html" target="_blank">Plan Nexux</a></li>
+                <li><a href="./pages/aiguide.html" target="_blank">Asistente IA</a></li>
                 <li>
-                    <button type="button"
-                        onclick="document.getElementById('fechaHora').innerHTML = new Date().toLocaleString('es-ES')">Click
-                        sobre mi: Fecha y Hora</button>
+                    <button id="btnFechaHora" type="button">Click sobre mi: Fecha y Hora</button>
                     <p id="fechaHora"></p>
                 </li>
             </ul>
@@ -230,20 +229,33 @@
             </main>
         </div>
     </div>
-    <script src="./js/index-acordeon.js"></script>
+    <script src="./js/index.js"></script>
     <!--cuadro del footer-->
     <div class="footer">
         <footer>
-            <p>Derechos reservados &copy; 2025</p>
+            <p>Derechos reservados &copy; 2026</p>
             <div class="colmizquierda">
                 <p>Pagina creada por Javier Bravo Pintado<br>Curso 2025-2026</p>
             </div>
             <div class="colmderecha">
-                <p>Asignatura: Aplicaciones Web<br>Este trabajo se ha enviado el día 04/11/2024</p>
+                <p>Asignatura: Aplicaciones Web<br>Este trabajo se ha enviado en el 2026</p>
             </div>
         </footer>
     </div>
     <!-- Duplicate script removed -->
+    <script>
+        // Event listener para el botón de fecha y hora
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnFechaHora = document.getElementById('btnFechaHora');
+            const fechaHoraEl = document.getElementById('fechaHora');
+            
+            if (btnFechaHora) {
+                btnFechaHora.addEventListener('click', () => {
+                    fechaHoraEl.innerHTML = new Date().toLocaleString('es-ES');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
