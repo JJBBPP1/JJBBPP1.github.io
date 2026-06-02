@@ -88,11 +88,15 @@ body {
     display: flex;
     flex-direction: column;
     gap: var(--spacing);
+    padding: var(--spacing);
     padding-right: 8px;
+    background: rgba(242, 244, 250, 0.9);
+    border-radius: calc(var(--radius) * 1.25);
+    border: 1px solid rgba(15, 52, 96, 0.08);
 }
 
 .chat-messages::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 
 .chat-messages::-webkit-scrollbar-track {
@@ -136,24 +140,54 @@ body {
 }
 
 .message-content {
+    position: relative;
     max-width: 70%;
-    padding: 12px 16px;
-    border-radius: var(--radius);
+    padding: 16px 18px;
+    border-radius: 22px;
     word-wrap: break-word;
-    box-shadow: var(--shadow);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    line-height: 1.7;
+}
+
+.message-content:hover {
+    transform: translateY(-1px);
 }
 
 .message.user .message-content {
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--accent-alt) 0%, var(--primary) 100%);
     color: white;
-    border-bottom-right-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-bottom-right-radius: 8px;
 }
 
 .message.ia .message-content {
-    background: #f0f0f0;
+    background: rgba(240, 244, 252, 0.95);
     color: var(--text);
-    border-bottom-left-radius: 2px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(15, 52, 96, 0.14);
+    border-bottom-left-radius: 8px;
+}
+
+.message.ia .message-content::after,
+.message.user .message-content::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: inherit;
+    border-radius: 3px;
+    transform: rotate(45deg);
+    top: 18px;
+}
+
+.message.ia .message-content::after {
+    left: -7px;
+    box-shadow: -1px 1px 1px rgba(15, 52, 96, 0.05);
+}
+
+.message.user .message-content::after {
+    right: -7px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 /* Typing Indicator */
@@ -397,24 +431,35 @@ body {
 
 /* Formateo de bloques de código (por si le pides ayuda con scripts de JS) */
 .message.ia .message-content pre {
-    background-color: var(--primary-light);
-    color: #ffffff;
-    padding: 12px;
-    border-radius: calc(var(--radius) / 2);
+    background: rgba(15, 52, 96, 0.95);
+    color: #f4f7ff;
+    padding: 16px;
+    border-radius: 16px;
     overflow-x: auto;
-    margin: 12px 0;
+    margin: 16px 0;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Código en línea dentro de un texto */
 .message.ia .message-content code {
     font-family: 'Courier New', Courier, monospace;
-    background-color: rgba(0, 0, 0, 0.06);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.9em;
+    background-color: rgba(15, 52, 96, 0.08);
+    color: var(--primary);
+    padding: 3px 7px;
+    border-radius: 5px;
+    font-size: 0.95em;
     font-weight: 600;
+}
+
+.message.ia .message-content blockquote {
+    margin: 16px 0;
+    padding: 14px 18px;
+    border-left: 4px solid var(--accent);
+    background: rgba(239, 243, 255, 0.9);
+    color: var(--text);
+    border-radius: 12px;
 }
 
 /* Mensajes especiales de error del sistema */
