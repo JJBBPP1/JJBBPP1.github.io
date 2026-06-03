@@ -21,7 +21,7 @@ let conversationHistory = [];
 window.addEventListener('DOMContentLoaded', () => {
     // Esperamos un momento corto a que Marked se cargue en el navegador
     setTimeout(() => {
-        appendMessage('bot', '¡Hola! Bienvenido al asistente inteligente de mi web. Estoy entrenado para responderte sobre cualquiera de mis secciones:\n\n* **Mis ejercicios de JavaScript** y manipulación de DOM (incluyendo el acordeón interactivo).\n* **Mis apuntes de Servicios en Red** (DNS, DHCP, direccionamiento).\n* **El funcionamiento de mi calculadora** interactiva.\n* **Todo sobre mi proyecto de empresa NEXUS Gaming & Servers** y administración de servidores Minecraft.\n\n¿De qué te gustaría hablar hoy?');
+        appendMessage('bot', '¡Hola! Bienvenido al asistente inteligente de mi web. Estoy entrenado para responderte sobre cualquiera de mis secciones:\n\n* **Mis ejercicios de JavaScript** y manipulación de DOM (incluyendo el acordeón interactivo).\n* **Mis apuntes de Servicios en Red** (DNS, DHCP, direccionamiento).\n* **El funcionamiento de mi calculadora** interactiva.\n* **Todo sobre mi proyecto de empresa NEXUS Gaming & Servers** y administración de servidores Minecraft y otros juegos y servicios.\n\n¿De qué te gustaría hablar hoy?');
     }, 500);
 });
 
