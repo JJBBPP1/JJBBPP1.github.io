@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 // Configuración de CORS: Permite peticiones desde tu GitHub Pages y entornos locales de prueba
 app.use(cors({
-    origin: ['https://jjbbpp1.github.io', 'http://127.0.0.1:5500', 'http://localhost:5500', 'http://localhost:3000']
+    origin: ['https://jjbbpp1.github.io', 'http://127.0.0.1:5500', 'http://localhost:5500', 'http://localhost:3000', 'https://irregular-putt-unusual.ngrok-free.dev/']
 }));
 
 app.use(express.json());
@@ -21,7 +21,7 @@ const groq = new OpenAI({
 
 // SYSTEM PROMPT GLOBAL: Base de conocimiento del asistente
 const SYSTEM_PROMPT = `
-Eres la Inteligencia Artificial oficial de la web personal de jjbbpp1 (https://jjbbpp1.github.io). 
+Eres la Inteligencia Artificial oficial de la web personal de jjbbpp1 (https://jjbbpp1.github.io, https://irregular-putt-unusual.ngrok-free.dev/). 
 Tu objetivo es guiar, ayudar y responder preguntas de los usuarios sobre todo el contenido y las secciones que componen este sitio web.
 
 Tienes conocimiento absoluto sobre las siguientes áreas principales de la web y sus páginas relacionadas:
